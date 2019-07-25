@@ -1,5 +1,6 @@
 
 module.exports = {
+
     /**
      * Returns the current date in mm/dd/yyyy format.
      * */

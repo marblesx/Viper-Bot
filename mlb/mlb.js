@@ -1,6 +1,6 @@
 
 {
-    const common = require('./common/common');
+    const common = require('common/common.js');
     const https = require('https');
     const logger = require('winston');
     let BASE_URL = 'https://statsapi.mlb.com/api/';
