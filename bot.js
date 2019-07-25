@@ -37,7 +37,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 break;
             case 'mlb':
                  mlb.mlbMethods(args, bot, channelID);
-
                 break;
         }
     }

@@ -4,8 +4,9 @@
     const request = require('request');
     let BASE_URL = 'https://statsapi.mlb.com/api/';
     let currentGame = "In Progress";
-    let notPlayed = "Pre-Game";
-    let FinalGame = "Final"
+    let PreGame = "Pre-Game";
+    let FinalGame = "Final";
+    let NotPlayed ="Scheduled";
     let _bot;
     let _channelID
     /**
@@ -49,13 +50,11 @@
                 // data is already parsed as JSON:
                 if (data.dates.length !== 0) {
                     let games = data.dates[0].games;
-                    console.log(games.length);
                     for (let i = 0; i < games.length; i++) {
                         console.log(i);
                         console.log(games[i]);
                         message += gameStatus(games[i].status.detailedState, games[i].teams.away, games[i].teams.home, games[i].gameDate);
                     }
-                    console.log(message);
                     _bot.sendMessage({
                         to: _channelID,
                         message: message
@@ -90,7 +89,8 @@
                 toReturn = awayTeam.team.name + " are loosing to " + homeTeam.team.name + ": " + awayTeam.score + "-"+ homeTeam.score;
             }
             break;
-            case notPlayed:
+            case Scheduled:
+            case PreGame:
                 toReturn = awayTeam.team.name + " are playing " + homeTeam.team.name + " at " + common.convertTime(gameDate);
                 break;
             case FinalGame:
@@ -109,14 +109,7 @@
 
     }
 
-
-
-
-
-
-
 // exports the variables and functions above so that other modules can use them
 module.exports.mlbMethods = mlbMethods;
-
 
 }
