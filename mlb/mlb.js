@@ -46,6 +46,7 @@
                 // data is already parsed as JSON:
                 if (data.dates.length !== 0) {
                     let games = data.dates[0].games;
+                    console.log(games.length);
                     for (let i = 0; i < games.length; i++) {
 
                         message += gameStatus(games[i].status.detailedState, games[i].teams.away, games[i].teams.home, games[i].gameDate);
@@ -55,7 +56,10 @@
                         message: message
                     });
                 } else {
-                    return "Boo! No games today."
+                    _bot.sendMessage({
+                        to: _channelID,
+                        message: "No games today!, Boooooo"
+                    });
                 }
             }
         });
