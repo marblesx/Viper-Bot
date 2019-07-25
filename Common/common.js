@@ -19,9 +19,11 @@ module.exports = {
         }
         return mm + '/' + dd + '/' + yyyy;
     },
+    /**
+     * @param {string} time string format to convert.
+     * **/
     convertTime: function(time)
     {
-        let date = new Date(time).toLocaleTimeString("en-US", {timeZone: "America/New_York"});
-       return date;
+        return new Date(time).toLocaleTimeString("en-US", {timeZone: "America/New_York", hour:'2-digit', minute:'2-digit'});
     }
 };
