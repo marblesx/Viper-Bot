@@ -22,6 +22,8 @@ module.exports = {
     convertTime: function(time)
     {
         let date = new Date(time);
-       return date.toLocaleTimeString();
+        let offset = -300; //Timezone offset for EST in minutes.
+        let estDate = new Date(date.getTime() + offset*60*1000);
+       return estDate.toTimeString();
     }
 };
