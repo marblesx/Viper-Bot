@@ -1,0 +1,11 @@
+{
+  "name": "vipers-sports-bot",
+  "version": "0.1",
+  "description": "Viper discord sports bot that will show statistics for players",
+  "main": "bot.js",
+  "author": "Your Name",
+  "dependencies": {
+    "discord.io": "^2.5.3",
+    "winston": "^3.2.1"
+  }
+}
