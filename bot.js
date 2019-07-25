@@ -1,4 +1,4 @@
-const mlb = require('../mlb/mlb.js');
+const mlb = require('mlb');
 const Discord = require('discord.io');
 const logger = require('winston');
 const auth = require('./auth.json');
