@@ -6,12 +6,17 @@
     let currentGame = "In Progress";
     let notPlayed = "Pre-Game";
     let FinalGame = "Final"
+    let _bot;
+    let _channelID
     /**
      * This handles all the arg method calls for mlb
      * @param {string[] }args
+     * @param bot
+     * @param channelId
      */
-    function mlbMethods(args) {
-
+    function mlbMethods(args, bot, channelId) {
+        _bot=bot;
+        _channelID = channelId;
         switch (args[1]){
             case 'games':
                 return gamesToday();
@@ -23,13 +28,12 @@
     }
 
 
-    async function gamesToday() {
+     function gamesToday() {
         let message = '';
         let date = common.getToDaysDate();
         let url = BASE_URL + 'v1/schedule/games/?sportId=1&date=' + date;
 
-
-       await request.get({
+        request.get({
             url: url,
             json: true,
             headers: {'User-Agent': 'request'}
@@ -46,7 +50,10 @@
 
                         message += gameStatus(games[i].status.detailedState, games[i].teams.away, games[i].teams.home, games[i].gameDate);
                     }
-                    return message;
+                    _bot.sendMessage({
+                        to: _channelID,
+                        message: message
+                    });
                 } else {
                     return "Boo! No games today."
                 }
