@@ -41,6 +41,7 @@
             } else {
                 // data is already parsed as JSON:
                 if (data.dates.length !== 0) {
+                    console.log('got data');
                     let games = data.dates[0].games;
                     for (let i = 0; i < games.length; i++) {
 

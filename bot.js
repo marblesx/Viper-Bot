@@ -26,6 +26,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split('.');
         var cmd = args[0];
+        let toSend = ''
 
         switch(cmd) {
             case 'ping':
@@ -35,9 +36,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 });
                 break;
             case 'mlb':
+                toSend = mlb.mlbMethods(args);
+                console.log(tosend);
                 bot.sendMessage({
                     to: channelID,
-                    message: mlb.mlbMethods(args)
+                    message: toSend
                 });
                 break;
         }
