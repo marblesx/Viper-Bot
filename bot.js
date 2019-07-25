@@ -37,7 +37,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 break;
             case 'mlb':
                 toSend = mlb.mlbMethods(args);
-                console.log(tosend);
+                console.log(toSend);
                 bot.sendMessage({
                     to: channelID,
                     message: toSend
