@@ -1,8 +1,8 @@
 
 {
-    const common = require('../common/common');
+    const common = require('../Common/common');
     const https = require('https');
-    const logger = require('winston');
+    
     let BASE_URL = 'https://statsapi.mlb.com/api/';
 
     /**
@@ -55,7 +55,7 @@
                }
             });
         }).on("error", (err) => {
-            logger.error("Error: " + err.message);
+            
             return "Oh shit, something went wrong.... ";
         });
     }
@@ -65,7 +65,7 @@
 
 
 // exports the variables and functions above so that other modules can use them
-module.exports.mlbMethods = mlbMethods(args);
+module.exports.mlbMethods = mlbMethods;
 
 
 }
