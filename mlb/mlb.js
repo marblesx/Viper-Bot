@@ -7,6 +7,7 @@
     let PreGame = "Pre-Game";
     let FinalGame = "Final";
     let Scheduled ="Scheduled";
+    let GameOver = "Game Over";
     let _bot;
     let _channelID
     /**
@@ -71,10 +72,10 @@
 
     /**
      *
-     * @param {string} status
-     * @param {object} awayTeam
-     * @param {object} homeTeam
-     * @param {string} gameDate
+     * @param {string} status : the Status of the current game.
+     * @param {object} awayTeam : the team object for the away team.
+     * @param {object} homeTeam : the team object for the home team.
+     * @param {string} gameDate : The current Date of the game.
      */
     function gameStatus(status, awayTeam, homeTeam, gameDate) {
         let toReturn = '';
@@ -94,6 +95,7 @@
                 toReturn = awayTeam.team.name + " are playing " + homeTeam.team.name + " at " + common.convertTime(gameDate);
                 break;
             case FinalGame:
+            case GameOver:
                 if(awayTeam.score > homeTeam.score)
                 {
                     toReturn = awayTeam.team.name + "  beat " + homeTeam.team.name + ": " + awayTeam.score + "-"+ homeTeam.score;

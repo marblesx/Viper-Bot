@@ -22,6 +22,6 @@ module.exports = {
     convertTime: function(time)
     {
         let date = new Date(time);
-       return date.toString();
+       return date.toLocaleTimeString();
     }
 };
