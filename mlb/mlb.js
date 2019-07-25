@@ -55,6 +55,7 @@
                         console.log(games[i]);
                         message += gameStatus(games[i].status.detailedState, games[i].teams.away, games[i].teams.home, games[i].gameDate);
                     }
+                    console.log(message);
                     _bot.sendMessage({
                         to: _channelID,
                         message: message
