@@ -6,7 +6,7 @@
     let currentGame = "In Progress";
     let PreGame = "Pre-Game";
     let FinalGame = "Final";
-    let NotPlayed ="Scheduled";
+    let Scheduled ="Scheduled";
     let _bot;
     let _channelID
     /**
