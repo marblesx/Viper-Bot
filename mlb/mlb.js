@@ -80,7 +80,7 @@
         switch (status) {
             case currentGame:
                 if (awayTeam.score === homeTeam.score) {
-                    toReturn = awayTeam.team.name + "and " + homeTeam.team.name + " are tied: " + awayTeam.score + "-" + homeTeam.score;
+                    toReturn = awayTeam.team.name + " and " + homeTeam.team.name + " are tied: " + awayTeam.score + "-" + homeTeam.score;
                 } else if (awayTeam.score > homeTeam.score) {
                     toReturn = awayTeam.team.name + " are beating " + homeTeam.team.name + ": " + awayTeam.score + "-" + homeTeam.score;
                 } else {
