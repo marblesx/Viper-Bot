@@ -44,9 +44,9 @@
                     let games = data.dates[0].games;
                     for (let i = 0; i < games.length; i++) {
 
-                        message += gameStatus(games[0].status.detailedState, games[0].teams.away, games[0].teams.home, games[0].gameDate);
+                        message += gameStatus(games[i].status.detailedState, games[i].teams.away, games[i].teams.home, games[i].gameDate);
                     }
-                    return console.log(message);
+                    return message;
                 } else {
                     return "Boo! No games today."
                 }
@@ -67,15 +67,15 @@
             case currentGame:
             if(awayTeam.score > homeTeam.score)
             {
-               toReturn = awayTeam.team.name + " is beating " + homeTeam.team.name + ": " + awayTeam.score + "-"+ homeTeam.score;
+               toReturn = awayTeam.team.name + " are beating " + homeTeam.team.name + ": " + awayTeam.score + "-"+ homeTeam.score;
             }
             else
             {
-                toReturn = awayTeam.team.name + " is loosing to " + homeTeam.team.name + ": " + awayTeam.score + "-"+ homeTeam.score;
+                toReturn = awayTeam.team.name + " are loosing to " + homeTeam.team.name + ": " + awayTeam.score + "-"+ homeTeam.score;
             }
             break;
             case notPlayed:
-                toReturn = awayTeam.team.name + " is playing " + homeTeam.team.name + " at " + common.convertTime(gameDate);
+                toReturn = awayTeam.team.name + " are playing " + homeTeam.team.name + " at " + common.convertTime(gameDate);
                 break;
             case FinalGame:
                 if(awayTeam.score > homeTeam.score)
@@ -84,7 +84,7 @@
                 }
                 else
                 {
-                    toReturn = awayTeam.team.name + " lost " + homeTeam.team.name + ": " + awayTeam.score + "-"+ homeTeam.score;
+                    toReturn = awayTeam.team.name + " lost to " + homeTeam.team.name + ": " + awayTeam.score + "-"+ homeTeam.score;
                 }
                 break;
 
