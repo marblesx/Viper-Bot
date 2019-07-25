@@ -21,7 +21,7 @@ module.exports = {
     },
     convertTime: function(time)
     {
-        let date = new Date(time).toLocaleString("en-US", {timeZone: "America/New_York"});
-       return date.toLocaleTimeString();
+        let date = new Date(time).toLocaleTimeString("en-US", {timeZone: "America/New_York"});
+       return date;
     }
 };
