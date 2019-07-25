@@ -1,10 +1,11 @@
 
 {
     const common = require('../Common/common');
-    const https = require('https');
-    
+    const request = require('request');
     let BASE_URL = 'https://statsapi.mlb.com/api/';
-
+    let currentGame = "In Progress";
+    let notPlayed = "Pre-Game";
+    let FinalGame = "Final"
     /**
      * This handles all the arg method calls for mlb
      * @param {string[] }args
@@ -24,41 +25,75 @@
 
     function gamesToday() {
         let message = '';
-        let data;
         let date = common.getToDaysDate();
-        https.get(BASE_URL+'v1/schedule/games/?sportId=1&date='+date, (resp) => {
-            resp.on('data', (chuck)=> {
-                data += chuck;
-            });
-            resp.on('end', () => {
-               if(data.dates.length !== 0)
-               {
-                   let games = data.dates.games;
-                   for(let i = 0; i < games.length; i++){
-                       let winnerStatus = '';
-                       if(games[i].teams[0].team.isWinner)
-                       {
-                           winnerStatus = " beat "
-                       }
-                       else
-                       {
-                           winnerStatus = " lost to "
-                       }
-                      message += games[i].teams[0].team.name + winnerStatus + games[i].teams[1].team.name + " " +
-                          games[i].teams[0].score + "-" + games[i].teams[1].score + "\n"
-                   }
-                   return message;
-               }
-               else
-               {
-                   return "Boo! No games today."
-               }
-            });
-        }).on("error", (err) => {
-            
-            return "Oh shit, something went wrong.... ";
+        let url = BASE_URL + 'v1/schedule/games/?sportId=1&date=' + date;
+
+
+        request.get({
+            url: url,
+            json: true,
+            headers: {'User-Agent': 'request'}
+        }, (err, res, data) => {
+            if (err) {
+                console.log('Error:', err);
+            } else if (res.statusCode !== 200) {
+                console.log('Status:', res.statusCode);
+            } else {
+                // data is already parsed as JSON:
+                if (data.dates.length !== 0) {
+                    let games = data.dates[0].games;
+                    for (let i = 0; i < games.length; i++) {
+
+                        message += gameStatus(games[0].status.detailedState, games[0].teams.away, games[0].teams.home, games[0].gameDate);
+                    }
+                    return console.log(message);
+                } else {
+                    return "Boo! No games today."
+                }
+            }
         });
     }
+
+    /**
+     *
+     * @param {string} status
+     * @param {object} awayTeam
+     * @param {object} homeTeam
+     * @param {string} gameDate
+     */
+    function gameStatus(status, awayTeam, homeTeam, gameDate) {
+        let toReturn = '';
+        switch(status){
+            case currentGame:
+            if(awayTeam.score > homeTeam.score)
+            {
+               toReturn = awayTeam.team.name + " is beating " + homeTeam.team.name + ": " + awayTeam.score + "-"+ homeTeam.score;
+            }
+            else
+            {
+                toReturn = awayTeam.team.name + " is loosing to " + homeTeam.team.name + ": " + awayTeam.score + "-"+ homeTeam.score;
+            }
+            break;
+            case notPlayed:
+                toReturn = awayTeam.team.name + " is playing " + homeTeam.team.name + " at " + common.convertTime(gameDate);
+                break;
+            case FinalGame:
+                if(awayTeam.score > homeTeam.score)
+                {
+                    toReturn = awayTeam.team.name + "  beat " + homeTeam.team.name + ": " + awayTeam.score + "-"+ homeTeam.score;
+                }
+                else
+                {
+                    toReturn = awayTeam.team.name + " lost " + homeTeam.team.name + ": " + awayTeam.score + "-"+ homeTeam.score;
+                }
+                break;
+
+        }
+        return toReturn + "\n";
+
+    }
+
+
 
 
 
