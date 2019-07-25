@@ -10,26 +10,26 @@
      * This handles all the arg method calls for mlb
      * @param {string[] }args
      */
-    function mlbMethods(args, callback) {
+    function mlbMethods(args) {
 
         switch (args[1]){
             case 'games':
-                callback(gamesToday());
+                return gamesToday();
                 break;
                 default:
-                    callback("Invalid command, try !mlb.help for a list of valid commands.");
+                    return "Invalid command, try !mlb.help for a list of valid commands.";
         }
 
     }
 
 
-    function gamesToday() {
+    async function gamesToday() {
         let message = '';
         let date = common.getToDaysDate();
         let url = BASE_URL + 'v1/schedule/games/?sportId=1&date=' + date;
 
 
-        request.get({
+       await request.get({
             url: url,
             json: true,
             headers: {'User-Agent': 'request'}
@@ -41,13 +41,11 @@
             } else {
                 // data is already parsed as JSON:
                 if (data.dates.length !== 0) {
-                    console.log('got data');
                     let games = data.dates[0].games;
                     for (let i = 0; i < games.length; i++) {
 
                         message += gameStatus(games[i].status.detailedState, games[i].teams.away, games[i].teams.home, games[i].gameDate);
                     }
-                    console.log(message);
                     return message;
                 } else {
                     return "Boo! No games today."

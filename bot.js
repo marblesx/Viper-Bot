@@ -36,12 +36,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 });
                 break;
             case 'mlb':
-                mlb.mlbMethods(args, function(data) {
-                    console.log(data);
-                    bot.sendMessage({
-                        to: channelID,
-                        message: data
-                    });
+                toSend = mlb.mlbMethods(args);
+                console.log(toSend);
+                bot.sendMessage({
+                    to: channelID,
+                    message: toSend
                 });
                 break;
         }

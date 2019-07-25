@@ -21,7 +21,7 @@ module.exports = {
     },
     convertTime: function(time)
     {
-        let date = new Date(time);
+        let date = new Date(time+"UTC");
        return date.toString();
     }
 };
