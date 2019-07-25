@@ -17,12 +17,15 @@
     function mlbMethods(args, bot, channelId) {
         _bot=bot;
         _channelID = channelId;
-        switch (args[1]){
+        switch (args[1]) {
             case 'games':
-                return gamesToday();
+                gamesToday();
                 break;
-                default:
-                    return "Invalid command, try !mlb.help for a list of valid commands.";
+            default:
+                _bot.sendMessage({
+                    to: _channelID,
+                    message: "Invalid command, try !mlb.help for a list of valid commands."
+                });
         }
 
     }
@@ -48,7 +51,8 @@
                     let games = data.dates[0].games;
                     console.log(games.length);
                     for (let i = 0; i < games.length; i++) {
-
+                        console.log(i);
+                        console.log(games[i]);
                         message += gameStatus(games[i].status.detailedState, games[i].teams.away, games[i].teams.home, games[i].gameDate);
                     }
                     _bot.sendMessage({
