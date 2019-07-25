@@ -10,14 +10,14 @@
      * This handles all the arg method calls for mlb
      * @param {string[] }args
      */
-    function mlbMethods(args) {
+    function mlbMethods(args, callback) {
 
         switch (args[1]){
             case 'games':
-                return gamesToday();
+                callback(gamesToday());
                 break;
                 default:
-                    return "Invalid command, try !mlb.help for a list of valid commands.";
+                    callback("Invalid command, try !mlb.help for a list of valid commands.");
         }
 
     }
@@ -47,6 +47,7 @@
 
                         message += gameStatus(games[i].status.detailedState, games[i].teams.away, games[i].teams.home, games[i].gameDate);
                     }
+                    console.log(message);
                     return message;
                 } else {
                     return "Boo! No games today."
