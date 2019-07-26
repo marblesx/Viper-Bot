@@ -2,13 +2,16 @@
     const common = require('../Common/common');
     const request = require('request');
     let BASE_URL = 'https://statsapi.mlb.com/api/';
-    let currentGame = "In Progress";
-    let PreGame = "Pre-Game";
-    let FinalGame = "Final";
-    let Scheduled = "Scheduled";
-    let GameOver = "Game Over";
+    let TODAY_GAMES_URL = BASE_URL + 'v1/schedule/games/?sportId=1';
+    const currentGame = "In Progress";
+    const PreGame = "Pre-Game";
+    const FinalGame = "Final";
+    const Scheduled = "Scheduled";
+    const GameOver = "Game Over";
+    const Phillies_ID = '143';
+    let Phillies_Location = '';
     let _bot;
-    let _channelID
+    let _channelID;
 
     /**
      * This handles all the arg method calls for mlb
@@ -36,11 +39,9 @@
      * */
     function gamesToday() {
         let message = '';
-        let date = common.getToDaysDate();
-        let url = BASE_URL + 'v1/schedule/games/?sportId=1&date=' + date;
 
         request.get({
-            url: url,
+            url: TODAY_GAMES_URL,
             json: true,
             headers: {'User-Agent': 'request'}
         }, (err, res, data) => {
@@ -101,6 +102,62 @@
                 break;
         }
         return toReturn + "\n";
+    }
+
+    function philliesLive(){
+        while(true){
+            request.get({
+                url: TODAY_GAMES_URL,
+                json: true,
+                headers: {'User-Agent': 'request'}
+            }, (err, res, data) => {
+                if (err) {
+                    console.log('Error:', err);
+                } else if (res.statusCode !== 200) {
+                    console.log('Status:', res.statusCode);
+                } else {
+                    // data is already parsed as JSON:
+                    if (data.dates.length !== 0) {
+                        let games = data.dates[0].games;
+                        for (let i = 0; i < games.length; i++) {
+                           if( games[i].teams.away.team.id === Phillies_ID || games[i].teams.home.team.id)
+                           {
+                               if(games[i].teams.away.team.id === Phillies_ID)
+                               {
+                                   Phillies_Location = 'away'
+                               }
+                               else
+                               {
+                                   Phillies_Location = 'home'
+                               }
+                           }
+                        }
+                        _bot.sendMessage({
+                            to: _channelID,
+                            message: message
+                        });
+                    } else {
+
+                    }
+                }
+            });
+
+            let date = common.getToDaysDate();
+            let url = TODAY_GAMES_URL+'&date=' + date;
+
+        }
+
+
+    }
+
+    /**
+     * @param {string} message : Message to send to channel.
+     * */
+    function UpdateChannel(message){
+        _bot.sendMessage({
+            to: _channelID,
+            message: message
+        });
     }
 
     // exports the variables and functions above so that other modules can use them
