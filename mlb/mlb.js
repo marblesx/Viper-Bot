@@ -138,6 +138,7 @@
                     callback('Unknown Team');
                 } else {
                     // get the only team
+                    console.log(data.teams[0].teamName)
                  callback(data.teams[0].teamName);
                 }
             }
