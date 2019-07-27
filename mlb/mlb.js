@@ -119,7 +119,7 @@
      * @returns {string} Team Name IE Phillies
      */
     function getTeamName(id) {
-        let res = request('GET', TEAM_URL + id);
+        let res = request_sync('GET', TEAM_URL + id);
         return JSON.parse(res.getBody('utf8')).teams[0].teamName;
 
     }
