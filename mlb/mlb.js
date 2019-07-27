@@ -111,14 +111,13 @@
     }
 
     /***
-     *
      * @param id The ID of the team for the MLB.
      * @returns Just the Team name(I.E Phillies).
      */
     function getTeamName(id)
     {
         request.get({
-            url: TEAM_URL + id,
+            url: TEAM_URL + id.toString(),
             json: true,
             async: false,
             headers: {'User-Agent': 'request'}
