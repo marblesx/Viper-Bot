@@ -6,7 +6,7 @@
     let VERSION_1 = 'v1';
     let BASE_URL = 'https://statsapi.mlb.com/api/'+VERSION_1;
     let TODAY_GAMES_URL = BASE_URL + '/schedule/games/?sportId=1';
-    let TEAM_URL = BASE_URL + '/teams/'
+    let TEAM_URL = BASE_URL + '/teams/';
 
     const currentGame = "In Progress";
     const PreGame = "Pre-Game";
@@ -84,10 +84,14 @@
      */
     function gameStatus(status, awayTeam, homeTeam, gameDate) {
         let toReturn = '';
-        let awayTeamName =
-        getTeamName(awayTeam.team.id);
-        let homeTeamName=
-        getTeamName(homeTeam.team.id);
+        let awayTeamName = '';
+        getTeamName(awayTeam.team.id).then(function(name){
+            awayTeamName = name;
+        });
+        let homeTeamName='';
+        getTeamName(homeTeam.team.id).then(function(name){
+           homeTeamName= name;
+        });
 
         switch (status) {
             case currentGame:
@@ -119,10 +123,12 @@
      * @param id The ID of the team for the MLB.
      * @returns Just the Team name(I.E Phillies).
      */
-     async function getTeamName(id)
+    async function getTeamName(id)
     {
         return await fetch(TEAM_URL + id.toString())
-            .then(res=>res.json().teams[0].teamName);
+            .then(res=> res.json()).then(res=>
+                res.teams[0].teamName
+            )
     }
 
     function philliesLive(){
