@@ -83,9 +83,9 @@
      */
     function gameStatus(status, awayTeam, homeTeam, gameDate) {
         let toReturn = '';
-        let awayTeamName = awayTeam.team.teamName;
+        let awayTeamName = awayTeam.team.name;
 
-        let homeTeamName=homeTeam.team.teamName;
+        let homeTeamName=homeTeam.team.name;
 
         switch (status) {
             case currentGame:

@@ -36,8 +36,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mlb/mlb.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+            <state relative-caret-position="578">
+              <caret line="87" column="43" selection-start-line="87" selection-start-column="43" selection-end-line="87" selection-end-column="43" />
               <folding>
                 <element signature="n#!!doc;n#gamesToday#0;n#!!top" />
                 <element signature="e#1318#1448#0" />
@@ -179,12 +179,12 @@
       <updated>1563986868759</updated>
       <workItem from="1563986870480" duration="4714000" />
       <workItem from="1564058981952" duration="7696000" />
-      <workItem from="1564189721926" duration="7433000" />
+      <workItem from="1564189721926" duration="7562000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39755000" />
+    <option name="totallyTimeSpent" value="39884000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1186" extended-state="6" />
@@ -313,8 +313,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mlb/mlb.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        <state relative-caret-position="578">
+          <caret line="87" column="43" selection-start-line="87" selection-start-column="43" selection-end-line="87" selection-end-column="43" />
           <folding>
             <element signature="n#!!doc;n#gamesToday#0;n#!!top" />
             <element signature="e#1318#1448#0" />
