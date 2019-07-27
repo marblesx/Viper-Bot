@@ -1,6 +1,8 @@
 {
     const common = require('../Common/common');
     const request = require('request');
+    const fetch = require('node-fetch');
+
     let VERSION_1 = 'v1';
     let BASE_URL = 'https://statsapi.mlb.com/api/'+VERSION_1;
     let TODAY_GAMES_URL = BASE_URL + '/schedule/games/?sportId=1';
@@ -119,8 +121,9 @@
      */
      async function getTeamName(id)
     {
-        let jsonTeamName = await request.get(TEAM_URL + id.toString());
-        return jsonTeamName.teams[0].teamName;
+        const jsonTeamName = await fetch(TEAM_URL + id.toString());
+        const data = await jsonTeamName.json();
+        return data.teams[0].teamName;
     }
 
     function philliesLive(){
