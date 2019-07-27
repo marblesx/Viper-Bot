@@ -100,7 +100,7 @@
                 break;
             case Scheduled:
             case PreGame:
-                toReturn = awayTeamName + " are playing " + homeTeamName + " at " + common.convertTime(gameDate);
+                toReturn = awayTeamName + " are visiting " + homeTeamName + " at " + common.convertTime(gameDate);
                 break;
             case FinalGame:
             case GameOver:
