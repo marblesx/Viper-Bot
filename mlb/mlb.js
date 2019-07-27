@@ -39,9 +39,9 @@
      * */
     function gamesToday() {
         let message = '';
-
+        let date = common.getToDaysDate();
         request.get({
-            url: TODAY_GAMES_URL,
+            url: TODAY_GAMES_URL+'&date='+date,
             json: true,
             headers: {'User-Agent': 'request'}
         }, (err, res, data) => {
@@ -120,7 +120,7 @@
                     if (data.dates.length !== 0) {
                         let games = data.dates[0].games;
                         for (let i = 0; i < games.length; i++) {
-                           if( games[i].teams.away.team.id === Phillies_ID || games[i].teams.home.team.id)
+                           if( games[i].teams.away.team.id === Phillies_ID || games[i].teams.home.team.id === Phillies_ID)
                            {
                                if(games[i].teams.away.team.id === Phillies_ID)
                                {

@@ -6,18 +6,7 @@ module.exports = {
      * */
      getToDaysDate: function()
     {
-        let today = new Date();
-        let dd = today.getDate();
-        let mm = today.getMonth() + 1; //January is 0!
-
-        let yyyy = today.getFullYear();
-        if (dd < 10) {
-            dd = '0' + dd;
-        }
-        if (mm < 10) {
-            mm = '0' + mm;
-        }
-        return mm + '/' + dd + '/' + yyyy;
+        return new Date().toLocaleDateString("en-US", {timeZone: "America/New_York",month: '2-digit',day:'2-digit', year:'numeric'});
     },
     /**
      * @param {string} time string format to convert.
