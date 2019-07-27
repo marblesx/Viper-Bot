@@ -119,26 +119,8 @@
      */
      async function getTeamName(id)
     {
-        await request.get({
-            url: TEAM_URL + id.toString(),
-            json: true,
-            headers: {'User-Agent': 'request'}
-        }, (err, res, data) => {
-            if (err) {
-                console.log('Error:', err);
-            } else if (res.statusCode !== 200) {
-                console.log('Status:', res.statusCode);
-            } else {
-                if (data.message === "Object not found") {
-                    console.log('Invalid team ID: '+ id);
-                    return 'Unknown Team';
-                } else {
-                    // get the only team
-                    console.log(data.teams[0].teamName)
-                 return data.teams[0].teamName;
-                }
-            }
-        });
+        let jsonTeamName = await request.get(TEAM_URL + id.toString());
+        return jsonTeamName.teams[0].teamName;
     }
 
     function philliesLive(){
