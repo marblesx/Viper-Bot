@@ -1,8 +1,11 @@
 {
     const common = require('../Common/common');
     const request = require('request');
-    let BASE_URL = 'https://statsapi.mlb.com/api/';
-    let TODAY_GAMES_URL = BASE_URL + 'v1/schedule/games/?sportId=1';
+    let VERSION_1 = 'v1';
+    let BASE_URL = 'https://statsapi.mlb.com/api/'+VERSION_1;
+    let TODAY_GAMES_URL = BASE_URL + '/schedule/games/?sportId=1';
+    let TEAM_URL = BASE_URL + 'teams/'
+
     const currentGame = "In Progress";
     const PreGame = "Pre-Game";
     const FinalGame = "Final";
@@ -53,6 +56,7 @@
                 // data is already parsed as JSON:
                 if (data.dates.length !== 0) {
                     let games = data.dates[0].games;
+                    message += "Away team first, home team second: \n"
                     for (let i = 0; i < games.length; i++) {
                         message += gameStatus(games[i].status.detailedState, games[i].teams.away, games[i].teams.home, games[i].gameDate);
                     }
@@ -78,30 +82,60 @@
      */
     function gameStatus(status, awayTeam, homeTeam, gameDate) {
         let toReturn = '';
+        let awayTeamName = getTeamName(awayTeam.team.id);
+        let homeTeamName = getTeamName(homeTeam.team.id);
         switch (status) {
             case currentGame:
                 if (awayTeam.score === homeTeam.score) {
-                    toReturn = awayTeam.team.name + " and " + homeTeam.team.name + " are tied: " + awayTeam.score + "-" + homeTeam.score;
+                    toReturn = awayTeamName + " and " + homeTeamName + " are tied: " + awayTeam.score + "-" + homeTeam.score;
                 } else if (awayTeam.score > homeTeam.score) {
-                    toReturn = awayTeam.team.name + " are beating " + homeTeam.team.name + ": " + awayTeam.score + "-" + homeTeam.score;
+                    toReturn = awayTeamName + " are beating " + homeTeamName + ": " + awayTeam.score + "-" + homeTeam.score;
                 } else {
-                    toReturn = awayTeam.team.name + " are loosing to " + homeTeam.team.name + ": " + awayTeam.score + "-" + homeTeam.score;
+                    toReturn = awayTeamName + " are loosing to " + homeTeamName + ": " + awayTeam.score + "-" + homeTeam.score;
                 }
                 break;
             case Scheduled:
             case PreGame:
-                toReturn = awayTeam.team.name + " are playing " + homeTeam.team.name + " at " + common.convertTime(gameDate);
+                toReturn = awayTeamName + " are playing " + homeTeamName + " at " + common.convertTime(gameDate);
                 break;
             case FinalGame:
             case GameOver:
                 if (awayTeam.score > homeTeam.score) {
-                    toReturn = awayTeam.team.name + "  beat " + homeTeam.team.name + ": " + awayTeam.score + "-" + homeTeam.score;
+                    toReturn = awayTeamName + "  beat " + homeTeamName + ": " + awayTeam.score + "-" + homeTeam.score;
                 } else {
-                    toReturn = awayTeam.team.name + " lost to " + homeTeam.team.name + ": " + awayTeam.score + "-" + homeTeam.score;
+                    toReturn = awayTeamName + " lost to " + homeTeamName + ": " + awayTeam.score + "-" + homeTeam.score;
                 }
                 break;
         }
         return toReturn + "\n";
+    }
+
+    /***
+     *
+     * @param id The ID of the team for the MLB.
+     * @returns Just the Team name(I.E Phillies).
+     */
+    function getTeamName(id)
+    {
+        request.get({
+            url: TEAM_URL + id,
+            json: true,
+            headers: {'User-Agent': 'request'}
+        }, (err, res, data) => {
+            if (err) {
+                console.log('Error:', err);
+            } else if (res.statusCode !== 200) {
+                console.log('Status:', res.statusCode);
+            } else {
+                if (data.message === "Object not found") {
+                    console.log('Invalid team ID: '+ id);
+                } else {
+                    // get the only team
+                  let team = data.teams[0];
+                  return team.teamName;
+                }
+            }
+        });
     }
 
     function philliesLive(){

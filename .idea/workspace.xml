@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="faa749b9-bdfb-47d3-b053-0b101701f94e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bot.js" beforeDir="false" afterPath="$PROJECT_DIR$/bot.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mlb/mlb.js" beforeDir="false" afterPath="$PROJECT_DIR$/mlb/mlb.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -38,10 +37,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mlb/mlb.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="714">
-              <caret line="44" selection-start-line="44" selection-end-line="44" />
+            <state relative-caret-position="537">
+              <caret line="105" column="72" selection-start-line="105" selection-start-column="72" selection-end-line="105" selection-end-column="72" />
               <folding>
                 <element signature="n#!!doc;n#gamesToday#0;n#!!top" />
+                <element signature="e#1318#1448#0" />
+                <element signature="e#1530#1601#0" />
                 <element signature="n#!!doc;n#gameStatus#0;n#!!top" />
                 <element signature="n#!!block;n#philliesLive#0;n#!!top" />
               </folding>
@@ -61,8 +62,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package-lock.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3060">
-              <caret line="180" column="6" selection-start-line="180" selection-start-column="6" selection-end-line="180" selection-end-column="6" />
+            <state relative-caret-position="323">
+              <caret line="198" column="21" lean-forward="true" selection-start-line="198" selection-start-column="16" selection-end-line="198" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -82,6 +83,7 @@
       <find>“</find>
       <find>”</find>
       <find>console.log</find>
+      <find>awayTeam.team.name</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;</replace>
@@ -100,6 +102,7 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/bot.js" />
         <option value="$PROJECT_DIR$/common/common.js" />
+        <option value="$PROJECT_DIR$/package-lock.json" />
         <option value="$PROJECT_DIR$/mlb/mlb.js" />
       </list>
     </option>
@@ -177,12 +180,12 @@
       <updated>1563986868759</updated>
       <workItem from="1563986870480" duration="4714000" />
       <workItem from="1564058981952" duration="7696000" />
-      <workItem from="1564189721926" duration="512000" />
+      <workItem from="1564189721926" duration="1783000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32834000" />
+    <option name="totallyTimeSpent" value="34105000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1186" extended-state="6" />
@@ -241,8 +244,26 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/mlb/mlb.js</url>
-          <line>106</line>
+          <line>140</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/mlb/mlb.js</url>
+          <line>45</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/mlb/mlb.js</url>
+          <line>56</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/mlb/mlb.js</url>
+          <line>82</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -263,13 +284,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bot.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="527">
@@ -277,10 +291,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/package-lock.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3060">
-          <caret line="180" column="6" selection-start-line="180" selection-start-column="6" selection-end-line="180" selection-end-column="6" />
+        <state relative-caret-position="323">
+          <caret line="198" column="21" lean-forward="true" selection-start-line="198" selection-start-column="16" selection-end-line="198" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -293,10 +314,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mlb/mlb.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="44" selection-start-line="44" selection-end-line="44" />
+        <state relative-caret-position="537">
+          <caret line="105" column="72" selection-start-line="105" selection-start-column="72" selection-end-line="105" selection-end-column="72" />
           <folding>
             <element signature="n#!!doc;n#gamesToday#0;n#!!top" />
+            <element signature="e#1318#1448#0" />
+            <element signature="e#1530#1601#0" />
             <element signature="n#!!doc;n#gameStatus#0;n#!!top" />
             <element signature="n#!!block;n#philliesLive#0;n#!!top" />
           </folding>
