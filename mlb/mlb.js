@@ -1,7 +1,6 @@
 {
     const common = require('../Common/common');
     const request = require('request');
-    const fetch = require('node-fetch');
 
     let VERSION_1 = 'v1';
     let BASE_URL = 'https://statsapi.mlb.com/api/'+VERSION_1;
@@ -84,14 +83,9 @@
      */
     function gameStatus(status, awayTeam, homeTeam, gameDate) {
         let toReturn = '';
-        let awayTeamName = '';
-        getTeamName(awayTeam.team.id).then(function(name){
-            awayTeamName = name;
-        });
-        let homeTeamName='';
-        getTeamName(homeTeam.team.id).then(function(name){
-           homeTeamName= name;
-        });
+        let awayTeamName = awayTeam.team.teamName;
+
+        let homeTeamName=homeTeam.team.teamName;
 
         switch (status) {
             case currentGame:
@@ -117,18 +111,6 @@
                 break;
         }
         return toReturn + "\n";
-    }
-
-    /***
-     * @param id The ID of the team for the MLB.
-     * @returns Just the Team name(I.E Phillies).
-     */
-    async function getTeamName(id)
-    {
-        return await fetch(TEAM_URL + id.toString())
-            .then(res=> res.json()).then(res=>
-                res.teams[0].teamName
-            )
     }
 
     function philliesLive(){
