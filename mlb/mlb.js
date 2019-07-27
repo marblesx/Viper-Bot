@@ -56,7 +56,7 @@
                 // data is already parsed as JSON:
                 if (data.dates.length !== 0) {
                     let games = data.dates[0].games;
-                    message += "Away team first, home team second: \n"
+                    message += "Away team first, home team second: \n";
                     for (let i = 0; i < games.length; i++) {
                         message += gameStatus(games[i].status.detailedState, games[i].teams.away, games[i].teams.home, games[i].gameDate);
                     }
@@ -120,6 +120,7 @@
         request.get({
             url: TEAM_URL + id,
             json: true,
+            async: false,
             headers: {'User-Agent': 'request'}
         }, (err, res, data) => {
             if (err) {
@@ -131,8 +132,7 @@
                     console.log('Invalid team ID: '+ id);
                 } else {
                     // get the only team
-                  let team = data.teams[0];
-                  return team.teamName;
+                 return data.teams[0].teamName;
                 }
             }
         });
