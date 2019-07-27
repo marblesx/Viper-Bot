@@ -82,15 +82,11 @@
      */
     function gameStatus(status, awayTeam, homeTeam, gameDate) {
         let toReturn = '';
-        let awayTeamName;
-        getTeamName(awayTeam.team.id, function(teamName){
-            awayTeamName = teamName;
-        });
-        let homeTeamName;
+        let awayTeamName =
+        getTeamName(awayTeam.team.id);
+        let homeTeamName=
+        getTeamName(homeTeam.team.id);
 
-        getTeamName(homeTeam.team.id, function (teamName) {
-            homeTeamName = teamName;
-        });
         switch (status) {
             case currentGame:
                 if (awayTeam.score === homeTeam.score) {
@@ -121,7 +117,7 @@
      * @param id The ID of the team for the MLB.
      * @returns Just the Team name(I.E Phillies).
      */
-     async function getTeamName(id, callback)
+     async function getTeamName(id)
     {
         await request.get({
             url: TEAM_URL + id.toString(),
@@ -135,11 +131,11 @@
             } else {
                 if (data.message === "Object not found") {
                     console.log('Invalid team ID: '+ id);
-                    callback('Unknown Team');
+                    return 'Unknown Team';
                 } else {
                     // get the only team
                     console.log(data.teams[0].teamName)
-                 callback(data.teams[0].teamName);
+                 return data.teams[0].teamName;
                 }
             }
         });
