@@ -28,7 +28,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         var args = message.substring(1).split('.');
         var cmd = args[0];
         let toSend = '';
-        console.log('Command from: ' + message.member);
+        console.log('Command from: ' + user);
         switch(cmd) {
             case 'ping':
                 bot.sendMessage({
