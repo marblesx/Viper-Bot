@@ -121,9 +121,8 @@
      */
      async function getTeamName(id)
     {
-        const jsonTeamName = await fetch(TEAM_URL + id.toString());
-        const data = await jsonTeamName.json();
-        return data.teams[0].teamName;
+        return await fetch(TEAM_URL + id.toString())
+            .then(res=>res.json().teams[0].teamName);
     }
 
     function philliesLive(){
