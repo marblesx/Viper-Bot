@@ -6,9 +6,9 @@
   "author": "Your Name",
   "dependencies": {
     "discord.io": "^2.5.3",
+    "node-fetch": "^2.6.0",
     "package.json": "^2.0.1",
     "request": "^2.88.0",
-    "winston": "^3.2.1",
-    "node-fetch": "^2.6.0"
+    "winston": "^3.2.1"
   }
 }
