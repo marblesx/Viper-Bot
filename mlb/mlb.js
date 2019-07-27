@@ -28,6 +28,12 @@
         _bot = bot;
         _channelID = channelId;
         switch (args[1]) {
+            case 'help':
+                _bot.sendMessage({
+                    to: _channelID,
+                    message: "valid commands are: \n" +
+                        "!mls.games"
+                });
             case 'games':
                 gamesToday();
                 break;
@@ -121,42 +127,10 @@
     function getTeamName(id) {
         let res = request_sync('GET', TEAM_URL + id);
         return JSON.parse(res.getBody('utf8')).teams[0].teamName;
-
     }
 
     function philliesLive() {
         while (true) {
-            request.get({
-                url: TODAY_GAMES_URL,
-                json: true,
-                headers: {'User-Agent': 'request'}
-            }, (err, res, data) => {
-                if (err) {
-                    console.log('Error:', err);
-                } else if (res.statusCode !== 200) {
-                    console.log('Status:', res.statusCode);
-                } else {
-                    // data is already parsed as JSON:
-                    if (data.dates.length !== 0) {
-                        let games = data.dates[0].games;
-                        for (let i = 0; i < games.length; i++) {
-                            if (games[i].teams.away.team.id === Phillies_ID || games[i].teams.home.team.id === Phillies_ID) {
-                                if (games[i].teams.away.team.id === Phillies_ID) {
-                                    Phillies_Location = 'away'
-                                } else {
-                                    Phillies_Location = 'home'
-                                }
-                            }
-                        }
-                        _bot.sendMessage({
-                            to: _channelID,
-                            message: message
-                        });
-                    } else {
-
-                    }
-                }
-            });
 
             let date = common.getToDaysDate();
             let url = TODAY_GAMES_URL + '&date=' + date;
