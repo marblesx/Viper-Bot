@@ -4,7 +4,7 @@
     let VERSION_1 = 'v1';
     let BASE_URL = 'https://statsapi.mlb.com/api/'+VERSION_1;
     let TODAY_GAMES_URL = BASE_URL + '/schedule/games/?sportId=1';
-    let TEAM_URL = BASE_URL + 'teams/'
+    let TEAM_URL = BASE_URL + '/teams/'
 
     const currentGame = "In Progress";
     const PreGame = "Pre-Game";
