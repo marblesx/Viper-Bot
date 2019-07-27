@@ -1,9 +1,10 @@
 {
     const common = require('../Common/common');
     const request = require('request');
+    const request_sync = require('sync-request');
 
     let VERSION_1 = 'v1';
-    let BASE_URL = 'https://statsapi.mlb.com/api/'+VERSION_1;
+    let BASE_URL = 'https://statsapi.mlb.com/api/' + VERSION_1;
     let TODAY_GAMES_URL = BASE_URL + '/schedule/games/?sportId=1';
     let TEAM_URL = BASE_URL + '/teams/';
 
@@ -45,7 +46,7 @@
         let message = '';
         let date = common.getToDaysDate();
         request.get({
-            url: TODAY_GAMES_URL+'&date='+date,
+            url: TODAY_GAMES_URL + '&date=' + date,
             json: true,
             headers: {'User-Agent': 'request'}
         }, (err, res, data) => {
@@ -83,9 +84,9 @@
      */
     function gameStatus(status, awayTeam, homeTeam, gameDate) {
         let toReturn = '';
-        let awayTeamName = awayTeam.team.name;
+        let awayTeamName = getTeamName(awayTeam.team.id);
 
-        let homeTeamName=homeTeam.team.name;
+        let homeTeamName = getTeamName(homeTeam.team.id);
 
         switch (status) {
             case currentGame:
@@ -113,8 +114,18 @@
         return toReturn + "\n";
     }
 
-    function philliesLive(){
-        while(true){
+    /**
+     * @param {string | int } id ID of the Team
+     * @returns {string} Team Name IE Phillies
+     */
+    function getTeamName(id) {
+        var res = request('GET', TEAM_URL + id);
+        return JSON.parse(res.getBody('utf8')).teams[0].teamName;
+
+    }
+
+    function philliesLive() {
+        while (true) {
             request.get({
                 url: TODAY_GAMES_URL,
                 json: true,
@@ -129,17 +140,13 @@
                     if (data.dates.length !== 0) {
                         let games = data.dates[0].games;
                         for (let i = 0; i < games.length; i++) {
-                           if( games[i].teams.away.team.id === Phillies_ID || games[i].teams.home.team.id === Phillies_ID)
-                           {
-                               if(games[i].teams.away.team.id === Phillies_ID)
-                               {
-                                   Phillies_Location = 'away'
-                               }
-                               else
-                               {
-                                   Phillies_Location = 'home'
-                               }
-                           }
+                            if (games[i].teams.away.team.id === Phillies_ID || games[i].teams.home.team.id === Phillies_ID) {
+                                if (games[i].teams.away.team.id === Phillies_ID) {
+                                    Phillies_Location = 'away'
+                                } else {
+                                    Phillies_Location = 'home'
+                                }
+                            }
                         }
                         _bot.sendMessage({
                             to: _channelID,
@@ -152,7 +159,7 @@
             });
 
             let date = common.getToDaysDate();
-            let url = TODAY_GAMES_URL+'&date=' + date;
+            let url = TODAY_GAMES_URL + '&date=' + date;
 
         }
 
@@ -162,7 +169,7 @@
     /**
      * @param {string} message : Message to send to channel.
      * */
-    function UpdateChannel(message){
+    function UpdateChannel(message) {
         _bot.sendMessage({
             to: _channelID,
             message: message
