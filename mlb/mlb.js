@@ -92,9 +92,9 @@
             case currentGame:
                 if (awayTeam.score + homeTeam.score === 0) {
                     toReturn = awayTeamName + " and " + homeTeamName + " are scoreless: " + awayTeam.score + "-" + homeTeam.score;
-                }   else if (awayTeam.score === homeTeam.score) {
+                } else if (awayTeam.score === homeTeam.score) {
                     toReturn = awayTeamName + " and " + homeTeamName + " are tied: " + awayTeam.score + "-" + homeTeam.score;
-                }   else if (awayTeam.score > homeTeam.score) {
+                } else if (awayTeam.score > homeTeam.score) {
                     toReturn = awayTeamName + " are beating " + homeTeamName + ": " + awayTeam.score + "-" + homeTeam.score;
                 } else {
                     toReturn = awayTeamName + " are losing to " + homeTeamName + ": " + awayTeam.score + "-" + homeTeam.score;
