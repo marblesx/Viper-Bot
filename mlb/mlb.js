@@ -14,7 +14,7 @@
     const Scheduled = "Scheduled";
     const GameOver = "Game Over";
     const Phillies_ID = '143';
-    let Phillies_Location = '';
+
     let _bot;
     let _channelID;
 
@@ -32,7 +32,7 @@
                 _bot.sendMessage({
                     to: _channelID,
                     message: "valid commands are: \n" +
-                        "!mls.games"
+                        "!mls.games \n"
                 });
             case 'games':
                 gamesToday();
@@ -50,7 +50,7 @@
      * */
     function gamesToday() {
         let message = '';
-        let date = common.getToDaysDate();
+        let date = common.getToDaysDateFormatted();
         request.get({
             url: TODAY_GAMES_URL + '&date=' + date,
             json: true,
@@ -129,15 +129,142 @@
         return JSON.parse(res.getBody('utf8')).teams[0].teamName;
     }
 
+    function PhilliesNextGame() {
+        //set the start of this up, we're going to get the formatted date, and the current date object
+        let dateFormatted = common.getToDaysDateFormatted();
+        let toDaysDate = common.getToDaysDate();
+        //set the url to todays date est.
+        let scheduleUrl = TODAY_GAMES_URL + '&date=' + dateFormatted;
+        //blank object, we'll generate this.
+        let gameObject = {};
+        while (gameObject.game === undefined) {
+            let response = request_sync('GET', scheduleUrl);
+            let schedule = JSON.parse(response.getBody('utf8'));
+            if (schedule.dates.length !== 0) {
+                let games = schedule.dates[0].games;
+                for (let i = 0; i < games.length; i++) {
+                    //if the phillies match any of the teams (away/home)
+                    if (games[i].teams.away.team.id === Phillies_ID || games[i].teams.home.team.id === Phillies_ID) {
+                        //save the game
+                        gameObject.game = games[i];
+                        // game id
+                        gameObject.Phillies_GameID = Phillies_games[i].gamePk;
+                        //if the game is starting... or started set timeout to -1
+                        if (games[i].status.detailedState === currentGame || games[i].status.detailedState === PreGame) {
+                            gameObject.timeout = -1;
+                        } else if (games[i].status.detailedState === FinalGame || games[i].status.detailedState === GameOver) {
+                            gameObject.game = undefined;
+                        } else {
+                            //if its not we'll set the timeout to the start time.. we're going to run in to issues due to game delays.
+                            gameObject.timeout = common.getTimeDifferenceInSeconds(games[i].gameDate);
+                        }
+                        //some of the mlb apis dont care about teams id, just away/home status.. we need to save this.
+                        if (games[i].teams.away.team.id === Phillies_ID) {
+                            gameObject.Phillies_Location = 'away';
+                        } else {
+                            gameObject.Phillies_Location = 'home';
+                        }
+                        break; //Break the for loop.
+                    }
+                }
+            }
+            //check game property, if its not set, check the next day (do this FOREVER..lets break this after x amount of tries... )
+            if(gameObject.game === undefined)
+            {
+                //get the next day.
+                toDaysDate = new Date(toDaysDate.setDate(toDaysDate.getDate() + 1));
+                dateFormatted = common.formatDate(toDaysDate);
+                //set the new url.
+                scheduleUrl = TODAY_GAMES_URL + '&date=' + dateFormatted;
+            }
+        }
+        return gameObject;
+    }
+
+    /**
+     * This function runs the phillies games, keeps track of the items, passes the values back to the user.
+     * @param {object} philliesGame
+     * @returns {object} philliesGame
+     */
+    function getPhilliesGameUpdates(philliesGame)
+    {
+        UpdateChannel("Phillies Game is starting: ");
+        let GameStatus = philliesGame.game.status.detailedState;
+
+        while (GameStatus !== FinalGame || GameStatus !== GameOver) {
+            //we're going to keep track of the current innings, current content to send back to the users on the channel.
+            let innings = [];
+            let content = [];
+            request.get({
+                url: BASE_URL + 'game/'+ philliesGame.Phillies_GameID +'/content',
+                json: true,
+                headers: {'User-Agent': 'request'}
+            }, (err, res, data) => {
+                if (err) {
+                    console.log('Error:', err);
+                } else if (res.statusCode !== 200) {
+                    console.log('Status:', res.statusCode);
+                } else {
+                    // data is already parsed as JSON:
+                    if (data.highlights.highlights.items.length !== 0) {
+                        let teamID='';
+                        let highlights = data.highlights.highlights.items;
+
+                        for (let i = 0; i < highlights.length; i++) {
+                            if(!content.includes(highlights[i].guid)) {
+                                content.push(highlights[i].guid);
+                                for(let x = 0; x< highlights[i].keywordsAll.length;x++){
+                                  if(highlights[i].keywordsAll[x].type == 'team_id')
+                                  {
+                                      teamID = highlights[i].keywordsAll[x].value;
+                                      break;
+                                  }
+                                }
+                                if(teamID === Phillies_ID)
+                                {
+                                    //its a phillies highlight.
+                                    for(let x = 0; i<highlights[i].playbacks.length; i++)
+                                    {
+                                        if(highlights[i].playbacks[x].name === 'mp4Avc')
+                                        {
+                                            UpdateChannel(highlights[i].description);
+                                            UpdateChannel(highlights[i].playbacks[x].url);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        _bot.sendMessage({
+                            to: _channelID,
+                            message: "Ah shit, something broke."
+                        });
+                    }
+                }
+            });
+            // 5 mins is seconds
+         common.sleep(300);
+            let res = request_sync('GET',BASE_URL + 'game/'+philliesGame.Phillies_GameID+'/feed/live');
+            GameStatus = JSON.parse(res.getBody('utf8')).gameData.status.detailedState;
+
+            //Lets get the next game.
+        philliesGame = PhilliesNextGame();
+        return philliesGame;
+    }
+
     function philliesLive() {
         while (true) {
 
-            let date = common.getToDaysDate();
-            let url = TODAY_GAMES_URL + '&date=' + date;
-
-        }
-
-
+            let philliesGame = PhilliesNextGame();
+            // No timeout means the games in progress or starting.. lets start this!
+            if(philliesGame.timeout === -1)
+            {
+                philliesGame = getPhilliesGameUpdates(philliesGame);
+                UpdateChannel('Phillies game ended.')
+            }
+            common.sleep(philliesGame.timeout);
+        } //end while true
     }
 
     /**
