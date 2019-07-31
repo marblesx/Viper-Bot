@@ -19,6 +19,7 @@ bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
+    mlb.philliesLive(bot, channelID);
 
 });
 bot.on('message', function (user, userID, channelID, message, evt) {
@@ -29,7 +30,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         var cmd = args[0];
         let toSend = '';
         console.log('Command from: ' + user);
-        switch(cmd) {
+        switch(cmd.toLowerCase()) {
             case 'ping':
                 bot.sendMessage({
                     to: channelID,

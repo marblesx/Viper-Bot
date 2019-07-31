@@ -32,7 +32,7 @@
                 _bot.sendMessage({
                     to: _channelID,
                     message: "valid commands are: \n" +
-                        "!mls.games \n"
+                        "!mlb.games \n"
                 });
             case 'games':
                 gamesToday();
@@ -184,9 +184,11 @@
     /**
      * This function runs the phillies games, keeps track of the items, passes the values back to the user.
      * @param {object} philliesGame
+     * @param {object} bot
+     * @param {int} channelID
      * @returns {object} philliesGame
      */
-    function getPhilliesGameUpdates(philliesGame)
+    function getPhilliesGameUpdates(philliesGame, bot, channelID)
     {
         UpdateChannel("Phillies Game is starting: ");
         let GameStatus = philliesGame.game.status.detailedState;
@@ -196,7 +198,7 @@
             let innings = [];
             let content = [];
             request.get({
-                url: BASE_URL + 'game/'+ philliesGame.Phillies_GameID +'/content',
+                url: BASE_URL + 'game/' + philliesGame.Phillies_GameID + '/content',
                 json: true,
                 headers: {'User-Agent': 'request'}
             }, (err, res, data) => {
@@ -207,26 +209,31 @@
                 } else {
                     // data is already parsed as JSON:
                     if (data.highlights.highlights.items.length !== 0) {
-                        let teamID='';
+                        let teamID = '';
                         let highlights = data.highlights.highlights.items;
 
                         for (let i = 0; i < highlights.length; i++) {
-                            if(!content.includes(highlights[i].guid)) {
+                            if (!content.includes(highlights[i].guid)) {
                                 content.push(highlights[i].guid);
-                                for(let x = 0; x< highlights[i].keywordsAll.length;x++){
-                                  if(highlights[i].keywordsAll[x].type == 'team_id')
-                                  {
-                                      teamID = highlights[i].keywordsAll[x].value;
-                                      break;
-                                  }
+                                for (let x = 0; x < highlights[i].keywordsAll.length; x++) {
+                                    if (highlights[i].keywordsAll[x].type == 'team_id') {
+                                        teamID = highlights[i].keywordsAll[x].value;
+                                        break;
+                                    }
                                 }
-                                if(teamID === Phillies_ID)
-                                {
+                                if (teamID === Phillies_ID) {
                                     //its a phillies highlight.
-                                    for(let x = 0; i<highlights[i].playbacks.length; i++)
-                                    {
-                                        if(highlights[i].playbacks[x].name === 'mp4Avc')
-                                        {
+                                    for (let x = 0; i < highlights[i].playbacks.length; i++) {
+                                        if (highlights[i].playbacks[x].name === 'mp4Avc') {
+                                            bot.sendMessage({
+                                                to: channelID,
+                                                message: highlights[i].description
+                                            });
+                                            bot.sendMessage({
+                                                to: channelID,
+                                                message: highlights[i].playbacks[x].url
+                                            });
+
                                             UpdateChannel(highlights[i].description);
                                             UpdateChannel(highlights[i].playbacks[x].url);
                                             break;
@@ -236,31 +243,31 @@
                             }
                         }
                     } else {
-                        _bot.sendMessage({
-                            to: _channelID,
+                        bot.sendMessage({
+                            to: channelID,
                             message: "Ah shit, something broke."
                         });
                     }
                 }
             });
             // 5 mins is seconds
-         common.sleep(300);
-            let res = request_sync('GET',BASE_URL + 'game/'+philliesGame.Phillies_GameID+'/feed/live');
+            common.sleep(300);
+            let res = request_sync('GET', BASE_URL + 'game/' + philliesGame.Phillies_GameID + '/feed/live');
             GameStatus = JSON.parse(res.getBody('utf8')).gameData.status.detailedState;
-
+        }//end while
             //Lets get the next game.
         philliesGame = PhilliesNextGame();
         return philliesGame;
     }
 
-    function philliesLive() {
+    function philliesLive(bot, channelID) {
         while (true) {
 
             let philliesGame = PhilliesNextGame();
             // No timeout means the games in progress or starting.. lets start this!
             if(philliesGame.timeout === -1)
             {
-                philliesGame = getPhilliesGameUpdates(philliesGame);
+                philliesGame = getPhilliesGameUpdates(philliesGame, bot, channelID);
                 UpdateChannel('Phillies game ended.')
             }
             common.sleep(philliesGame.timeout);
@@ -279,4 +286,5 @@
 
     // exports the variables and functions above so that other modules can use them
     module.exports.mlbMethods = mlbMethods;
+    module.exports.philliesLive = philliesLive;
 }
