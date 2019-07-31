@@ -50,8 +50,6 @@ module.exports = {
 
         while(date.getTime() < newDate.getTime()) {
             date = new Date();
-            console.log(date);
-            console.log(newDate);
 
         }
          return true;
