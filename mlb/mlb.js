@@ -146,11 +146,11 @@
                 let games = schedule.dates[0].games;
                 for (let i = 0; i < games.length; i++) {
                     //if the phillies match any of the teams (away/home)
-                    if (games[i].teams.away.team.id === Phillies_ID || games[i].teams.home.team.id === Phillies_ID) {
+                    if (games[i].teams.away.team.id.toString() === Phillies_ID || games[i].teams.home.team.id.toString() === Phillies_ID) {
                         //save the game
                         gameObject.game = games[i];
                         // game id
-                        gameObject.Phillies_GameID = Phillies_games[i].gamePk;
+                        gameObject.Phillies_GameID = games[i].gamePk;
                         //if the game is starting... or started set timeout to -1
                         if (games[i].status.detailedState === currentGame || games[i].status.detailedState === PreGame) {
                             gameObject.timeout = -1;
@@ -161,7 +161,7 @@
                             gameObject.timeout = common.getTimeDifferenceInSeconds(games[i].gameDate);
                         }
                         //some of the mlb apis dont care about teams id, just away/home status.. we need to save this.
-                        if (games[i].teams.away.team.id === Phillies_ID) {
+                        if (games[i].teams.away.team.id.toString() === Phillies_ID) {
                             gameObject.Phillies_Location = 'away';
                         } else {
                             gameObject.Phillies_Location = 'home';
@@ -223,7 +223,7 @@
                                         break;
                                     }
                                 }
-                                if (teamID === Phillies_ID) {
+                                if (teamID.toString() === Phillies_ID) {
                                     //its a phillies highlight.
                                     for (let x = 0; i < highlights[i].playbacks.length; i++) {
                                         if (highlights[i].playbacks[x].name === 'mp4Avc') {
@@ -263,7 +263,7 @@
         return philliesGame;
     }
 
-    function philliesLive(bot, channelID) {
+    async function philliesLive(bot, channelID) {
         while (true) {
 
             let philliesGame = PhilliesNextGame();
@@ -271,7 +271,10 @@
             if(philliesGame.timeout === -1)
             {
                 philliesGame = getPhilliesGameUpdates(philliesGame, bot, channelID);
-                UpdateChannel('Phillies game ended.')
+                bot.sendMessage({
+                    to: channelID,
+                    message: "Next Phillies Game is: "+ new Date(philliesGame.game.gameDate).toLocaleString(("en-US",{timeZone: "America/New_York"}))
+                });
             }
             common.sleep(philliesGame.timeout);
         } //end while true
