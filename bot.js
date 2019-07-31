@@ -19,7 +19,7 @@ bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
-    //mlb.philliesLive(bot, 105483393906511872);
+    mlb.philliesLive(bot, '491687879056031814');
 
 });
 bot.on('message', function (user, userID, channelID, message, evt) {

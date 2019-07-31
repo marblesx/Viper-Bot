@@ -265,8 +265,11 @@
 
     async function philliesLive(bot, channelID) {
         while (true) {
+            console.log('started [phillies live.');
 
             let philliesGame = PhilliesNextGame();
+            console.log(philliesGame);
+
             // No timeout means the games in progress or starting.. lets start this!
             if(philliesGame.timeout === -1)
             {
@@ -276,6 +279,8 @@
                     message: "Next Phillies Game is: "+ new Date(philliesGame.game.gameDate).toLocaleString(("en-US",{timeZone: "America/New_York"}))
                 });
             }
+            console.log(philliesGame.timeout);
+
             common.sleep(philliesGame.timeout);
         } //end while true
     }
