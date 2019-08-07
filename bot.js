@@ -26,7 +26,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     // It will listen for messages that will start with `!`
     let mentioned = false;
     if (message.mentions !== undefined){
+        console.log(message.mentions);
+        console.log(bot.user);
+        console.log(message.mentions.users)
         for (let i = 0; i < message.mentions.users.count(); i++) {
+            console.log(message.mentions.users[i])
             if (message.mentions.users[i] == bot.user) {
                 mentioned = true;
                 break;
