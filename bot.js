@@ -33,7 +33,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     if (mentioned) {
         bot.sendMessage({
             to: channelID,
-            message: 'Sorry '+ userID +' I\'m just here for sports and dick pics'
+            message: 'Sorry <@'+ userID +'> I\'m just here for sports and dick pics'
         });
     }
     else if (message.substring(0, 1) == '!') {
