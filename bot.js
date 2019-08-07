@@ -26,14 +26,14 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
     let mentioned = false;
-    for(let i = 0; i< message.mentions.users.count(); i++)
-    {
-        if(message.mentions.users[i] == bot.user)
-        {
-            mentioned = true;
-            break;
+    if (message.mentions.users !== undefined)
+        for (let i = 0; i < message.mentions.users.count(); i++) {
+            if (message.mentions.users[i] == bot.user) {
+                mentioned = true;
+                break;
+            }
         }
-    }
+}
     if (mentioned) {
         message.reply('Sorry I\'m just here for sports and dick pics');
     }
