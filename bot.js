@@ -25,7 +25,16 @@ bot.on('ready', function (evt) {
 bot.on('message', function (user, userID, channelID, message, evt) {
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
-    if (message.isMentioned(bot.user)) {
+    let mentioned = false;
+    for(let i = 0; i< message.mentions.users.count(); i++)
+    {
+        if(message.mentions.users[i] == bot.user)
+        {
+            mentioned = true;
+            break;
+        }
+    }
+    if (mentioned) {
         message.reply('Sorry I\'m just here for sports and dick pics');
     }
     else if (message.substring(0, 1) == '!') {
@@ -33,17 +42,17 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         var cmd = args[0];
         let toSend = '';
         console.log('Command from: ' + user);
-        switch (cmd.toLowerCase()) {
-            case 'ping':
-                console.log(channelID);
-                bot.sendMessage({
-                    to: channelID,
-                    message: 'Pong!'
-                });
-                break;
-            case 'mlb':
-                mlb.mlbMethods(args, bot, channelID);
-                break;
+            switch (cmd.toLowerCase()) {
+                case 'ping':
+                    console.log(channelID);
+                    bot.sendMessage({
+                        to: channelID,
+                        message: 'Pong!'
+                    });
+                    break;
+                case 'mlb':
+                    mlb.mlbMethods(args, bot, channelID);
+                    break;
+            }
         }
-    }
 });
