@@ -31,12 +31,14 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 mentioned = true;
         }
     if (mentioned) {
-        message.reply('Sorry I\'m just here for sports and dick pics');
+        bot.sendMessage({
+            to: channelID,
+            message: 'Sorry '+ userID +' I\'m just here for sports and dick pics'
+        });
     }
     else if (message.substring(0, 1) == '!') {
-        var args = message.substring(1).split('.');
-        var cmd = args[0];
-        let toSend = '';
+        let args = message.substring(1).split('.');
+        let cmd = args[0];
         console.log('Command from: ' + user);
             switch (cmd.toLowerCase()) {
                 case 'ping':
