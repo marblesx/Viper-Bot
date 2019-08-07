@@ -33,19 +33,17 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         var cmd = args[0];
         let toSend = '';
         console.log('Command from: ' + user);
-        else {
-            switch (cmd.toLowerCase()) {
-                case 'ping':
-                    console.log(channelID);
-                    bot.sendMessage({
-                        to: channelID,
-                        message: 'Pong!'
-                    });
-                    break;
-                case 'mlb':
-                    mlb.mlbMethods(args, bot, channelID);
-                    break;
-            }
+        switch (cmd.toLowerCase()) {
+            case 'ping':
+                console.log(channelID);
+                bot.sendMessage({
+                    to: channelID,
+                    message: 'Pong!'
+                });
+                break;
+            case 'mlb':
+                mlb.mlbMethods(args, bot, channelID);
+                break;
         }
     }
 });
