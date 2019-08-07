@@ -30,17 +30,22 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         var cmd = args[0];
         let toSend = '';
         console.log('Command from: ' + user);
-        switch(cmd.toLowerCase()) {
-            case 'ping':
-                console.log(channelID);
-                bot.sendMessage({
-                    to: channelID,
-                    message: 'Pong!'
-                });
-                break;
-            case 'mlb':
-                 mlb.mlbMethods(args, bot, channelID);
-                break;
+        if (message.isMentioned(bot.user)) {
+            message.reply('Sorry I\'m just here for sports and dick pics');
+        }
+        else {
+            switch (cmd.toLowerCase()) {
+                case 'ping':
+                    console.log(channelID);
+                    bot.sendMessage({
+                        to: channelID,
+                        message: 'Pong!'
+                    });
+                    break;
+                case 'mlb':
+                    mlb.mlbMethods(args, bot, channelID);
+                    break;
+            }
         }
     }
 });
