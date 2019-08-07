@@ -97,7 +97,7 @@
 
         switch (status.detailedState) {
             case Postponed:
-                toReturn = "The game between " +  awayTeamName + " and " + homeTeamName + "is postponed due to " + status.reason
+                toReturn = "The game between " +  awayTeamName + " and " + homeTeamName + " is postponed due to " + status.reason
                 break;
             case currentGame:
                 if (awayTeam.score + homeTeam.score === 0) {
