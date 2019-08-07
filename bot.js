@@ -26,7 +26,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
     let mentioned = false;
-    if (message.mentions.users !== undefined)
+    if (message.mentions.users !== undefined){
         for (let i = 0; i < message.mentions.users.count(); i++) {
             if (message.mentions.users[i] == bot.user) {
                 mentioned = true;
