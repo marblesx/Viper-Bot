@@ -13,6 +13,7 @@
     const FinalGame = "Final";
     const Scheduled = "Scheduled";
     const GameOver = "Game Over";
+    const Postponed = "Postponed"
     const Phillies_ID = '143';
 
     let _bot;
@@ -66,7 +67,7 @@
                     let games = data.dates[0].games;
                     message += "Away team first, home team second: \n";
                     for (let i = 0; i < games.length; i++) {
-                        message += gameStatus(games[i].status.detailedState, games[i].teams.away, games[i].teams.home, games[i].gameDate);
+                        message += gameStatus(games[i].status, games[i].teams.away, games[i].teams.home, games[i].gameDate);
                     }
                     _bot.sendMessage({
                         to: _channelID,
@@ -83,7 +84,7 @@
     }
 
     /**
-     * @param {string} status : the Status of the current game.
+     * @param {object} status : the Status object of the current game
      * @param {object} awayTeam : the team object for the away team.
      * @param {object} homeTeam : the team object for the home team.
      * @param {string} gameDate : The current Date of the game.
@@ -94,7 +95,10 @@
 
         let homeTeamName = getTeamName(homeTeam.team.id);
 
-        switch (status) {
+        switch (status.detailedState) {
+            case Postponed:
+                toReturn = "The game between " +  awayTeamName + " and " + homeTeamName + "is postponed due to " + status.reason
+                break;
             case currentGame:
                 if (awayTeam.score + homeTeam.score === 0) {
                     toReturn = awayTeamName + " and " + homeTeamName + " are scoreless: " + awayTeam.score + "-" + homeTeam.score;
