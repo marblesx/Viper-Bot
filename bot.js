@@ -1,4 +1,5 @@
 const mlb = require('./mlb/mlb');
+const softball = require('./softball/softball');
 const Discord = require('discord.io');
 const logger = require('winston');
 const auth = require('./auth.json');
@@ -16,21 +17,17 @@ const bot = new Discord.Client({
     autorun: true
 });
 bot.on('ready', function (evt) {
-    logger.info('Connected');
-    logger.info('Logged in as: ');
-    logger.info(bot.username + ' - (' + bot.id + ')');
+    console.log('Connected');
+    console.log('Logged in as: ');
+    console.log(bot.username + ' - (' + bot.id + ')');
 
 });
 bot.on('message', function (user, userID, channelID, message, evt) {
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
-    let mentioned = false;
-    console.log(bot.user);
     console.log(message);
     if (message.includes(bot.id)){
-                mentioned = true;
-        }
-    if (mentioned) {
+
         bot.sendMessage({
             to: channelID,
             message: 'Sorry <@'+ userID +'> I\'m just here for sports and dick pics'
@@ -50,6 +47,9 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     break;
                 case 'mlb':
                     mlb.mlbMethods(args, bot, channelID);
+                    break;
+                case 'sb':
+                    softball.softballMethods(args, bot, channelID);
                     break;
             }
         }
