@@ -2,8 +2,8 @@
 
     const tabletojson = require('tabletojson');
     const SummerUrl = 'http://www.cuttingedgesports.net/statistics/su2team.htm';
-    const FallUrl = 'http://www.cuttingedgesports.net/statistics/fateam.htm';
-    const SpringUrl = 'http://www.cuttingedgesports.net/statistics/spteam.htm';
+    const FallUrl = 'http://www.cuttingedgesports.net/statistics/fa2team.htm';
+    const SpringUrl = 'http://www.cuttingedgesports.net/statistics/sp2team.htm';
 
     const statNames =
         {

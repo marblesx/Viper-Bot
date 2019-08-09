@@ -9,6 +9,7 @@
     "sync-request": "^6.1.0",
     "package.json": "^2.0.1",
     "request": "^2.88.0",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "tabletojson": "^1.0.4"
   }
 }
