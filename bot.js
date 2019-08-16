@@ -1,9 +1,12 @@
 const mlb = require('./mlb/mlb');
+const misc = require('./miscellaneous/miscellaneous');
 const softball = require('./softball/softball');
 const Discord = require('discord.io');
 const logger = require('winston');
 const auth = require('./auth.json');
 const https = require('https');
+
+let startTime;
 
 // Configure logger settings
 logger.remove(logger.transports.Console);
@@ -20,6 +23,7 @@ bot.on('ready', function (evt) {
     console.log('Connected');
     console.log('Logged in as: ');
     console.log(bot.username + ' - (' + bot.id + ')');
+    startTime = new Date();
 
 });
 bot.on('message', function (user, userID, channelID, message, evt) {
@@ -51,6 +55,32 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 case 'sb':
                     softball.softballMethods(args, bot, channelID);
                     break;
+                case 'rock':
+                    bot.sendMessage({
+                        to: channelID,
+                        message: mis.RockPaperScissors('rock',userID)
+                    });
+                case 'scissors':
+                    bot.sendMessage({
+                        to: channelID,
+                        message: misc.RockPaperScissors('scissors',userID)
+                    });
+                case 'paper':
+                    bot.sendMessage({
+                        to: channelID,
+                        message: misc.RockPaperScissors('paper',userID)
+                    });
+                case '8ball':
+                    bot.sendMessage({
+                        to: channelID,
+                        message: misc.eightBall()
+                    });
+                case 'uptime':
+                    bot.sendMessage({
+                        to: channelID,
+                        message:  Math.abs(new Date() - startTime) / 36e5
+                    });
+
             }
         }
 });
