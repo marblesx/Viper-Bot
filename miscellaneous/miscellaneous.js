@@ -80,7 +80,7 @@
         {
             if(cpuPick.toLowerCase() === 'paper'){
                 user.l++;
-                message = 'You picked rock, cpu picked paper. You lost. <@'+ userID +'>\n' +
+                message = 'You picked rock, cpu picked paper. You lost. <@'+ userId +'>\n' +
                     ' wins ' + user.w +
                     '\nloses '+ user.l +
                     '\nties '+ user.t
@@ -88,7 +88,7 @@
             else
             {
                 user.w++;
-                message = 'You picked rock, cpu picked scissors. You won. <@'+ userID +'>\n' +
+                message = 'You picked rock, cpu picked scissors. You won. <@'+ userId +'>\n' +
                     ' wins ' + user.w +
                     '\nloses '+ user.l +
                     '\nties '+ user.t
@@ -98,7 +98,7 @@
         {
             if(cpuPick.toLowerCase() === 'scissors'){
                 user.l++;
-                message = 'You picked paper, cpu picked scissors. You lost. <@'+ userID +'>\n' +
+                message = 'You picked paper, cpu picked scissors. You lost. <@'+ userId +'>\n' +
                     ' wins ' + user.w +
                     '\nloses '+ user.l +
                     '\nties '+ user.t
@@ -106,7 +106,7 @@
             else
             {
                 user.w++;
-                message = 'You picked paper, cpu picked rock. You won. <@'+ userID +'>\n' +
+                message = 'You picked paper, cpu picked rock. You won. <@'+ userId +'>\n' +
                     ' wins ' + user.w +
                     '\nloses '+ user.l +
                     '\nties '+ user.t
@@ -116,7 +116,7 @@
         {
             if(cpuPick.toLowerCase() === 'rock'){
                 user.l++;
-                message = 'You picked paper, cpu picked paper. You lost. <@'+ userID +'>\n' +
+                message = 'You picked paper, cpu picked paper. You lost. <@'+ userId +'>\n' +
                     ' wins ' + user.w +
                     '\nloses '+ user.l +
                     '\nties '+ user.t
@@ -124,7 +124,7 @@
             else
             {
                 user.w++;
-                message = 'You picked paper, cpu picked scissors. You won. <@'+ userID +'>\n' +
+                message = 'You picked paper, cpu picked scissors. You won. <@'+ userId +'>\n' +
                     ' wins ' + user.w +
                     '\nloses '+ user.l +
                     '\nties '+ user.t
