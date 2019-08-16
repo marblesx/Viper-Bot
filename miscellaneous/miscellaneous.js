@@ -55,14 +55,15 @@
         }
         if(user === undefined)
         {
-            user= {};
-            user.userId = userId;
-            user.w = 0; //wins
-            user.l = 0; //loses
-            user.t = 0;//ties
-            user.r =0;//rock
-            user.p=0;//paper
-            user.s =0;//scissors
+            user= {
+                userID :userId,
+            w : 0, //wins
+            l : 0, //loses
+            t : 0,//ties
+            r : 0,//rock
+            p : 0,//paper
+            s : 0//scissors
+        }
         }
         let cpuPick = RPS[Math.floor(Math.random()*RPS.length)];
         let message = '';

@@ -40,6 +40,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     else if (message.substring(0, 1) == '!') {
         let args = message.substring(1).split('.');
         let cmd = args[0];
+        if(cmd.startsWith('8Ball'))
+        {
+            cmd = '8Ball';
+        }
         console.log('Command from: ' + user);
             switch (cmd.toLowerCase()) {
                 case 'ping':
@@ -60,21 +64,25 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                         to: channelID,
                         message: misc.RockPaperScissors('rock',userID)
                     });
+                    break;
                 case 'scissors':
                     bot.sendMessage({
                         to: channelID,
                         message: misc.RockPaperScissors('scissors',userID)
                     });
+                    break;
                 case 'paper':
                     bot.sendMessage({
                         to: channelID,
                         message: misc.RockPaperScissors('paper',userID)
                     });
+                    break;
                 case '8ball':
                     bot.sendMessage({
                         to: channelID,
                         message: misc.eightBall()
                     });
+                    break;
                 case 'uptime':
                     bot.sendMessage({
                         to: channelID,
