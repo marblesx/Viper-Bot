@@ -147,6 +147,16 @@
 
     }
 
+    function CoinFlip(){
+        let FlipResult = [Math.floor(Math.random())]; // Coin in the air
+
+        if (FlipResult >= .5)                         // Prints result 
+            return "Heads"
+        else
+            return "Tails"
+    }
+
     module.exports.eightBall = EightBall;
     module.exports.RockPaperScissors = RockPaperScissors;
+    module.exports.RockPaperScissors = CoinFlip;
 }
