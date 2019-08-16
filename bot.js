@@ -40,7 +40,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     else if (message.substring(0, 1) == '!') {
         let args = message.substring(1).split('.');
         let cmd = args[0];
-        if(cmd.startsWith('8Ball'))
+        if(cmd.toLowerCase().startsWith('8ball'))
         {
             cmd = '8Ball';
         }
