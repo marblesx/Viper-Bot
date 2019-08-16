@@ -88,6 +88,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                         to: channelID,
                         message:  Math.abs(new Date() - startTime) / 36e5
                     });
+                    break;
                 case 'flip':
                     bot.sendMessage({
                         to: channelID,

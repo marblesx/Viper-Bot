@@ -158,5 +158,5 @@
 
     module.exports.eightBall = EightBall;
     module.exports.RockPaperScissors = RockPaperScissors;
-    module.exports.RockPaperScissors = CoinFlip;
+    module.exports.CoinFlip = CoinFlip;
 }
