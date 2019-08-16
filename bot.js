@@ -58,7 +58,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 case 'rock':
                     bot.sendMessage({
                         to: channelID,
-                        message: mis.RockPaperScissors('rock',userID)
+                        message: misc.RockPaperScissors('rock',userID)
                     });
                 case 'scissors':
                     bot.sendMessage({

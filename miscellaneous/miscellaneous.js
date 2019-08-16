@@ -55,6 +55,7 @@
         }
         if(user === undefined)
         {
+            user= {};
             user.userId = userId;
             user.w = 0; //wins
             user.l = 0; //loses
