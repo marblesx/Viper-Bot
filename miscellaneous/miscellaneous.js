@@ -71,7 +71,7 @@
         if(cpuPick.toLowerCase() === userInput.toLowerCase())
         {
             user.t++;
-            message = 'You picked '+cpuPick.toLowerCase()+', cpu picked '+userInput.toLowerCase()+'. You tied. <@'+ userID +'>\n' +
+            message = 'You picked '+cpuPick.toLowerCase()+', cpu picked '+userInput.toLowerCase()+'. You tied. <@'+ userId +'>\n' +
                 ' wins ' + user.w +
                 '\nloses '+ user.l +
                 '\nties '+ user.t
@@ -133,7 +133,7 @@
         let newUser = true;
         for(let i = 0; i<RPSScore.length; i++)
         {
-            if(RPSScore[i].userID === user.userId) {
+            if(RPSScore[i].userID === user.userID) {
                  RPSScore[i] = user;
                  newUser = false;
                 break;
