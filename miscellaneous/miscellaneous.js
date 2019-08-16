@@ -148,7 +148,7 @@
     }
 
     function CoinFlip(){
-        let FlipResult = [Math.floor(Math.random())]; // Coin in the air
+        let FlipResult = Math.random(); // Coin in the air
 
         if (FlipResult >= .5)                         // Prints result 
             return "Heads"
