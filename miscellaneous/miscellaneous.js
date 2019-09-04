@@ -116,7 +116,7 @@
         {
             if(cpuPick.toLowerCase() === 'rock'){
                 user.l++;
-                message = 'You picked paper, cpu picked paper. You lost. <@'+ userId +'>\n' +
+                message = 'You picked scissors, cpu picked rock. You lost. <@'+ userId +'>\n' +
                     ' wins ' + user.w +
                     '\nloses '+ user.l +
                     '\nties '+ user.t
@@ -124,7 +124,7 @@
             else
             {
                 user.w++;
-                message = 'You picked paper, cpu picked scissors. You won. <@'+ userId +'>\n' +
+                message = 'You picked scissors, cpu picked paper. You won. <@'+ userId +'>\n' +
                     ' wins ' + user.w +
                     '\nloses '+ user.l +
                     '\nties '+ user.t
