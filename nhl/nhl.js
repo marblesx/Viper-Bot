@@ -5,7 +5,7 @@
 
     let VERSION_1 = 'v1';
     let BASE_URL = 'https://statsapi.web.nhl.com/api/' + VERSION_1;
-    let TODAY_GAMES_URL = BASE_URL + '/schedule/games/?sportId=1';
+    let TODAY_GAMES_URL = BASE_URL + '/schedule';
     let TEAM_URL = BASE_URL + '/teams/';
     let FLYERS_ID = "4";
 
@@ -52,7 +52,7 @@
      * */
     function gamesToday() {
         let message = '';
-        let date = common.getDateFormatted();
+        let date = common.getDateFormatted().replace('/','-');
         request.get({
             url: TODAY_GAMES_URL + '?date=' + date,
             json: true,
@@ -127,6 +127,15 @@
                 toReturn = "Well folks, we have no idea whats going on this game between "+awayTeamName +" and "+homeTeamName + ". We can assume its due to something called: \""+status.detailedState+ "\"";
         }
         return toReturn + "\n";
+    }
+
+    /**
+     * @param {string | int } id ID of the Team
+     * @returns {string} Team Name IE Phillies
+     */
+    function getTeamName(id) {
+        let res = request_sync('GET', TEAM_URL + id);
+        return JSON.parse(res.getBody('utf8')).teams[0].teamName;
     }
     // exports the variables and functions above so that other modules can use them
     module.exports.nhlMethods = nhlMethods;
