@@ -8,7 +8,13 @@ module.exports = {
     {
         return new Date().toLocaleDateString("en-US", {timeZone: "America/New_York",month: '2-digit',day:'2-digit', year:'numeric'});
     },
-
+    /**
+     * Returns the current date in yyyy/mm/dd format.
+     * */
+    getDateFormatted: function()
+    {
+        return new Date().toLocaleDateString("en-US", {timeZone: "America/New_York", year:'numeric',month: '2-digit',day:'2-digit'});
+    },
     /**
      * @param {date} date Date object
      * Returns the date in mm/dd/yyyy format.

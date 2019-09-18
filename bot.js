@@ -1,4 +1,5 @@
 const mlb = require('./mlb/mlb');
+const nhl = require('./nhl/nhl');
 const misc = require('./miscellaneous/miscellaneous');
 const softball = require('./softball/softball');
 const Discord = require('discord.io');
@@ -55,6 +56,9 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     break;
                 case 'mlb':
                     mlb.mlbMethods(args, bot, channelID);
+                    break;
+                case 'nhl':
+                    nhl.nhlMethods(args, bot, channelID);
                     break;
                 case 'sb':
                     softball.softballMethods(args, bot, channelID);
