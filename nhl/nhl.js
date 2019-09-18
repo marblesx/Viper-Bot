@@ -52,7 +52,7 @@
      * */
     function gamesToday() {
         let message = '';
-        let date = common.getDateFormatted().replace('/','-');
+        let date = common.getDateFormatted();
         request.get({
             url: TODAY_GAMES_URL + '?date=' + date,
             json: true,
