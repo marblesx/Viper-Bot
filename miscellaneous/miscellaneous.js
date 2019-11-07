@@ -176,7 +176,7 @@
 
     function reboot()
     {
-       let dir = exec("cd Viper-Bot; git pull origin develop ; pm2 stop all; pm2 start bot.js", function(err, stdout, stderr) {
+       let dir = exec("cd ~ ; cd Viper-Bot; git pull origin develop ; pm2 stop all; pm2 start bot.js", function(err, stdout, stderr) {
             if (err) {
                 // should have err.code here?
             }
