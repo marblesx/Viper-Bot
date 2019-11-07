@@ -1,5 +1,6 @@
 {
-    const { spawn } = require('child_process');
+
+    const exec = require('child_process').exec;
 
     let eightballPhrases = [
         'As I see it, yes.',
@@ -176,10 +177,10 @@
 
     function reboot()
     {
-       let dir = spawn("cd ~ ; cd Viper-Bot; git pull origin develop ");
-
-        dir.on('exit', function (code) {
-            // exit code is code
+        const child = exec("cd ~ ; cd Viper-Bot ; git pull origin develop ", function (error, stdout, stderr) {
+            if (error !== null) {
+                console.log('exec error: ' + error);
+            }
         });
     }
 
