@@ -56,6 +56,12 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 case 'mlb':
                     mlb.mlbMethods(args, bot, channelID);
                     break;
+                case 'nba':
+                    bot.sendMessage({
+                        to: channelID,
+                        message: 'Coming soon!'
+                    });
+                    break;
                 case 'nhl':
                     nhl.nhlMethods(args, bot, channelID);
                     break;
