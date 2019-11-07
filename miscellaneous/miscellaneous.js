@@ -176,12 +176,9 @@
 
     function reboot()
     {
-       //let dir = spawn("cd ~ ; cd Viper-Bot; git pull origin develop ; pm2 stop all; pm2 start bot.js");
-        let file = '../rebootCommand.sh',
-        args = [], options = {};
-
-        const child = execFile('sh',['../rebootCommands.sh'],(err,stdout,stderr)=>{
+        const child = execFile('sh',['/rebootCommands.sh'],(err,stdout,stderr)=>{
             if (err){
+                console.log(process.cwd());
                 console.log(err);
                 console.log(stderr);
             } else {
