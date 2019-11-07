@@ -169,7 +169,7 @@
      */
     function Dice(dice)
     {
-        return Math.floor(Math.random() * dice) + 1
+        return Math.floor(Math.random() * dice) + 1;
     }
 
 
