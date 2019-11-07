@@ -1,5 +1,5 @@
 {
-    const exec  = require('child_process').exec;
+    const spawn  = require('child_process').spawn;
 
     let eightballPhrases = [
         'As I see it, yes.',
@@ -174,15 +174,10 @@
         return Math.floor(Math.random() * dice) + 1;
     }
 
-    function reboot()
-    {
-        const child = exec('. ~/Viper-Bot/rebootCommands.sh',(err,stdout,stderr)=>{
-            if (err){
-                console.log(err);
-                console.log(stderr);
-            } else {
-                console.log(stdout);
-            }
+    function reboot() {
+        const child = spawn('. ~/Viper-Bot/rebootCommands.sh');
+        child.on('exit', code => {
+            console.log(`Exit code is: ${code}`);
         });
     }
 
