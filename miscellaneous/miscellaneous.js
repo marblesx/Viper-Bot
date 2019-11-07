@@ -147,6 +147,11 @@
 
     }
 
+    /**
+     * Flips a coin
+     * @return {string} heads or tails
+     * @constructor
+     */
     function CoinFlip(){
         let FlipResult = Math.random(); // Coin in the air
 
@@ -156,6 +161,18 @@
             return "Tails"
     }
 
+    /**
+     * Returns number for dice 1-6
+     * @return {number} dice number 1-6
+     * @constructor
+     */
+    function Dice()
+    {
+        return Math.floor(Math.random() * 6) + 1
+    }
+
+
+    module.exports.dice = Dice;
     module.exports.eightBall = EightBall;
     module.exports.RockPaperScissors = RockPaperScissors;
     module.exports.CoinFlip = CoinFlip;

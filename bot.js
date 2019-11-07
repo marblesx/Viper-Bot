@@ -24,7 +24,6 @@ bot.on('ready', function (evt) {
     console.log('Connected');
     console.log('Logged in as: ');
     console.log(bot.username + ' - (' + bot.id + ')');
-    startTime = new Date();
 
 });
 bot.on('message', function (user, userID, channelID, message, evt) {
@@ -99,7 +98,14 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                         message: misc.CoinFlip()
                     });
                     break;
+                case 'dice':
+                    bot.sendMessage({
+                        to: channelID,
+                        message: misc.Dice()
+                    });
+                    break;
 
             }
         }
 });
+
