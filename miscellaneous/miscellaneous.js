@@ -1,4 +1,6 @@
 {
+    let exec = require('child_process').exec;
+
     let eightballPhrases = [
         'As I see it, yes.',
         'Ask again later.',
@@ -172,7 +174,21 @@
         return Math.floor(Math.random() * dice) + 1;
     }
 
+    function reboot()
+    {
+       let dir = exec("cd Viper-Bot; git pull origin develop ; pm2 stop all; pm2 start bot.js", function(err, stdout, stderr) {
+            if (err) {
+                // should have err.code here?
+            }
+            console.log(stdout);
+        });
 
+        dir.on('exit', function (code) {
+            // exit code is code
+        });
+    }
+
+    module.exports.reboot = reboot;
     module.exports.dice = Dice;
     module.exports.eightBall = EightBall;
     module.exports.RockPaperScissors = RockPaperScissors;
