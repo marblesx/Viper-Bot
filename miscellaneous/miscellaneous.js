@@ -1,5 +1,5 @@
 {
-    const { execFile } = require('child_process');
+    const execFile  = require('child_process').execFile;
 
     let eightballPhrases = [
         'As I see it, yes.',
@@ -180,7 +180,7 @@
         let file = '../rebootCommand.sh',
         args = [], options = {};
 
-        execFile(file,args,options,(err,stdout,stderr)=>{
+        const child = execFile('sh',['../rebootCommands.sh'],(err,stdout,stderr)=>{
             if (err){
                 console.log(err);
                 console.log(stderr);
