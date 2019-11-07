@@ -110,10 +110,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                         message: 'You rolled a ' + misc.dice(parseInt(args[1]))
                     });
                     break;
-                case 'reboot':
+                case 'update':
                     bot.sendMessage({
                         to: channelID,
-                        message: 'Rebooting with latest code!'
+                        message: 'Updating with latest code!'
                     });
                     misc.reboot();
                     break;
