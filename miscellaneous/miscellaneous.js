@@ -1,5 +1,5 @@
 {
-    let { spawn } = require('child_process').exec;
+    const { spawn } = require('child_process');
 
     let eightballPhrases = [
         'As I see it, yes.',
