@@ -176,7 +176,7 @@
 
     function reboot()
     {
-        const child = execFile('sh',['/rebootCommands.sh'],(err,stdout,stderr)=>{
+        const child = execFile('sh',['~/Viper-Bot/rebootCommands.sh'],(err,stdout,stderr)=>{
             if (err){
                 console.log(process.cwd());
                 console.log(err);
