@@ -163,12 +163,13 @@
 
     /**
      * Returns number for dice 1-6
+     * @param {number}dice number
      * @return {number} dice number 1-6
      * @constructor
      */
-    function Dice()
+    function Dice(dice)
     {
-        return Math.floor(Math.random() * 6) + 1
+        return Math.floor(Math.random() * dice) + 1
     }
 
 

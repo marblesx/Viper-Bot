@@ -98,10 +98,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                         message: misc.CoinFlip()
                     });
                     break;
-                case 'dice':
+                case 'd':
                     bot.sendMessage({
                         to: channelID,
-                        message: 'You rolled a ' + misc.dice()
+                        message: 'You rolled a ' + misc.dice(args)
                     });
                     break;
 
