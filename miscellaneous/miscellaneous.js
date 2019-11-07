@@ -1,5 +1,5 @@
 {
-    const execFile  = require('child_process').execFile;
+    const exec  = require('child_process').exec;
 
     let eightballPhrases = [
         'As I see it, yes.',
@@ -176,9 +176,8 @@
 
     function reboot()
     {
-        const child = execFile('sh',['~/Viper-Bot/rebootCommands.sh'],(err,stdout,stderr)=>{
+        const child = exec('. ~/Viper-Bot/rebootCommands.sh',(err,stdout,stderr)=>{
             if (err){
-                console.log(process.cwd());
                 console.log(err);
                 console.log(stderr);
             } else {
