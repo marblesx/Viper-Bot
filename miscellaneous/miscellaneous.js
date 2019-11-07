@@ -1,5 +1,5 @@
 {
-    let { sawn } = require('child_process').exec;
+    let { spawn } = require('child_process').exec;
 
     let eightballPhrases = [
         'As I see it, yes.',
@@ -176,7 +176,7 @@
 
     function reboot()
     {
-       let dir = sawn("cd ~ ; cd Viper-Bot; git pull origin develop ; pm2 stop all; pm2 start bot.js");
+       let dir = spawn("cd ~ ; cd Viper-Bot; git pull origin develop ; pm2 stop all; pm2 start bot.js");
 
         dir.on('exit', function (code) {
             // exit code is code
