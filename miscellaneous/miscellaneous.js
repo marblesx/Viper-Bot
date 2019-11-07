@@ -1,5 +1,5 @@
 {
-    let exec = require('child_process').exec;
+    let { sawn } = require('child_process').exec;
 
     let eightballPhrases = [
         'As I see it, yes.',
@@ -176,12 +176,7 @@
 
     function reboot()
     {
-       let dir = exec("cd ~ ; cd Viper-Bot; git pull origin develop ; pm2 stop all; pm2 start bot.js", function(err, stdout, stderr) {
-            if (err) {
-                // should have err.code here?
-            }
-            console.log(stdout);
-        });
+       let dir = sawn("cd ~ ; cd Viper-Bot; git pull origin develop ; pm2 stop all; pm2 start bot.js");
 
         dir.on('exit', function (code) {
             // exit code is code

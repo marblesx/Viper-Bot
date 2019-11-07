@@ -104,7 +104,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                         message: 'You rolled a ' + misc.dice(parseInt(args[1]))
                     });
                     break;
-                
+
             }
         }
 });
