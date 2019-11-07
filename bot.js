@@ -107,7 +107,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 case 'reboot':
                     bot.sendMessage({
                         to: channelID,
-                        message: 'Rebooting with latest code'
+                        message: 'Rebooting with latest code!'
                     });
                     misc.reboot();
                     break;
