@@ -101,7 +101,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 case 'dice':
                     bot.sendMessage({
                         to: channelID,
-                        message: misc.dice()
+                        message: 'You rolled a ' + misc.dice()
                     });
                     break;
 
