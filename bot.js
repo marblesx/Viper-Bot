@@ -101,7 +101,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 case 'dice':
                     bot.sendMessage({
                         to: channelID,
-                        message: misc.Dice()
+                        message: misc.dice()
                     });
                     break;
 
