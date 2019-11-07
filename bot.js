@@ -59,7 +59,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 case 'nba':
                     bot.sendMessage({
                         to: channelID,
-                        message: 'Coming soon!'
+                        message: 'Coming soon(er) or later.!'
                     });
                     break;
                 case 'nhl':
