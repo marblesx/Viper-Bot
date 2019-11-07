@@ -50,7 +50,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     console.log(channelID);
                     bot.sendMessage({
                         to: channelID,
-                        message: 'Pong! online'
+                        message: 'Pong!'
                     });
                     break;
                 case 'mlb':
