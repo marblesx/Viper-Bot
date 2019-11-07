@@ -1,5 +1,5 @@
 {
-    const { spawn } = require('child_process');
+    const { execFile } = require('child_process');
 
     let eightballPhrases = [
         'As I see it, yes.',
@@ -176,10 +176,17 @@
 
     function reboot()
     {
-       let dir = spawn("cd ~ ; cd Viper-Bot; git pull origin develop ; pm2 stop all; pm2 start bot.js");
+       //let dir = spawn("cd ~ ; cd Viper-Bot; git pull origin develop ; pm2 stop all; pm2 start bot.js");
+        let file = '../rebootCommand.sh',
+        args = [], options = {};
 
-        dir.on('exit', function (code) {
-            // exit code is code
+        execFile(file,args,options,(err,stdout,stderr)=>{
+            if (err){
+                console.log(err);
+                console.log(stderr);
+            } else {
+                console.log(stdout);
+            }
         });
     }
 
