@@ -20,12 +20,14 @@ const bot = new Discord.Client({
     token: auth.token,
     autorun: true
 });
+
 bot.on('ready', function (evt) {
     console.log('Connected');
     console.log('Logged in as: ');
     console.log(bot.username + ' - (' + bot.id + ')');
 
 });
+
 bot.on('message', function (user, userID, channelID, message, evt) {
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
@@ -114,6 +116,13 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     bot.sendMessage({
                         to: channelID,
                         message: 'Updating with latest code!'
+                    });
+                    misc.reboot();
+                    break;
+                case 'geg':
+                    bot.sendMessage({
+                        to: channelID,
+                        message: 'LETS GO EDDEH!'
                     });
                     misc.reboot();
                     break;
