@@ -13,7 +13,7 @@
     const FinalGame = "Final";
     const Scheduled = "Scheduled";
     const GameOver = "Game Over";
-    const Postponed = "Postponed"
+    const Postponed = "Postponed";
     const Phillies_ID = '143';
 
     let _bot;
@@ -21,9 +21,9 @@
 
     /**
      * This handles all the arg method calls for mlb
-     * @param {string[] } args
-     * @param {object} bot
-     * @param {int}channelId
+     * @param {string[] } args list of arguments  
+     * @param {object} bot bot object
+     * @param {int}channelId channel id
      */
     function mlbMethods(args, bot, channelId) {
         _bot = bot;
@@ -35,6 +35,7 @@
                     message: "valid commands are: \n" +
                         "!mlb.games \n"
                 });
+                break;
             case 'games':
                 gamesToday();
                 break;
@@ -88,6 +89,7 @@
      * @param {object} awayTeam : the team object for the away team.
      * @param {object} homeTeam : the team object for the home team.
      * @param {string} gameDate : The current Date of the game.
+     * @returns {string} game status
      */
     function gameStatus(status, awayTeam, homeTeam, gameDate) {
         let toReturn = '';
@@ -97,7 +99,7 @@
 
         switch (status.detailedState) {
             case Postponed:
-                toReturn = "The game between " +  awayTeamName + " and " + homeTeamName + " is postponed due to " + status.reason
+                toReturn = "The game between " + awayTeamName + " and " + homeTeamName + " is postponed due to " + status.reason;
                 break;
             case currentGame:
                 if (awayTeam.score + homeTeam.score === 0) {
@@ -188,109 +190,6 @@
         }
         return gameObject;
     }
-
-    /**
-     * This function runs the phillies games, keeps track of the items, passes the values back to the user.
-     * @param {object} philliesGame
-     * @param {object} bot
-     * @param {int} channelID
-     * @returns {object} philliesGame
-     */
-    function getPhilliesGameUpdates(philliesGame, bot, channelID)
-    {
-        UpdateChannel("Phillies Game is starting: ");
-        let GameStatus = philliesGame.game.status.detailedState;
-
-        while (GameStatus !== FinalGame || GameStatus !== GameOver) {
-            //we're going to keep track of the current innings, current content to send back to the users on the channel.
-            let innings = [];
-            let content = [];
-            request.get({
-                url: BASE_URL + 'game/' + philliesGame.Phillies_GameID + '/content',
-                json: true,
-                headers: {'User-Agent': 'request'}
-            }, (err, res, data) => {
-                if (err) {
-                    console.log('Error:', err);
-                } else if (res.statusCode !== 200) {
-                    console.log('Status:', res.statusCode);
-                } else {
-                    // data is already parsed as JSON:
-                    if (data.highlights.highlights.items.length !== 0) {
-                        let teamID = '';
-                        let highlights = data.highlights.highlights.items;
-
-                        for (let i = 0; i < highlights.length; i++) {
-                            if (!content.includes(highlights[i].guid)) {
-                                content.push(highlights[i].guid);
-                                for (let x = 0; x < highlights[i].keywordsAll.length; x++) {
-                                    if (highlights[i].keywordsAll[x].type == 'team_id') {
-                                        teamID = highlights[i].keywordsAll[x].value;
-                                        break;
-                                    }
-                                }
-                                if (teamID.toString() === Phillies_ID) {
-                                    //its a phillies highlight.
-                                    for (let x = 0; i < highlights[i].playbacks.length; i++) {
-                                        if (highlights[i].playbacks[x].name === 'mp4Avc') {
-                                            bot.sendMessage({
-                                                to: channelID,
-                                                message: highlights[i].description
-                                            });
-                                            bot.sendMessage({
-                                                to: channelID,
-                                                message: highlights[i].playbacks[x].url
-                                            });
-
-                                            UpdateChannel(highlights[i].description);
-                                            UpdateChannel(highlights[i].playbacks[x].url);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        bot.sendMessage({
-                            to: channelID,
-                            message: "Ah shit, something broke."
-                        });
-                    }
-                }
-            });
-            // 5 mins is seconds
-            common.sleep(300);
-            let res = request_sync('GET', BASE_URL + 'game/' + philliesGame.Phillies_GameID + '/feed/live');
-            GameStatus = JSON.parse(res.getBody('utf8')).gameData.status.detailedState;
-        }//end while
-            //Lets get the next game.
-        philliesGame = PhilliesNextGame();
-
-        return philliesGame;
-    }
-
-    async function philliesLive(bot, channelID) {
-        while (true) {
-            console.log('started [phillies live.');
-
-            let philliesGame = PhilliesNextGame();
-            console.log(philliesGame);
-
-            // No timeout means the games in progress or starting.. lets start this!
-            if(philliesGame.timeout === -1)
-            {
-                philliesGame = getPhilliesGameUpdates(philliesGame, bot, channelID);
-                bot.sendMessage({
-                    to: channelID,
-                    message: "Next Phillies Game is: "+ new Date(philliesGame.game.gameDate).toLocaleString(("en-US",{timeZone: "America/New_York"}))
-                });
-            }
-            console.log(philliesGame.timeout);
-
-            common.sleep(philliesGame.timeout);
-        } //end while true
-    }
-
     /**
      * @param {string} message : Message to send to channel.
      * */

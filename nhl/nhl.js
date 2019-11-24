@@ -14,7 +14,7 @@
     const FinalGame = "Final";
     const Scheduled = "Scheduled";
     const GameOver = "Game Over";
-    const Postponed = "Postponed"
+    const Postponed = "Postponed";
 
     let _bot;
     let _channelID;
@@ -22,9 +22,9 @@
 
     /**
      * This handles all the arg method calls for nhl
-     * @param {string[] } args
-     * @param {object} bot
-     * @param {int}channelId
+     * @param {string[] } args arguments for the bot.
+     * @param {object} bot the bot object.
+     * @param {int}channelId the channel ID it sends back to.
      */
     function nhlMethods(args, bot, channelId) {
         _bot = bot;
@@ -36,6 +36,7 @@
                     message: "valid commands are: \n" +
                         "!nhl.games \n"
                 });
+                break;
             case 'games':
                 gamesToday();
                 break;
@@ -89,6 +90,7 @@
      * @param {object} awayTeam : the team object for the away team.
      * @param {object} homeTeam : the team object for the home team.
      * @param {string} gameDate : The current Date of the game.
+     * @returns {string} the game status for the nhl.
      */
     function gameStatus(status, awayTeam, homeTeam, gameDate) {
         let toReturn = '';

@@ -65,3 +65,6 @@ auth.json
 
 #webstorm
 .idea/workspace.xml
+
+#visual studios
+.vs/
