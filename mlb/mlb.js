@@ -190,6 +190,7 @@
         }
         return gameObject;
     }
+
     /**
      * @param {string} message : Message to send to channel.
      * */

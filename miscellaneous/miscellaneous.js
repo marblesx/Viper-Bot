@@ -36,7 +36,7 @@
 
     /***
      * Gets message from 8Ball
-     * returns Returns random string.
+     * @returns {string} Returns random string.
      * */
     function EightBall() {
         return eightballPhrases[Math.floor(Math.random()*eightballPhrases.length)];
@@ -44,7 +44,7 @@
     /***
      * @param {string}userInput user selection
      * @param {string}userId the user id
-     * @return returns the message
+     * @returns {string} returns the message
      * */
     function RockPaperScissors(userInput, userId)
     {
@@ -58,15 +58,15 @@
         }
         if(user === undefined)
         {
-            user= {
-                userID :userId,
-            w : 0, //wins
-            l : 0, //loses
-            t : 0,//ties
-            r : 0,//rock
-            p : 0,//paper
-            s : 0//scissors
-        }
+            user = {
+                userID: userId,
+                w: 0, //wins
+                l: 0, //loses
+                t: 0,//ties
+                r: 0,//rock
+                p: 0,//paper
+                s: 0//scissors
+            };
         }
         let cpuPick = RPS[Math.floor(Math.random()*RPS.length)];
         let message = '';
@@ -74,63 +74,63 @@
         if(cpuPick.toLowerCase() === userInput.toLowerCase())
         {
             user.t++;
-            message = 'You picked '+cpuPick.toLowerCase()+', cpu picked '+userInput.toLowerCase()+'. You tied. <@'+ userId +'>\n' +
+            message = 'You picked ' + cpuPick.toLowerCase() + ', cpu picked ' + userInput.toLowerCase() + '. You tied. <@' + userId + '>\n' +
                 ' wins ' + user.w +
-                '\nloses '+ user.l +
-                '\nties '+ user.t
+                '\nloses ' + user.l +
+                '\nties ' + user.t;
         }
         else  if(userInput.toLowerCase() === 'rock')
         {
             if(cpuPick.toLowerCase() === 'paper'){
                 user.l++;
-                message = 'You picked rock, cpu picked paper. You lost. <@'+ userId +'>\n' +
+                message = 'You picked rock, cpu picked paper. You lost. <@' + userId + '>\n' +
                     ' wins ' + user.w +
-                    '\nloses '+ user.l +
-                    '\nties '+ user.t
+                    '\nloses ' + user.l +
+                    '\nties ' + user.t;
             }
             else
             {
                 user.w++;
-                message = 'You picked rock, cpu picked scissors. You won. <@'+ userId +'>\n' +
+                message = 'You picked rock, cpu picked scissors. You won. <@' + userId + '>\n' +
                     ' wins ' + user.w +
-                    '\nloses '+ user.l +
-                    '\nties '+ user.t
+                    '\nloses ' + user.l +
+                    '\nties ' + user.t;
             }
         }
         else  if(userInput.toLowerCase()=== 'paper')
         {
             if(cpuPick.toLowerCase() === 'scissors'){
                 user.l++;
-                message = 'You picked paper, cpu picked scissors. You lost. <@'+ userId +'>\n' +
+                message = 'You picked paper, cpu picked scissors. You lost. <@' + userId + '>\n' +
                     ' wins ' + user.w +
-                    '\nloses '+ user.l +
-                    '\nties '+ user.t
+                    '\nloses ' + user.l +
+                    '\nties ' + user.t;
             }
             else
             {
                 user.w++;
-                message = 'You picked paper, cpu picked rock. You won. <@'+ userId +'>\n' +
+                message = 'You picked paper, cpu picked rock. You won. <@' + userId + '>\n' +
                     ' wins ' + user.w +
-                    '\nloses '+ user.l +
-                    '\nties '+ user.t
+                    '\nloses ' + user.l +
+                    '\nties ' + user.t;
             }
         }
         else
         {
             if(cpuPick.toLowerCase() === 'rock'){
                 user.l++;
-                message = 'You picked scissors, cpu picked rock. You lost. <@'+ userId +'>\n' +
+                message = 'You picked scissors, cpu picked rock. You lost. <@' + userId + '>\n' +
                     ' wins ' + user.w +
-                    '\nloses '+ user.l +
-                    '\nties '+ user.t
+                    '\nloses ' + user.l +
+                    '\nties ' + user.t;
             }
             else
             {
                 user.w++;
-                message = 'You picked scissors, cpu picked paper. You won. <@'+ userId +'>\n' +
+                message = 'You picked scissors, cpu picked paper. You won. <@' + userId + '>\n' +
                     ' wins ' + user.w +
-                    '\nloses '+ user.l +
-                    '\nties '+ user.t
+                    '\nloses ' + user.l +
+                    '\nties ' + user.t;
             }
         }
         let newUser = true;
@@ -159,9 +159,9 @@
         let FlipResult = Math.random(); // Coin in the air
 
         if (FlipResult >= .5)                         // Prints result 
-            return "Heads"
+            return "Heads";
         else
-            return "Tails"
+            return "Tails";
     }
 
     /**
