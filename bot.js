@@ -97,7 +97,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 case 'uptime':
                     bot.sendMessage({
                         to: channelID,
-                        message: "Bot has been running for: " + misc.upTime(startTime);
+                        message: "Bot has been running for: " + misc.upTime(startTime)
                     });
                     break;
                 case 'flip':
