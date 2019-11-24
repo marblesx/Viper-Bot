@@ -5,7 +5,6 @@ const softball = require('./softball/softball');
 const Discord = require('discord.io');
 const logger = require('winston');
 const auth = require('./auth.json');
-const https = require('https');
 
 let startTime;
 
@@ -25,6 +24,7 @@ bot.on('ready', function (evt) {
     console.log('Connected');
     console.log('Logged in as: ');
     console.log(bot.username + ' - (' + bot.id + ')');
+    startTime = new Date();
 
 });
 
@@ -39,7 +39,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             message: 'Sorry <@'+ userID +'> I\'m just here for sports and dick pics'
         });
     }
-    else if (message.substring(0, 1) == '!') {
+    else if (message.substring(0, 1) === '!') {
         let args = message.substring(1).split('.');
         let cmd = args[0];
         if(cmd.toLowerCase().startsWith('8ball'))
@@ -97,7 +97,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 case 'uptime':
                     bot.sendMessage({
                         to: channelID,
-                        message:  Math.abs(new Date() - startTime) / 36e5
+                        message: "Bot has been running for: " + misc.upTime(startTime);
                     });
                     break;
                 case 'flip':

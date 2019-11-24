@@ -184,6 +184,22 @@
         });
     }
 
+    /**
+     * comes time to current time.
+     * @param {Date} startTime time object
+     * @returns {string} 00:00:00 time format
+     */
+    function getUptime(startTime) {
+        let d = (new Date().getTime() - startTime.getTime()) / 1000;
+
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+        var s = Math.floor(d % 3600 % 60);
+
+        return ('0' + h).slice(-2) + ":" + ('0' + m).slice(-2) + ":" + ('0' + s).slice(-2);
+    }
+
+    module.exports.upTime = getUptime;
     module.exports.reboot = reboot;
     module.exports.dice = Dice;
     module.exports.eightBall = EightBall;
