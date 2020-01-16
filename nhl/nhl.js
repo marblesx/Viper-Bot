@@ -136,13 +136,12 @@
         {
             let jsonObj = getLiveGame(game.link);
             let linescore = jsonObj.liveData.linescore;
-            toReturn += ": " + linescore.currentPeriodOrdinal + " period";
             switch(linescore.currentPeriodTimeRemaining){
                 case 'END':
-
                     break;
                 default:
                     toReturn += ": " + linescore.currentPeriodOrdinal + " period, with " +linescore.currentPeriodTimeRemaining + " remaining.";
+                    break;
             }
         }
         return toReturn + "\n";
