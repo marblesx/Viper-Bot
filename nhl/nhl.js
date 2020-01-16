@@ -182,5 +182,5 @@
     }
     // exports the variables and functions above so that other modules can use them
     module.exports.nhlMethods = nhlMethods;
-    module.exports. = getTeams;
+    module.exports.getTeams = getTeams;
 }//end of the file
