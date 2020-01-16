@@ -142,7 +142,7 @@
 
                     break;
                 default:
-                    toReturn += ": " + linescore.currentPeriodOrdinal + " period, with " +linescore.currentPeriodTimeRemaining + "remaining.";
+                    toReturn += ": " + linescore.currentPeriodOrdinal + " period, with " +linescore.currentPeriodTimeRemaining + " remaining.";
             }
         }
         return toReturn + "\n";
@@ -152,7 +152,7 @@
      * Sets up the team names.
      */
     function getTeams() {
-        if (cache_teams.length === 0) {
+        if (Object.entries(cache_teams).length === 0) {
             let res = request_sync('GET', TEAM_URL);
             let temp = JSON.parse(res.getBody('utf8')).teams;
             for (let i = 0; i < temp.length; i++) {
