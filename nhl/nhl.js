@@ -168,7 +168,6 @@
     function getTeamName(id) {
          getTeams();
          return cache_teams[id];
-        }
     }
 
     /**
