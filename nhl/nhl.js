@@ -154,24 +154,8 @@
      * @return jsonObject {object} Json returned value from URL.
      */
     function getLiveGame(url){
-        let jsonReturn ={};
-        request.get({
-            url: hostUrl + url,
-            json: true,
-            headers: {'User-Agent': 'request'}
-        }, (err, res, data) => {
-            if (err) {
-                console.log('Error:', err);
-            } else if (res.statusCode !== 200) {
-                console.log('Status:', res.statusCode);
-            } else {
-                // data is already parsed as JSON:
-                if (data.length !== 0) {
-                   jsonReturn = data;
-                }
-            }
-        });
-        return jsonReturn;
+        let res = request_sync('GET',  hostUrl + url);
+        return JSON.parse(res.getBody('utf8'));
     }
     // exports the variables and functions above so that other modules can use them
     module.exports.nhlMethods = nhlMethods;
