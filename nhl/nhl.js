@@ -156,7 +156,7 @@
             let res = request_sync('GET', TEAM_URL);
             let temp = JSON.parse(res.getBody('utf8')).teams;
             for (let i = 0; i < temp.length; i++) {
-                cache_teams[i] = temp[i].name;
+                cache_teams[i+1] = temp[i].name;
             }
         }
     }
