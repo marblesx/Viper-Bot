@@ -25,6 +25,7 @@ bot.on('ready', function (evt) {
     console.log('Logged in as: ');
     console.log(bot.username + ' - (' + bot.id + ')');
     startTime = new Date();
+    nhl.getTeams();
 
 });
 

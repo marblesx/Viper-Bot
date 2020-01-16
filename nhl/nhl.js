@@ -10,6 +10,8 @@
     let TEAM_URL = BASE_URL + '/teams/';
     let FLYERS_ID = "4";
 
+    let cache_teams ={};
+
     const currentGame = "In Progress";
     const PreGame = "Pre-Game";
     const FinalGame = "Final";
@@ -134,9 +136,29 @@
         {
             let jsonObj = getLiveGame(game.link);
             let linescore = jsonObj.liveData.linescore;
-            toReturn += ": " + linescore.currentPeriodOrdinal + " period, with "+linescore.currentPeriodTimeRemaining;
+            toReturn += ": " + linescore.currentPeriodOrdinal + " period";
+            switch(linescore.currentPeriodTimeRemaining){
+                case 'END':
+
+                    break;
+                default:
+                    toReturn += ": " + linescore.currentPeriodOrdinal + " period, with " +linescore.currentPeriodTimeRemaining + "remaining.";
+            }
         }
         return toReturn + "\n";
+    }
+
+    /**
+     * Sets up the team names.
+     */
+    function getTeams() {
+        if (cache_teams.length === 0) {
+            let res = request_sync('GET', TEAM_URL);
+            let temp = JSON.parse(res.getBody('utf8')).teams;
+            for (let i = 0; i < temp.length; i++) {
+                cache_teams[i] = temp[i].name;
+            }
+        }
     }
 
     /**
@@ -144,8 +166,9 @@
      * @returns {string} Team Name IE Phillies
      */
     function getTeamName(id) {
-        let res = request_sync('GET', TEAM_URL + id);
-        return JSON.parse(res.getBody('utf8')).teams[0].teamName;
+         getTeams();
+         return cache_teams[id];
+        }
     }
 
     /**
@@ -159,4 +182,5 @@
     }
     // exports the variables and functions above so that other modules can use them
     module.exports.nhlMethods = nhlMethods;
+    module.exports. = getTeams;
 }//end of the file
