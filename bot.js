@@ -122,7 +122,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 case 'readme':
                     bot.sendMessage({
                         to: channelID,
-                        message: mis.getUpdatedChanges()
+                        message: misc.getUpdatedChanges()
                     });
                     break;
             }
