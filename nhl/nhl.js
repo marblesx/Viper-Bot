@@ -3,6 +3,7 @@
     const request = require('request');
     const request_sync = require('sync-request');
 
+    let hostUrl = 'https://statsapi.web.nhl.com'
     let VERSION_1 = 'v1';
     let BASE_URL = 'https://statsapi.web.nhl.com/api/' + VERSION_1;
     let TODAY_GAMES_URL = BASE_URL + '/schedule';
@@ -69,7 +70,7 @@
                     let games = data.dates[0].games;
                     message += "Away team first, home team second: \n";
                     for (let i = 0; i < games.length; i++) {
-                        message += gameStatus(games[i].status, games[i].teams.away, games[i].teams.home, games[i].gameDate);
+                        message += gameStatus(games[i].status, games[i].teams.away, games[i].teams.home, games[i].gameDate, games[i]);
                     }
                     _bot.sendMessage({
                         to: _channelID,
@@ -90,9 +91,10 @@
      * @param {object} awayTeam : the team object for the away team.
      * @param {object} homeTeam : the team object for the home team.
      * @param {string} gameDate : The current Date of the game.
+     * @param {object} game: The game object.
      * @returns {string} the game status for the nhl.
      */
-    function gameStatus(status, awayTeam, homeTeam, gameDate) {
+    function gameStatus(status, awayTeam, homeTeam, gameDate, game) {
         let toReturn = '';
         let awayTeamName = getTeamName(awayTeam.team.id);
 
@@ -128,6 +130,12 @@
             default:
                 toReturn = "Well folks, we have no idea whats going on this game between "+awayTeamName +" and "+homeTeamName + ". We can assume its due to something called: \""+status.detailedState+ "\"";
         }
+        if(status.detailedState === currentGame)
+        {
+            let jsonObj = getLiveGame(game.link);
+            let linescore = jsonObj.liveData.linescore;
+            toReturn += ": " + linescore.currentPeriodOrdinal + " period, with "+linescore.currentPeriodTimeRemaining;
+        }
         return toReturn + "\n";
     }
 
@@ -138,6 +146,32 @@
     function getTeamName(id) {
         let res = request_sync('GET', TEAM_URL + id);
         return JSON.parse(res.getBody('utf8')).teams[0].teamName;
+    }
+
+    /**
+     * Gets the json data from a url
+     * @param url {string } url string
+     * @return jsonObject {object} Json returned value from URL.
+     */
+    function getLiveGame(url){
+        let jsonReturn ={};
+        request.get({
+            url: hostUrl + url,
+            json: true,
+            headers: {'User-Agent': 'request'}
+        }, (err, res, data) => {
+            if (err) {
+                console.log('Error:', err);
+            } else if (res.statusCode !== 200) {
+                console.log('Status:', res.statusCode);
+            } else {
+                // data is already parsed as JSON:
+                if (data.length !== 0) {
+                   jsonReturn = data;
+                }
+            }
+        });
+        return jsonReturn;
     }
     // exports the variables and functions above so that other modules can use them
     module.exports.nhlMethods = nhlMethods;

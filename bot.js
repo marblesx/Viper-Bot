@@ -119,12 +119,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     });
                     misc.reboot();
                     break;
-                case 'geg':
+                case 'readme':
                     bot.sendMessage({
                         to: channelID,
-                        message: 'LETS GO EDDEH!'
+                        message: mis.getUpdatedChanges()
                     });
-                    misc.reboot();
                     break;
             }
         }

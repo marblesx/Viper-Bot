@@ -1,6 +1,8 @@
 {
-
+    const fs = require('fs');
     const exec = require('child_process').exec;
+
+
 
     let eightballPhrases = [
         'As I see it, yes.',
@@ -33,6 +35,23 @@
 
     let RPSScore = [];
 
+    /**
+     * Gets the latest changes as listed in the file.
+     * @returns {string} Returns the file contents, or the error.
+     * */
+    function getLatestChanges() {
+        let fileContents = "";
+        fs.readFile('update.txt', 'utf8', function (err, data) {
+            if (err) {
+                fileContents = 'Error reading from file.';
+            }
+            else {
+                fileContents = data;
+            }
+           
+        });
+        return fileContents;
+    }
 
     /***
      * Gets message from 8Ball
@@ -175,6 +194,9 @@
         return Math.floor(Math.random() * dice) + 1;
     }
 
+    /**
+     * Runs a command that pulls changes of code from git repo.
+     * */
     function reboot()
     {
         const child = exec("cd ~ ; cd Viper-Bot ; git pull origin develop ", function (error, stdout, stderr) {
@@ -205,4 +227,5 @@
     module.exports.eightBall = EightBall;
     module.exports.RockPaperScissors = RockPaperScissors;
     module.exports.CoinFlip = CoinFlip;
+    module.exports.getUpdatedChanges = getLatestChanges;
 }
