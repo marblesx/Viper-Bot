@@ -1,5 +1,5 @@
 {
-    const common = require('../Common/common');
+    const common = require('../common/common');
     const request = require('request');
     const request_sync = require('sync-request');
 
@@ -179,6 +179,13 @@
         return JSON.parse(res.getBody('utf8'));
     }
     // exports the variables and functions above so that other modules can use them
-    module.exports.nhlMethods = nhlMethods;
-    module.exports.getTeams = getTeams;
+    module.exports = {
+        name: 'nhl',
+        description: 'Gets a list of games.',
+        execute(args, bot, channelId){
+            _bot = bot;
+            _channelID = channelId;
+            gamesToday();
+        }
+    };
 }//end of the file

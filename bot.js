@@ -1,12 +1,25 @@
 const mlb = require('./mlb/mlb');
-const nhl = require('./nhl/nhl');
+const nhl = require('./commands/nhl');
 const misc = require('./miscellaneous/miscellaneous');
 const softball = require('./softball/softball');
 const Discord = require('discord.io');
 const logger = require('winston');
 const auth = require('./auth.json');
+const {prefix} = require('./config.json');
+const client = new Discord.Client();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 let startTime;
+
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+
+    // set a new item in the Collection
+    // with the key as the command name and the value as the exported module
+    client.commands.set(command.name, command);
+}
+
+
 
 // Configure logger settings
 logger.remove(logger.transports.Console);
@@ -40,10 +53,25 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             message: 'Sorry <@'+ userID +'> I\'m just here for sports and dick pics'
         });
     }
-    else if (message.substring(0, 1) === '!') {
+    else if (message.substring(0, 1) === prefix) {
+
         let args = message.substring(1).split('.');
         let cmd = args[0];
         if(cmd.toLowerCase().startsWith('8ball'))
+        {
+            cmd = '8Ball';
+        }
+
+
+        if (!client.commands.has(cmd[0])) return;
+
+        try {
+            client.commands.get(cmd).execute(args, bot, channelID);
+        } catch (error) {
+            console.error(error);
+        }
+
+        /*if(cmd.toLowerCase().startsWith('8ball'))
         {
             cmd = '8Ball';
         }
@@ -126,7 +154,8 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                         message: misc.getUpdatedChanges()
                     });
                     break;
-            }
+            }*/
+
         }
 });
 
