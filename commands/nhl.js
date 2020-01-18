@@ -1,5 +1,5 @@
 {
-    const common = require('../common/common');
+    const common = require('../common');
     const request = require('request');
     const request_sync = require('sync-request');
 
