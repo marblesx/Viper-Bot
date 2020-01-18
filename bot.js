@@ -9,7 +9,7 @@ const {prefix} = require('./config.json');
 const client = new Discord.Client();
 const clientCommands = {};
 const fs = require('fs');
-const commandFiles = fs.readdirSync('/commands').filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync('commands').filter(file => file.endsWith('.js'));
 
 let startTime;
 
