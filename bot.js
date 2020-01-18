@@ -7,7 +7,7 @@ const logger = require('winston');
 const auth = require('./auth.json');
 const {prefix} = require('./config.json');
 const client = new Discord.Client();
-client.commands = new Discord.Collection();
+const clientCommands = {};
 const fs = require('fs');
 const commandFiles = fs.readdirSync('/commands').filter(file => file.endsWith('.js'));
 
@@ -18,16 +18,14 @@ for (const file of commandFiles) {
 
     // set a new item in the Collection
     // with the key as the command name and the value as the exported module
-    client.commands.set(command.name, command);
+    clientCommands[command.name] = command;
 }
 
 
 
 // Configure logger settings
 logger.remove(logger.transports.Console);
-logger.add(new logger.transports.Console, {
-    colorize: true
-});
+
 logger.level = 'debug';
 // Initialize Discord Bot
 const bot = new Discord.Client({
@@ -40,8 +38,6 @@ bot.on('ready', function (evt) {
     console.log('Logged in as: ');
     console.log(bot.username + ' - (' + bot.id + ')');
     startTime = new Date();
-    nhl.getTeams();
-
 });
 
 bot.on('message', function (user, userID, channelID, message, evt) {
@@ -65,10 +61,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         }
 
 
-        if (!client.commands.has(cmd[0])) return;
+        if (!clientCommands[cmd]) return;
 
         try {
-            client.commands.get(cmd).execute(args, bot, channelID);
+            clientCommands[cmd].execute(args, bot, channelID);
         } catch (error) {
             console.error(error);
             bot.sendMessage({
