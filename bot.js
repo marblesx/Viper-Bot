@@ -69,6 +69,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             client.commands.get(cmd).execute(args, bot, channelID);
         } catch (error) {
             console.error(error);
+            bot.sendMessage({
+                to: channelID,
+                message: 'Sorry thats not a command.'
+            });
         }
 
         /*if(cmd.toLowerCase().startsWith('8ball'))
