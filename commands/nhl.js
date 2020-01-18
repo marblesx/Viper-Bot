@@ -1,9 +1,9 @@
 {
-    const common = require('../common');
+    const common = require('/common/common.js');
     const request = require('request');
     const request_sync = require('sync-request');
 
-    let hostUrl = 'https://statsapi.web.nhl.com'
+    let hostUrl = 'https://statsapi.web.nhl.com';
     let VERSION_1 = 'v1';
     let BASE_URL = 'https://statsapi.web.nhl.com/api/' + VERSION_1;
     let TODAY_GAMES_URL = BASE_URL + '/schedule';
