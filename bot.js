@@ -7,7 +7,9 @@ const logger = require('winston');
 const auth = require('./auth.json');
 const {prefix} = require('./config.json');
 const client = new Discord.Client();
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+client.commands = new Discord.Collection();
+const fs = require('fs');
+const commandFiles = fs.readdirSync('/commands').filter(file => file.endsWith('.js'));
 
 let startTime;
 
