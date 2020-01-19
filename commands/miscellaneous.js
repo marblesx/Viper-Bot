@@ -206,7 +206,7 @@
     module.exports = {
     name: 'upTime',
     description: 'Gets the current up time.',
-    execute(args, bot, channelId){
+    execute(args, bot, channelID, userID){
         bot.sendMessage({
             to: channelId,
             message: "Bot has been running for: " + getUptime(args[0])
@@ -216,7 +216,7 @@
     module.exports = {
         name: 'reboot',
         description: 'Reboots the bot and pulls latest code.',
-        execute(args, bot, channelID){
+        execute(args, bot, channelID, userID){
             bot.sendMessage({
                 to: channelID,
                 message: 'Updating with latest code!'
@@ -228,7 +228,7 @@
     module.exports = {
         name: 'd',
         description: 'Dice rolling command, d.20 will roll a 20 sided dice.',
-        execute(args, bot, channelID){
+        execute(args, bot, channelID, userID){
             bot.sendMessage({
                 to: channelID,
                 message: 'You rolled a ' + Dice(parseInt(args[1]))
@@ -238,7 +238,7 @@
     module.exports = {
         name: '8ball',
         description: '8 Ball command, works like a regular 8 ball..minus all the crap.',
-        execute(args, bot, channelID){
+        execute(args, bot, channelID, userID){
             bot.sendMessage({
                 to: channelID,
                 message: EightBall()
@@ -249,10 +249,10 @@
     module.exports = {
         name: 'rock',
         description: 'Rock command for rock/paper/scissors.',
-        execute(args, bot, channelID){
+        execute(args, bot, channelID,userID){
             bot.sendMessage({
                 to: channelID,
-                message: RockPaperScissors('rock',args[1])
+                message: RockPaperScissors('rock',userID)
             });
         }
     };
@@ -260,10 +260,10 @@
     module.exports = {
         name: 'paper',
         description: 'Paper command for rock/paper/scissors.',
-        execute(args, bot, channelID){
+        execute(args, bot, channelID,userID){
             bot.sendMessage({
                 to: channelID,
-                message: RockPaperScissors('paper',args[0])
+                message: RockPaperScissors('paper',userID)
             });
         }
     };
@@ -272,7 +272,7 @@
     module.exports = {
         name: 'scissors',
         description: 'Scissors command for rock/paper/scissors.',
-        execute(args, bot, channelID){
+        execute(args, bot, channelID, userID){
             bot.sendMessage({
                 to: channelID,
                 message: RockPaperScissors('scissors',args[1])
@@ -283,7 +283,7 @@
     module.exports = {
         name: 'flip',
         description: 'Flips a coin, either way you lose.',
-        execute(args, bot, channelID){
+        execute(args, bot, channelID, userID){
             bot.sendMessage({
                 to: channelID,
                 message: CoinFlip()

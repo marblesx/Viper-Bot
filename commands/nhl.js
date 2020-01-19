@@ -182,8 +182,8 @@
     module.exports = {
         name: 'nhl',
         description: 'Gets a list of nhl games, current scores, final scores.',
-        execute(args, bot, channelId){
-            nhlMethods(args,bot, channelId);
+        execute(args, bot, channelID, userID){
+            nhlMethods(args,bot, channelID);
         }
     };
 }//end of the file

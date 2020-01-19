@@ -205,8 +205,8 @@
     module.exports = {
         name: 'mlb',
         description: 'Gets a list of games.',
-        execute(args, bot, channelId){
-            nhlMethods(args,bot,channelId);
+        execute(args, bot, channelID, userID){
+            nhlMethods(args,bot,channelID);
         }
     };
 }

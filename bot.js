@@ -64,7 +64,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         if (!clientCommands[cmd]) return;
 
         try {
-            clientCommands[cmd].execute(args, bot, channelID);
+            clientCommands[cmd].execute(args, bot, channelID, userID);
         } catch (error) {
             console.error(error);
             bot.sendMessage({
