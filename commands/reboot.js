@@ -12,7 +12,7 @@ function reboot()
     });
 }
 module.exports = {
-    name: 'reboot',
+    name: 'update',
     description: 'Reboots the bot and pulls latest code.',
     execute(args, bot, channelID, userID){
         bot.sendMessage({
