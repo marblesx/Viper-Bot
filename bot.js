@@ -52,6 +52,9 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         if (cmd.toLowerCase().startsWith('8ball')) {
             cmd = '8Ball';
         }
+        if (cmd.toLowerCase().startsWith('uptime')) {
+            args[1] = startTime;
+        }
         if (!clientCommands[cmd]) return;
 
         try {

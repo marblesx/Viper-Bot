@@ -19,7 +19,7 @@ module.exports = {
     execute(args, bot, channelID, userID){
         bot.sendMessage({
             to: channelID,
-            message: "Bot has been running for: " + getUptime(userID)
+            message: "Bot has been running for: " + getUptime(args[1])
         });
     }
 };
