@@ -27,3 +27,14 @@ let eightballPhrases = [
 function EightBall() {
     return eightballPhrases[Math.floor(Math.random()*eightballPhrases.length)];
 }
+
+module.exports = {
+    name: '8Ball',
+    description: 'Generates random phrases from an 8Ball.',
+    execute(args, bot, channelID,userID){
+        bot.sendMessage({
+            to: channelID,
+            message: EightBall()
+        });
+    }
+};
