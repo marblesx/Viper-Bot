@@ -4,7 +4,7 @@ const logger = require('winston');
 const auth = require('./auth.json');
 const {prefix} = require('./config.json');
 const clientCommands = {};
-const commandNames = [];
+const commandNames = {};
 const fs = require('fs');
 const commandFiles = fs.readdirSync('commands').filter(file => file.endsWith('.js'));
 
