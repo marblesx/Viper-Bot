@@ -13,8 +13,8 @@ module.exports = {
 
         if (!args.length) {
             data.push('Here\'s a list of all my commands:\n');
-            data.push(commands.map(command => command.name).join(', '));
-            data.push(`\nYou can send \`${prefix}help [command name]\` to get info on a specific command!`);
+            data.push(args[1].map(command => command.name).join(', '));
+            data.push(`\nYou can send \`${prefix}[command name].help\` to get info on a specific command!`);
 
             bot.sendMessage({
                 to: channelID,

@@ -4,6 +4,7 @@ const logger = require('winston');
 const auth = require('./auth.json');
 const {prefix} = require('./config.json');
 const clientCommands = {};
+const commandNames = [];
 const fs = require('fs');
 const commandFiles = fs.readdirSync('commands').filter(file => file.endsWith('.js'));
 
@@ -14,6 +15,7 @@ for (const file of commandFiles) {
         // set a new item in the Collection
         // with the key as the command name and the value as the exported module
         clientCommands[command.name] = command;
+    commandNames.push(command.name);
 }
 
 
@@ -56,7 +58,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             args[1] = startTime;
         }
         if (cmd.toLowerCase().startsWith('help')) {
-            args[1] = message;
+            args[1] = commandNames;
         }
         if (!clientCommands[cmd]) return;
 
