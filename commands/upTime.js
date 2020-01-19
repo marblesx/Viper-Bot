@@ -18,8 +18,8 @@ module.exports = {
     description: 'Gets the current up time.',
     execute(args, bot, channelID, userID){
         bot.sendMessage({
-            to: channelId,
-            message: "Bot has been running for: " + getUptime(args[0])
+            to: channelID,
+            message: "Bot has been running for: " + getUptime(userID)
         });
     }
 };
