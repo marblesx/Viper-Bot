@@ -1,4 +1,4 @@
-const RockPaperScissors = require('/common/RockPaperScissorsGame');
+const RockPaperScissors = require('../Common/RockPaperScissorsGame');
 
 
 module.exports = {
