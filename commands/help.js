@@ -2,7 +2,6 @@
 const { prefix } = require('../config.json');
 
 const data = [];
-const { commands } = message.client;
 
 
 module.exports = {
