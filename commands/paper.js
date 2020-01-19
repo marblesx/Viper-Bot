@@ -7,7 +7,7 @@ module.exports = {
     execute(args, bot, channelID,userID){
         bot.sendMessage({
             to: channelID,
-            message: RockPaperScissors('paper',userID)
+            message: RockPaperScissors.RockPaperSissors('paper',userID)
         });
     }
 };
