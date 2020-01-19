@@ -55,6 +55,9 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         if (cmd.toLowerCase().startsWith('uptime')) {
             args[1] = startTime;
         }
+        if (cmd.toLowerCase().startsWith('help')) {
+            args[1] = message;
+        }
         if (!clientCommands[cmd]) return;
 
         try {
