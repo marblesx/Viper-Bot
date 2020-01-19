@@ -1,4 +1,4 @@
-const softball = require('./softball/softball');
+const softball = require('./commands/softball');
 const Discord = require('discord.io');
 const logger = require('winston');
 const auth = require('./auth.json');
@@ -10,12 +10,10 @@ const commandFiles = fs.readdirSync('commands').filter(file => file.endsWith('.j
 let startTime;
 
 for (const file of commandFiles) {
-    const commands = require(`./commands/${file}`);
-    for(const command of commands) {
+    const command = require(`./commands/${file}`);
         // set a new item in the Collection
         // with the key as the command name and the value as the exported module
         clientCommands[command.name] = command;
-    }
 }
 
 

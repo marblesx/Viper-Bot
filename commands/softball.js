@@ -136,7 +136,13 @@
         }
     }
 
-    module.exports.softballMethods = softballMethods;
+    module.exports = {
+        name: 'sb',
+        description: 'Gets the command list for the Softball League.',
+        execute(args, bot, channelID, userID){
+            softballMethods(args,bot, channelID);
+        }
+    };
 
 
 }
