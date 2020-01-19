@@ -181,11 +181,9 @@
     // exports the variables and functions above so that other modules can use them
     module.exports = {
         name: 'nhl',
-        description: 'Gets a list of games.',
+        description: 'Gets a list of nhl games, current scores, final scores.',
         execute(args, bot, channelId){
-            _bot = bot;
-            _channelID = channelId;
-            gamesToday();
+            nhlMethods(args,bot, channelId);
         }
     };
 }//end of the file

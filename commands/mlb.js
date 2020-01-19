@@ -202,5 +202,11 @@
     }
 
     // exports the variables and functions above so that other modules can use them
-    module.exports.mlbMethods = mlbMethods;
+    module.exports = {
+        name: 'mlb',
+        description: 'Gets a list of games.',
+        execute(args, bot, channelId){
+            nhlMethods(args,bot,channelId);
+        }
+    };
 }

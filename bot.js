@@ -1,6 +1,6 @@
-const mlb = require('./mlb/mlb');
+const mlb = require('./commands/mlb');
 const nhl = require('./commands/nhl');
-const misc = require('./miscellaneous/miscellaneous');
+const misc = require('./commands/miscellaneous');
 const softball = require('./softball/softball');
 const Discord = require('discord.io');
 const logger = require('winston');
@@ -69,7 +69,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             console.error(error);
             bot.sendMessage({
                 to: channelID,
-                message: 'Sorry thats not a command.'
+                message: 'ah crap we screwed up.'
             });
         }
 
@@ -125,12 +125,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                         message: misc.eightBall()
                     });
                     break;
-                case 'uptime':
-                    bot.sendMessage({
-                        to: channelID,
-                        message: "Bot has been running for: " + misc.upTime(startTime)
-                    });
-                    break;
+
                 case 'flip':
                     bot.sendMessage({
                         to: channelID,

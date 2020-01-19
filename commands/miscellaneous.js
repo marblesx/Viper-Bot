@@ -35,24 +35,6 @@
 
     let RPSScore = [];
 
-    /**
-     * Gets the latest changes as listed in the file.
-     * @returns {string} Returns the file contents, or the error.
-     * */
-    function getLatestChanges() {
-        let fileContents = "";
-        fs.readFile('update.txt', 'utf8', function (err, data) {
-            if (err) {
-                fileContents = 'Error reading from file.';
-            }
-            else {
-                fileContents = data;
-            }
-           
-        });
-        return fileContents;
-    }
-
     /***
      * Gets message from 8Ball
      * @returns {string} Returns random string.
@@ -221,11 +203,92 @@
         return ('0' + h).slice(-2) + ":" + ('0' + m).slice(-2) + ":" + ('0' + s).slice(-2);
     }
 
-    module.exports.upTime = getUptime;
-    module.exports.reboot = reboot;
-    module.exports.dice = Dice;
-    module.exports.eightBall = EightBall;
-    module.exports.RockPaperScissors = RockPaperScissors;
-    module.exports.CoinFlip = CoinFlip;
-    module.exports.getUpdatedChanges = getLatestChanges;
+    module.exports = {
+    name: 'upTime',
+    description: 'Gets the current up time.',
+    execute(args, bot, channelId){
+        bot.sendMessage({
+            to: channelId,
+            message: "Bot has been running for: " + getUptime(args[0])
+        });
+    }
+};
+    module.exports = {
+        name: 'reboot',
+        description: 'Reboots the bot and pulls latest code.',
+        execute(args, bot, channelID){
+            bot.sendMessage({
+                to: channelID,
+                message: 'Updating with latest code!'
+            });
+            reboot();
+        }
+    };
+
+    module.exports = {
+        name: 'd',
+        description: 'Dice rolling command, d.20 will roll a 20 sided dice.',
+        execute(args, bot, channelID){
+            bot.sendMessage({
+                to: channelID,
+                message: 'You rolled a ' + Dice(parseInt(args[1]))
+            });
+        }
+    };
+    module.exports = {
+        name: '8ball',
+        description: '8 Ball command, works like a regular 8 ball..minus all the crap.',
+        execute(args, bot, channelID){
+            bot.sendMessage({
+                to: channelID,
+                message: EightBall()
+            });
+        }
+    };
+
+    module.exports = {
+        name: 'rock',
+        description: 'Rock command for rock/paper/scissors.',
+        execute(args, bot, channelID){
+            bot.sendMessage({
+                to: channelID,
+                message: RockPaperScissors('rock',args[1])
+            });
+        }
+    };
+
+    module.exports = {
+        name: 'paper',
+        description: 'Paper command for rock/paper/scissors.',
+        execute(args, bot, channelID){
+            bot.sendMessage({
+                to: channelID,
+                message: RockPaperScissors('paper',args[0])
+            });
+        }
+    };
+
+
+    module.exports = {
+        name: 'scissors',
+        description: 'Scissors command for rock/paper/scissors.',
+        execute(args, bot, channelID){
+            bot.sendMessage({
+                to: channelID,
+                message: RockPaperScissors('scissors',args[1])
+            });
+        }
+    };
+
+    module.exports = {
+        name: 'flip',
+        description: 'Flips a coin, either way you lose.',
+        execute(args, bot, channelID){
+            bot.sendMessage({
+                to: channelID,
+                message: CoinFlip()
+            });
+        }
+    };
+
 }
