@@ -2,12 +2,12 @@ const RockPaperScissors = require('../Common/RockPaperScissorsGame');
 
 
 module.exports = {
-    name: 'scissors.js',
-    description: 'Scissors command for rock/paper/scissors.js.',
+    name: 'paper',
+    description: 'Paper command for rock/paper/scissors.',
     execute(args, bot, channelID,userID){
         bot.sendMessage({
             to: channelID,
-            message: RockPaperScissors('scissors.js',userID)
+            message: RockPaperScissors('paper',userID)
         });
     }
 };

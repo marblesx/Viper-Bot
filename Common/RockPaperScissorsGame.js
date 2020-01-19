@@ -28,7 +28,7 @@
                 t: 0,//ties
                 r: 0,//rock
                 p: 0,//paper
-                s: 0//scissors.js
+                s: 0//scissors
             };
         }
         let cpuPick = RPS[Math.floor(Math.random() * RPS.length)];
@@ -49,7 +49,7 @@
                     '\nties ' + user.t;
             } else {
                 user.w++;
-                message = 'You picked rock, cpu picked scissors.js. You won. <@' + userId + '>\n' +
+                message = 'You picked rock, cpu picked scissors. You won. <@' + userId + '>\n' +
                     ' wins ' + user.w +
                     '\nloses ' + user.l +
                     '\nties ' + user.t;
@@ -57,7 +57,7 @@
         } else if (userInput.toLowerCase() === 'paper') {
             if (cpuPick.toLowerCase() === 'scissors.js') {
                 user.l++;
-                message = 'You picked paper, cpu picked scissors.js. You lost. <@' + userId + '>\n' +
+                message = 'You picked paper, cpu picked scissors. You lost. <@' + userId + '>\n' +
                     ' wins ' + user.w +
                     '\nloses ' + user.l +
                     '\nties ' + user.t;
