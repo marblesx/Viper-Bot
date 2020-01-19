@@ -29,7 +29,7 @@ function EightBall() {
 }
 
 module.exports = {
-    name: '8Ball',
+    name: '8ball',
     description: 'Generates random phrases from an 8Ball.',
     execute(args, bot, channelID,userID){
         bot.sendMessage({

@@ -14,8 +14,8 @@ for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
         // set a new item in the Collection
         // with the key as the command name and the value as the exported module
-        clientCommands[command.name] = command;
-    commandNames.push(command.name);
+        clientCommands[command.name.toLowerCase()] = command;
+        commandNames[command.name] = command.description;
 }
 
 
@@ -50,12 +50,13 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     } else if (message.substring(0, 1) === prefix) {
 
         let args = message.substring(1).split('.');
-        let cmd = args[0];
-        if (cmd.toLowerCase().startsWith('8ball')) {
-            cmd = '8Ball';
-        }
-        if (cmd.toLowerCase().startsWith('uptime')) {
+        let cmd = args[0].toLowerCase();
+        if (cmd.startsWith('uptime')) {
             args[1] = startTime;
+        }
+        else if(cmd.startsWith('help'))
+        {
+            args[2]=commandNames;
         }
        
         if (!clientCommands[cmd]) return;
