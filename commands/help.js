@@ -1,7 +1,7 @@
 function getDynamicCommands(commands){
     let returnList = "";
     commands.forEach(command =>
-    returnList+= command.name + ": "+ command.description +"\n";
+    returnList+= command.name + ": "+ command.description +"\n"
     );
     return returnList;
 }
