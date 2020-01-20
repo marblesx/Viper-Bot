@@ -52,7 +52,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         if (cmd.startsWith('uptime')) {
             args[1] = startTime;
         }
-        else if(cmd.startsWith('help'))
+        else if(cmd.startsWith('vhelp'))
         {
             args[2]=commands;
         }
