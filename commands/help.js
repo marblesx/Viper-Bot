@@ -3,7 +3,7 @@ function getDynamicCommands(commands){
     commands.forEach(command =>
     returnList+= command.name + ": "+ command.description +"\n";
     );
-
+    return returnList;
 }
 
 module.exports = {
