@@ -94,7 +94,6 @@
         if (newUser) {
             RPSScore.push(user);
         }
-
         return message;
 
     }

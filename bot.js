@@ -18,8 +18,6 @@ for (const file of commandFiles) {
         commandNames[command.name] = command.description;
 }
 
-
-
 // Configure logger settings
 logger.remove(logger.transports.Console);
 
@@ -56,7 +54,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         }
         else if(cmd.startsWith('help'))
         {
-            args[2]=commandNames;
+            args[2]=clientCommands;
         }
        
         if (!clientCommands[cmd]) return;

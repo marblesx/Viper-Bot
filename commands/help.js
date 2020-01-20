@@ -5,7 +5,8 @@ module.exports = {
         let commands = args[2];
         bot.sendMessage({
             to: channelID,
-            message: 'Some commands are: ' + Object.keys(commands).map( function(key){ return key + ":\n" + commands[key] + "\n" }).join('')
+            message: 'Some commands are: ' +
+                Object.keys(commands).map( function(key){ return key + ":\n" + commands[key].description + "\n" }).join('')
         });
     }
 };
