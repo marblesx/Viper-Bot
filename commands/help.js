@@ -14,7 +14,7 @@ module.exports = {
         bot.sendMessage({
             to: channelID,
             message: 'Some commands are: \n' +
-              getDynamicCommands(args[2])
+              getDynamicCommands(args[args.length-1])
         });
     }
 };
