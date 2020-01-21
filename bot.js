@@ -17,7 +17,6 @@ for (const file of commandFiles) {
         clientCommands[command.name.toLowerCase()] = command;
         commands.push(command);
 }
-console.log(commands);
 // Configure logger settings
 logger.remove(logger.transports.Console);
 
@@ -54,7 +53,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         }
         if(cmd.startsWith('vhelp'))
         {
-
             args[args.length] = commands;
         }
        
@@ -66,7 +64,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             console.error(error);
             bot.sendMessage({
                 to: channelID,
-                message: 'ah crap we screwed up.'
+                message: 'Ah crap we screwed up.'
             });
         }
     }
