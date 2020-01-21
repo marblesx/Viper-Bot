@@ -6,11 +6,11 @@
   "author": "Marblesx",
   "dependencies": {
     "discord.io": "^2.5.3",
-    "sync-request": "^6.1.0",
+    "fs": "^0.0.1-security",
     "package.json": "^2.0.1",
     "request": "^2.88.0",
-    "winston": "^3.2.1",
-    "tabletojson": "^1.2.0",
-    "fs": "^0.0.1-security"
+    "sync-request": "^6.1.0",
+    "tabletojson": "~1.2.0",
+    "winston": "^3.2.1"
   }
 }

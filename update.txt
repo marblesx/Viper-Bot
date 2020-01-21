@@ -1,3 +1,0 @@
-1/15/2020
-1. Removed !geg command no longer needed
-2. Added time and period to method.
