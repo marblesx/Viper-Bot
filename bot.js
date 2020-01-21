@@ -1,4 +1,3 @@
-const softball = require('./commands/softball');
 const Discord = require('discord.io');
 const logger = require('winston');
 const {token} = require('./auth.json');
