@@ -44,17 +44,20 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             message: 'Sorry <@' + userID + '> I\'m just here for sports and dick pics'
         });
     } else if (message.substring(0, 1) === prefix) {
-
         let args = message.substring(1).split('.');
-        let cmd = args[0].toLowerCase();
+        let cmd = "";
+        if (message.toLocaleLowerCase().startsWith("!8ball")) {
+            cmd = "8ball";
+        } else {
+            cmd = args[0].toLowerCase();
+        }
         if (cmd.startsWith('uptime')) {
             args[1] = startTime;
         }
-        if(cmd.startsWith('vhelp'))
-        {
+        if (cmd.startsWith('vhelp')) {
             args[args.length] = commands;
         }
-       
+
         if (!clientCommands[cmd]) return;
 
         try {
