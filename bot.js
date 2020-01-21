@@ -1,7 +1,7 @@
 const softball = require('./commands/softball');
 const Discord = require('discord.io');
 const logger = require('winston');
-const auth = require('./auth.json');
+const {token} = require('./auth.json');
 const {prefix} = require('./config.json');
 const clientCommands = {};
 const commands = [];
@@ -23,7 +23,7 @@ logger.remove(logger.transports.Console);
 logger.level = 'debug';
 // Initialize Discord Bot
 const bot = new Discord.Client({
-    token: auth.token,
+    token: token,
     autorun: true
 });
 
