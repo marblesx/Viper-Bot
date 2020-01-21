@@ -17,7 +17,7 @@ for (const file of commandFiles) {
         clientCommands[command.name.toLowerCase()] = command;
         commands.push(command);
 }
-
+console.log(commands);
 // Configure logger settings
 logger.remove(logger.transports.Console);
 
