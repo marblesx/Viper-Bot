@@ -12,10 +12,8 @@ function Dice(dice)
 module.exports = {
     name: 'd',
     description: 'Dice rolling command, d.20 will roll a 20 sided dice.',
-    execute(args, bot, channelID, userID){
-        bot.sendMessage({
-            to: channelID,
-            message: 'You rolled a ' + Dice(parseInt(args[1]))
-        });
+    execute(args, bot){
+        bot.channel.send('You rolled a ' + Dice(parseInt(args[1])));
+        }
     }
-};
+

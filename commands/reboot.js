@@ -14,11 +14,8 @@ function reboot()
 module.exports = {
     name: 'update',
     description: 'Reboots the bot and pulls latest code.',
-    execute(args, bot, channelID, userID){
-        bot.sendMessage({
-            to: channelID,
-            message: 'Updating with latest code!'
-        });
+    execute(args, bot){
+      bot.channel.send('Updating with latest code!');
         reboot();
     }
 };

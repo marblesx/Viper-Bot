@@ -15,10 +15,7 @@ function CoinFlip(){
 module.exports = {
     name: 'flip',
     description: 'Flips a coin, either way you lose.',
-    execute(args, bot, channelID, userID){
-        bot.sendMessage({
-            to: channelID,
-            message: CoinFlip()
-        });
+    execute(args, bot) {
+        bot.channel.send(CoinFlip());
     }
 };
