@@ -17,33 +17,25 @@
     const Phillies_ID = '143';
 
     let _bot;
-    let _channelID;
 
     /**
      * This handles all the arg method calls for mlb
      * @param {string[] } args list of arguments  
      * @param {object} bot bot object
-     * @param {int}channelId channel id
      */
-    function mlbMethods(args, bot, channelId) {
+    function mlbMethods(args, bot) {
         _bot = bot;
-        _channelID = channelId;
         switch (args[1]) {
             case 'help':
-                _bot.sendMessage({
-                    to: _channelID,
-                    message: "valid commands are: \n" +
+                _bot.channel.send("valid commands are: \n" +
                         "!mlb.games \n"
-                });
+                );
                 break;
             case 'games':
                 gamesToday();
                 break;
             default:
-                _bot.sendMessage({
-                    to: _channelID,
-                    message: "Invalid command, try !mlb.help for a list of valid commands."
-                });
+                bot.channel.send("Invalid command, try !mlb.help for a list of valid commands.");
         }
     }
 
@@ -70,15 +62,9 @@
                     for (let i = 0; i < games.length; i++) {
                         message += gameStatus(games[i].status, games[i].teams.away, games[i].teams.home, games[i].gameDate);
                     }
-                    _bot.sendMessage({
-                        to: _channelID,
-                        message: message
-                    });
+                   _bot.channel.send(message);
                 } else {
-                    _bot.sendMessage({
-                        to: _channelID,
-                        message: "No games today!, Boooooo"
-                    });
+                   _bot.channel.send("No games today!, Boooooo");
                 }
             }
         });
@@ -195,18 +181,15 @@
      * @param {string} message : Message to send to channel.
      * */
     function UpdateChannel(message) {
-        _bot.sendMessage({
-            to: _channelID,
-            message: message
-        });
+        _bot.channel.send(message);
     }
 
     // exports the variables and functions above so that other modules can use them
     module.exports = {
         name: 'mlb',
         description: 'Gets a list of games.',
-        execute(args, bot, channelID, userID){
-            nhlMethods(args,bot,channelID);
+        execute(args, bot){
+            nhlMethods(args,bot);
         }
     };
 }

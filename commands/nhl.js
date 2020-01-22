@@ -20,8 +20,6 @@
     const Postponed = "Postponed";
 
     let _bot;
-    let _channelID;
-
 
     /**
      * This handles all the arg method calls for nhl
@@ -29,25 +27,18 @@
      * @param {object} bot the bot object.
      * @param {int}channelId the channel ID it sends back to.
      */
-    function nhlMethods(args, bot, channelId) {
+    function nhlMethods(args, bot) {
         _bot = bot;
-        _channelID = channelId;
         switch (args[1]) {
             case 'help':
-                _bot.sendMessage({
-                    to: _channelID,
-                    message: "valid commands are: \n" +
-                        "!nhl.games \n"
-                });
+                _bot.channel.send( "valid commands are: \n" +
+                        "!nhl.games \n");
                 break;
             case 'games':
                 gamesToday();
                 break;
             default:
-                _bot.sendMessage({
-                    to: _channelID,
-                    message: "Invalid command, try !nhl.help for a list of valid commands."
-                });
+                _bot.channel.send("Invalid command, try !nhl.help for a list of valid commands.");
         }
     }
 
@@ -74,15 +65,10 @@
                     for (let i = 0; i < games.length; i++) {
                         message += gameStatus(games[i].status, games[i].teams.away, games[i].teams.home, games[i].gameDate, games[i]);
                     }
-                    _bot.sendMessage({
-                        to: _channelID,
-                        message: message
-                    });
+                     _bot.channel.send( message);
+
                 } else {
-                    _bot.sendMessage({
-                        to: _channelID,
-                        message: "No games today!, Boooooo"
-                    });
+                    _bot.channel.send( "No games today!, Boooooo");
                 }
             }
         });
@@ -182,8 +168,8 @@
     module.exports = {
         name: 'nhl',
         description: 'Gets a list of nhl games, current scores, final scores.',
-        execute(args, bot, channelID, userID){
-            nhlMethods(args,bot, channelID);
+        execute(args, bot){
+            nhlMethods(args,bot);
         }
     };
 }//end of the file

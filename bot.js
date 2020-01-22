@@ -1,4 +1,4 @@
-const Discord = require('discord.io');
+const Discord = require('discord.js');
 const logger = require('winston');
 const {token} = require('./auth.json');
 const {prefix} = require('./config.json');
@@ -21,32 +21,22 @@ logger.remove(logger.transports.Console);
 
 logger.level = 'debug';
 // Initialize Discord Bot
-const bot = new Discord.Client({
-    token: token,
-    autorun: true
-});
+const bot = new Discord.Client();
 
-bot.on('ready', function (evt) {
+bot.on('ready', ()=> {
     console.log('Connected');
     console.log('Logged in as: ');
     console.log(bot.username + ' - (' + bot.id + ')');
     startTime = new Date();
 });
 
-bot.on('message', function (user, userID, channelID, message, evt) {
-    // Our bot needs to know if it will execute a command
-    // It will listen for messages that will start with `!`
-    console.log(message);
-    if (message.includes(bot.id)) {
+bot.on('message', async message => {
+    let messageText = message.content;
+    if (messageText.substring(0, 1) === prefix) {
 
-        bot.sendMessage({
-            to: channelID,
-            message: 'Sorry <@' + userID + '> I\'m just here for sports and dick pics'
-        });
-    } else if (message.substring(0, 1) === prefix) {
-        let args = message.substring(1).split('.');
+        let args = messageText.substring(1).split('.');
         let cmd = "";
-        if (message.toLocaleLowerCase().startsWith("!8ball")) {
+        if (messageText.toLocaleLowerCase().startsWith("!8ball")) {
             cmd = "8ball";
         } else {
             cmd = args[0].toLowerCase();
@@ -61,14 +51,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         if (!clientCommands[cmd]) return;
 
         try {
-            clientCommands[cmd].execute(args, bot, channelID, userID);
+            clientCommands[cmd].execute(args, message);
         } catch (error) {
             console.error(error);
-            bot.sendMessage({
-                to: channelID,
-                message: 'Ah crap we screwed up.'
-            });
+            message.channel.send("Error occurred.");
         }
-    }
-});
+}});
 
+bot.login(token);

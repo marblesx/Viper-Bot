@@ -53,10 +53,9 @@
      *
      * @param {string} url
      * @param {object} bot
-     * @param channelId
      * @constructor
      */
-    function GetStats(url, bot, channelId) {
+    function GetStats(url, bot) {
         tabletojson.convertUrl(
             url,
             function (tablesAsJson) {
@@ -71,7 +70,6 @@
                         // players after that.
                         //blank row
                         //total
-
 
                         returnMessage += 'Slap A Pitch Stats\n';
                         i++;
@@ -94,10 +92,7 @@
                     returnMessage = "Opps Nothing to return";
                 }
 
-                bot.sendMessage({
-                    to: channelId,
-                    message: returnMessage
-                });
+               bot.channel.send(returnMessage);
             }
         );
     }
@@ -106,43 +101,35 @@
      * This handles all the arg method calls for softball
      * @param {string[] } args
      * @param {object} bot
-     * @param {int}channelId
      */
-    function softballMethods(args, bot, channelId) {
+    function softballMethods(args, bot) {
 
         switch (args[1]) {
             case 'help':
-                bot.sendMessage({
-                    to: channelId,
-                    message: "valid commands are: \n" +
+                bot.channel.send( "valid commands are: \n" +
                         "!sb.su \n" +
                         "!sb.sp \n" +
                         "!sb.fa \n"
-                });
+                );
             case 'su':
-                GetStats(SummerUrl, bot, channelId);
+                GetStats(SummerUrl, bot);
                 break;
             case 'fa':
-                GetStats(FallUrl, bot, channelId);
+                GetStats(FallUrl, bot);
                 break;
             case 'sp':
-                GetStats(SpringUrl, bot, channelId);
+                GetStats(SpringUrl, bot);
                 break;
             default:
-                bot.sendMessage({
-                    to: channelId,
-                    message: "Invalid command, try !sb.help for a list of valid commands."
-                });
+               bot.channel.send("Invalid command, try !sb.help for a list of valid commands.");
         }
     }
 
     module.exports = {
         name: 'sb',
         description: 'Gets the command list for the Softball League.',
-        execute(args, bot, channelID, userID){
-            softballMethods(args,bot, channelID);
+        execute(args, bot){
+            softballMethods(args,bot);
         }
     };
-
-
 }

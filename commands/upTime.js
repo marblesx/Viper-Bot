@@ -16,10 +16,7 @@ function getUptime(startTime) {
 module.exports = {
     name: 'upTime',
     description: 'Gets the current up time.',
-    execute(args, bot, channelID, userID){
-        bot.sendMessage({
-            to: channelID,
-            message: "Bot has been running for: " + getUptime(args[1])
-        });
+    execute(args, bot){
+        bot.channel.send( "Bot has been running for: " + getUptime(args[1]));
     }
 };
