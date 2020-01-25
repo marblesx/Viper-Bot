@@ -48,7 +48,6 @@
     function getPlayerStats(player) {
         return player[stat.name] + ', ' + player[stat.games] + ', ' + player[stat.ab] + ', ' + player[stat.runs] + ', ' + player[stat.hits] + ', ' + player[stat.doubles] + ', ' + player[stat.triples] + ', ' + player[stat.homeruns] + ', ' + player[stat.rbi] + ', ' + player[stat.avg] + ', ' + player[stat.bb]
     }
-
     /****
      *
      * @param {string} url
