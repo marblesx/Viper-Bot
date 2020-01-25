@@ -37,6 +37,7 @@
 
     function cacheTeams() {
         if (Object.keys(nbaTeams).length === 0) {
+
             let today = request_sync('GET', baseUrl + 'v1/today.json');
             let returned = request_sync('GET', 'http://data.nba.net' + JSON.parse(today.getBody('utf8')).links.teams)
             let teams = JSON.parse(returned.getBody('utf8'));

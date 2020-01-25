@@ -19,7 +19,7 @@
          */
         getEuroFormattedDate: function()
         {
-            let d = new Date(),
+            let d = new Date(new Date().toLocaleTimeString("en-US", { timeZone: "America/New_York", year:'numeric', month:'2-digit', day: '2-digit' }));
                 month = '' + (d.getMonth() + 1),
                 day = '' + d.getDate(),
                 year = d.getFullYear();
