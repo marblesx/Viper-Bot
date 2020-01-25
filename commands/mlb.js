@@ -189,7 +189,7 @@
         name: 'mlb',
         description: 'Gets a list of games.',
         execute(args, bot){
-            nhlMethods(args,bot);
+            mlbMethods(args,bot);
         }
     };
 }

@@ -14,6 +14,24 @@
             return new Date().toLocaleDateString("en-US", { timeZone: "America/New_York", year: 'numeric', month: '2-digit', day: '2-digit' });
         },
         /**
+         * returns date as yyyymmdd string
+         * @return {string}
+         */
+        getEuroFormattedDate: function()
+        {
+            let d = new Date(),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+
+            return year+month+day;
+        },
+        /**
          * @param {date} date Date object
          * @returns {string} Returns the date in mm/dd/yyyy format.
          * */

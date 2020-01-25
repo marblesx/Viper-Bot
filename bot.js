@@ -24,9 +24,7 @@ logger.level = 'debug';
 const bot = new Discord.Client();
 
 bot.on('ready', ()=> {
-    console.log('Connected');
-    console.log('Logged in as: ');
-    console.log(bot.username + ' - (' + bot.id + ')');
+
     startTime = new Date();
 });
 
