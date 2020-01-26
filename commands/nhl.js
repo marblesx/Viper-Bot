@@ -85,8 +85,9 @@
     function gameStatus(status, awayTeam, homeTeam, gameDate, game) {
         let toReturn = '';
         let awayTeamName = getTeamName(awayTeam.team.id);
-
+        awayTeamName = awayTeamName == undefined ? awayTeam.team.name : awayTeamName;
         let homeTeamName = getTeamName(homeTeam.team.id);
+        homeTeamName = homeTeamName == undefined ? homeTeam.team.name : homeTeamName;
 
         switch (status.detailedState) {
             case Postponed:
