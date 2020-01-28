@@ -187,56 +187,55 @@
         let highlights = false;
         let gameID = 0;
         let date = common.getDateFormatted();
-            request.get({
-                url: TODAY_GAMES_URL + '?date=' + date,
-                json: true,
-                headers: {'User-Agent': 'request'}
-            }, (err, res, data) => {
-                if (err) {
-                    console.log('Error:', err);
-                } else if (res.statusCode !== 200) {
-                    console.log('Status:', res.statusCode);
+        request.get({
+            url: TODAY_GAMES_URL + '?date=' + date,
+            json: true,
+            headers: {'User-Agent': 'request'}
+        }, (err, res, data) => {
+            if (err) {
+                console.log('Error:', err);
+            } else if (res.statusCode !== 200) {
+                console.log('Status:', res.statusCode);
+            } else {
+                // data is already parsed as JSON:
+                if (data.dates.length !== 0) {
+                    let games = data.dates[0].games;
+                    for (let i = 0; i < games.length; i++) {
+                        if (games[i].teams.away.team.id == cache_teamCodes[teamCode] || games[i].teams.home.team.id == cache_teamCodes[teamCode]) {
+                            gameID = games[i].gamePk;
+                            highlights = true;
+                            break;
+                        }
+                    }
                 } else {
-                    // data is already parsed as JSON:
-                    if (data.dates.length !== 0) {
-                        let games = data.dates[0].games;
-                        for (let i = 0; i < games.length; i++) {
-                            if (games[i].teams.away.team.id == cache_teamCodes[teamCode] || games[i].teams.home.team.id == cache_teamCodes[teamCode]) {
-                                gameID = games[i].gamePk;
-                                highlights = true;
-                                break;
+                    _bot.channel.send(noHLMessage);
+                }
+                if (highlights) {
+                    let res = request_sync('GET', BASE_URL + `/game/${gameID}/content`);
+                    let temp = JSON.parse(res.getBody('utf8'));
+                    let highlightsjson = temp.highlights;
+                    let count = 0;
+                    if (highlightsjson.gameCenter.length !== 0) {
+                        let teamID = cache_teamCodes[teamCode];
+                        let hl = highlightsjson.gameCenter.items;
+                        for (let v = 0; v < hl.length; v++) {
+                            if (hl[v].keywords.find(k => k.type === 'teamId').value == teamID) {
+                                _bot.channel.send(hl[v].description);
+                                _bot.channel.send(hl[v].playbacks.find(p => p.name == 'FLASH_1800K_896x504').url);
+                                count++;
                             }
                         }
-                    } else {
-                        _bot.channel.send(noHLMessage);
-                    }
-                    if (highlights) {
-                        let res = request_sync('GET', BASE_URL + `/game/${gameID}/content`);
-                        let temp = JSON.parse(res.getBody('utf8'));
-                        let highlightsjson = temp.highlights;
-                        let count = 0;
-                        if (highlightsjson.gameCenter.length !== 0) {
-                            let teamID = cache_teamCodes[teamCode];
-                            let hl = highlightsjson.gameCenter.items;
-                            for (let v = 0; v < hl.length; v++) {
-                                if (hl[v].keywords.find(k => k.type === 'teamId').value == teamID) {
-                                    _bot.channel.send(hl[v].description);
-                                    _bot.channel.send(hl[v].playbacks.find(p => p.name == 'FLASH_1800K_896x504').url);
-                                    count++;
-                                }
-                            }
-                            if (count == 0) {
-                                _bot.channel.send(noHLMessage);
-                            }
-                        } else {
+                        if (count == 0) {
                             _bot.channel.send(noHLMessage);
                         }
                     } else {
                         _bot.channel.send(noHLMessage);
                     }
+                } else {
+                    _bot.channel.send(noHLMessage);
                 }
-            });
-        }
+            }
+        });
     }
 
 
