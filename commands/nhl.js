@@ -183,7 +183,7 @@
      * @param teamCode {string} 3 character Id of NHL team.
      */
     function getHighlights(teamCode) {
-        let noHLMessage = `Sorry, no highlights for ${cache_teams[cache_teamCodes[teamCode]]}.`;
+        let noHLMessage = `Sorry, no highlights for ${cache_teams[cache_teamCodes[teamCode]].name}.`;
         let highlights = false;
         let gameID = 0;
         let date = common.getDateFormatted();
