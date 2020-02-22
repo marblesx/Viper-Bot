@@ -24,11 +24,10 @@ function rollMutlipleDice(args) {
 
 module.exports = {
     name: 'd',
-    description: 'Dice rolling command, d.20 will roll a 20 sided dice.',
+    description: 'Dice rolling command, d.20 will roll a 20 sided dice. d.6.4 will roll a 6 sided dice 4 times and total them.',
     execute(args, bot) {
         if (args.length === 3) {
             let message = rollMutlipleDice(args);
-
             bot.channel.send(message);
         } else {
             bot.channel.send('You rolled a ' + Dice(parseInt(args[1])))
