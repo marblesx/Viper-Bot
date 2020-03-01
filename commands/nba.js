@@ -125,6 +125,10 @@
                     });
                     _bot.channel.send(message);
                 }
+                else
+                {
+                    _bot.channel.send("No games today.");
+                }
             }
         });
     }
