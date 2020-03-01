@@ -5,6 +5,6 @@ module.exports = {
     name: 'rock',
     description: 'Rock command for rock/paper/scissors.',
     execute(args, bot){
-        bot.channel.send(RockPaperScissors.RockPaperSissors('rock',bot.author.id));
+       RockPaperScissors.RockPaperSissors('rock',bot);
     }
 };

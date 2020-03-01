@@ -5,13 +5,13 @@
   "main": "bot.js",
   "author": "Marblesx",
   "dependencies": {
-    "discord.io": "^2.5.3",
     "discord.js": "^11.5.1",
     "fs": "^0.0.1-security",
     "package.json": "^2.0.1",
     "request": "^2.88.0",
     "sync-request": "^6.1.0",
     "tabletojson": "~1.2.0",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "mongodb": "^3.5.4"
   }
 }

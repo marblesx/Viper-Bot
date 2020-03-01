@@ -21,7 +21,7 @@
         {
             let d = new Date(new Date().toLocaleTimeString("en-US", { timeZone: "America/New_York", year:'numeric', month:'2-digit', day: '2-digit' }));
                 month = '' + (d.getMonth() + 1),
-                day = '' + d.getDate(),
+                 day = '' + d.getDate(),
                 year = d.getFullYear();
 
             if (month.length < 2)
@@ -39,7 +39,7 @@
             return date.toLocaleDateString("en-US", { month: '2-digit', day: '2-digit', year: 'numeric' });
         },
         /**
-         * @returns {string} the current date object in EST.
+         * @returns {Date} the current date object in EST.
          * */
         getToDaysDate: function () {
             return new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
