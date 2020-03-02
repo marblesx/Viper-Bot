@@ -6,6 +6,8 @@ const clientCommands = {};
 const commands = [];
 const fs = require('fs');
 const commandFiles = fs.readdirSync('commands').filter(file => file.endsWith('.js'));
+const commandRegex = /[!]\d+[d]\d+/g;
+const digitsRegex = /\d+/g;
 
 let startTime;
 
@@ -30,6 +32,13 @@ bot.on('ready', ()=> {
 
 bot.on('message', async message => {
     let messageText = message.content;
+    if(messageText.match(commandRegex))
+    {
+        let newNums = messageText.match(digitsRegex);
+        if(newNums.length === 2) {
+            messageText = `!d.${newNums[0]}.${newNums[1]}`;
+        }
+    }
     if (messageText.substring(0, 1) === prefix) {
 
         let args = messageText.substring(1).split('.');

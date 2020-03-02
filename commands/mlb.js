@@ -15,8 +15,11 @@
     const GameOver = "Game Over";
     const Postponed = "Postponed";
     const Phillies_ID = '143';
-
+    let cache_teams ={};
+    let cache_teamCodes ={};
     let _bot;
+    const NLCode= 104;
+    const ALCode = 103;
 
     /**
      * This handles all the arg method calls for mlb
@@ -39,10 +42,27 @@
         }
     }
 
+    /**
+     * Sets up the team names.
+     */
+    function cacheTeams() {
+        if (Object.entries(cache_teams).length === 0) {
+            let res = request_sync('GET', TEAM_URL);
+            let temp = JSON.parse(res.getBody('utf8')).teams;
+            for (let i = 0; i < temp.length; i++) {
+                if (temp[i].league.id === NLCode || temp[i].league.id === ALCode) {
+                    cache_teams[temp[i].id] = {name: temp[i].teamName, teamCode: temp[i].abbreviation.toLowerCase()};
+                    cache_teamCodes[temp[i].abbreviation.toLowerCase()] = temp[i].id;
+                }
+            }
+        }
+    }
+
+
     /***
      * Retrieves the current games for the current date, if they've been played, are being played, or are yet to play.
      * */
-    function gamesToday() {
+    async function gamesToday() {
         let message = '';
         let date = common.getToDaysDateFormatted();
         request.get({
@@ -56,7 +76,7 @@
                 console.log('Status:', res.statusCode);
             } else {
                 // data is already parsed as JSON:
-                if (data.dates.length !== 0) {
+                if (data.totalGames !== 0) {
                     let games = data.dates[0].games;
                     message += "Away team first, home team second: \n";
                     for (let i = 0; i < games.length; i++) {
@@ -121,8 +141,8 @@
      * @returns {string} Team Name IE Phillies
      */
     function getTeamName(id) {
-        let res = request_sync('GET', TEAM_URL + id);
-        return JSON.parse(res.getBody('utf8')).teams[0].teamName;
+       cacheTeams();
+        return cache_teams[id].name;
     }
 
     function PhilliesNextGame() {
