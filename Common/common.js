@@ -58,6 +58,15 @@
          */
         getTimeDifferenceInSeconds: function (timeOfGame) {
             return (new Date(timeOfGame).getTime() - new Date().getTime()) / 1000;
+        },
+        /**
+         * Gets a random number.
+         * @param max {number} max number returned.
+         * @returns {number} random number.
+         */
+        getRandomInt: function (max)
+        {
+            return Math.floor(Math.random() * Math.floor(max));
         }
 
     };
