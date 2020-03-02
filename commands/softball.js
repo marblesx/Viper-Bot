@@ -21,7 +21,7 @@
             16: 'SACF',
             17: 'RNC',
 
-        }
+        };
 
     const stat =
         {
