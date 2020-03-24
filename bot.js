@@ -76,7 +76,7 @@ bot.on('guildMemberAdd', member => {
     if(channel.name !== channelName) return;
     // Send the message, mentioning the member
     channel.send(`Welcome to the server, ${member}`);
-    serverCommand.welcome(channel);
+    serverCommand.welcome(bot);
 });
 
 bot.login(token);
