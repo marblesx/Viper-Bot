@@ -1,13 +1,14 @@
 const Discord = require('discord.js');
 const logger = require('winston');
 const {token} = require('./auth.json');
-const {prefix} = require('./config.json');
+const {prefix, channelName} = require('./config.json');
 const clientCommands = {};
 const commands = [];
 const fs = require('fs');
 const commandFiles = fs.readdirSync('commands').filter(file => file.endsWith('.js'));
 const commandRegex = /[!]\d+[d]\d+/g;
 const digitsRegex = /\d+/g;
+const serverCommand = require('./Common/serverCommon');
 
 let startTime;
 
@@ -64,5 +65,18 @@ bot.on('message', async message => {
             message.channel.send("Error occurred.");
         }
 }});
+
+// Create an event listener for new guild members
+bot.on('guildMemberAdd', member => {
+    // Send the message to a designated channel on a server:
+    const channel = member.guild.systemChannel;
+
+    if(!channel) return;
+    if(channel.type !== "text") return;
+    if(channel.name !== channelName) return;
+    // Send the message, mentioning the member
+    channel.send(`Welcome to the server, ${member}`);
+    serverCommand.welcome(channel);
+});
 
 bot.login(token);
