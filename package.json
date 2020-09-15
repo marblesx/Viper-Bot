@@ -7,11 +7,11 @@
   "dependencies": {
     "discord.js": "^11.5.1",
     "fs": "^0.0.1-security",
+    "mongodb": "^3.5.4",
     "package.json": "^2.0.1",
     "request": "^2.88.0",
     "sync-request": "^6.1.0",
     "tabletojson": "~1.2.0",
-    "winston": "^3.2.1",
-    "mongodb": "^3.5.4"
+    "winston": "^3.2.1"
   }
 }
