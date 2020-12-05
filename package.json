@@ -12,6 +12,7 @@
     "sync-request": "^6.1.0",
     "tabletojson": "~1.2.0",
     "winston": "^3.2.1",
-    "mongodb": "^3.5.4"
+    "mongodb": "^3.5.4",
+    "lib": "^4.3.0"
   }
 }

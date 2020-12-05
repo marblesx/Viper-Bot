@@ -67,6 +67,24 @@
         getRandomInt: function (max)
         {
             return Math.floor(Math.random() * Math.floor(max));
+        },
+        /**
+         * Returns if string is blank or not.
+         * @param userString {string}
+         * @return {boolean}
+         */
+        isBlank: function (userString){
+            if(userString){return false}
+            return true;
+        },
+        /**
+         * Returns if string is blank or not.
+         * @param userString {string}
+         * @return {boolean}
+         */
+        isNotBlank: function (userString){
+          if(userString){return true}
+          return false;
         }
 
     };
