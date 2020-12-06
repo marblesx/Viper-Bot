@@ -5,6 +5,8 @@ const matt = 'matt';
 const eddie = 'eddie';
 const kevin = 'kevin';
 
+const lastGameRegex = /[l]\d+/g;
+const digitsRegex = /\d+/g;
 
 const gamerTag = 'g';
 const eddieGamerTag = 'fastEddeh';
@@ -12,6 +14,247 @@ const markGamerTag = 'cmilk215';
 const mikeGamerTag = 'MikeKnightMedia';
 const mattGamerTag = 'marbles04';
 const kevinGamerTag = 'the nivekEffect';
+
+let slayerGame = "Slayer";
+let ctfGame = "CTF";
+let kothGame = "KOTH";
+let juggernautGame = "Juggernaut";
+let infectionGame = "Infection";
+let floodGame = "Flood";
+let raceGame = "Race";
+let extractionGame = "Extraction";
+let dominionGame = "Dominion";
+let regicideGame = "Regicide";
+let grifballGame = "Grifball";
+let ricochetGame = "Ricochet";
+let vipGame = "VIP";
+let territoriesGame = "Territories";
+let assualtGame = "Assault";
+
+
+const maps = [
+    'Pillar of Autumn',
+    'Halo',
+    'Truth and Reconciliation',
+    'Silent Cartographer',
+    '343 guilty spark',
+    'the library',
+    'two betrayals',
+    'keyes',
+    'the maw',
+    'battle creek',
+    'sidewinder',
+    'damnation',
+    'rat race',
+    'prisoner',
+    'hang em high',
+    'chill out',
+    'derelict',
+    'boarding action',
+    'chiron',
+    'blood gulch',
+    'wizard',
+    'longest',
+    'death island',
+    'danger canyon',
+    'infinity',
+    'timberland',
+    'ice fields',
+    'gephyrophobia',
+    'the heretic',
+    'the armory',
+    'cairo station',
+    'outskirts',
+    'metropolis',
+    'the arbiter',
+    'the oracle',
+    'delta halo',
+    'regret',
+    'sacred icon',
+    'quarantine zone',
+    'gravemind',
+    'uprising',
+    'high charity',
+    'the great journey',
+    'lockout',
+    'ascension',
+    'midship',
+    'ivory tower',
+    'beaver creek',
+    'burial mounds',
+    'colossus',
+    'zanzibar',
+    'coagulation',
+    'headlong',
+    'waterworks',
+    'foundation',
+    'containment',
+    'warlock',
+    'sanctuary',
+    'turf',
+    'backwash',
+    'elongation',
+    'gemini',
+    'relic',
+    'terminal',
+    'desolation',
+    'tombstone',
+    'district',
+    'uplift',
+    'arrival',
+    'sierra 117',
+    'crows nest',
+    'tsavo highway',
+    'the storm',
+    'floodgate',
+    'the ark',
+    'the covenant',
+    'cortana',
+    'halo',
+    'construct',
+    'epitaph',
+    'guardian',
+    'high ground',
+    'isolation',
+    'last resort',
+    'narrows',
+    'sandtrap',
+    'snowbound',
+    'the pit',
+    'valhalla',
+    'foundry',
+    'rats nest',
+    'standoff',
+    'avalanche',
+    'blackout',
+    'ghost town',
+    'cold storage',
+    'assembly',
+    'orbital',
+    'sandbox',
+    'citadel',
+    'heretic',
+    'longshore',
+    'prologue',
+    'dawn',
+    'requiem',
+    'forerunner',
+    'infinity',
+    'reclaimer',
+    'shutdown',
+    'composer',
+    'midnight',
+    'epilogue',
+    'multiplayer first DONOTUSE OR REMOVE',
+    'adrift',
+    'abandon',
+    'complex',
+    'exile',
+    'haven',
+    'longbow',
+    'meltdown',
+    'ragnarok',
+    'solace',
+    'vortex',
+    'ravine',
+    'impact',
+    'erosion',
+    'forge island',
+    'wreckage',
+    'harvest',
+    'shatter',
+    'landfall',
+    'monolith',
+    'skyline',
+    'daybreak',
+    'outcast',
+    'perdition',
+    'pitfall',
+    'vertigo',
+    'spartan ops first DONOTUSE OR REMOVE',
+    'chopperbowl',
+    'sniperalley',
+    'fortsw',
+    'temple',
+    'scurve',
+    'courtyard',
+    'complex',
+    'valhalla',
+    'factory',
+    'mezzanie',
+    'caverns',
+    'vortex',
+    'breach',
+    'hillside',
+    'engine',
+    'groundhog lockout',
+    'groundhog ascension',
+    'groundhog zanzibar',
+    'groundhog coagulation',
+    'groundhog warlock',
+    'groundhog sanctuary',
+    'groundhog forge skybox01',
+    'groundhog forge skybox02',
+    'groundhog forge skybox03',
+    'extracredit first DONOTUSE OR REMOVE',
+    'epilogue',
+    'prepare to drop',
+    'mombasa streets',
+    'tayari plaza',
+    'uplift reserve',
+    'kizingo boulevard',
+    'oni alpha site',
+    'nmpd hq',
+    'kikowani station',
+    'data hive',
+    'coastal highway',
+    'epilogue',
+    'groundhog relic',
+   'noble actual',
+    'winter contingency',
+    'oni sword base',
+    'nightfall',
+    'tip of the spear',
+    'long night of solace',
+    'exodus',
+    'new alexandria',
+    'the package',
+    'the pillar of autumn',
+    'the pillar of autumn credits',
+    'lone wolf',
+    'boardwalk',
+    'boneyard',
+    'countdown',
+    'powerhouse',
+    'reflection',
+    'spire',
+    'sword base',
+    'zealot',
+    'anchor 9',
+    'breakpoint',
+    'tempest',
+    'condemned',
+    'highlands',
+    'battle canyon',
+    'penance',
+    'ridgeline',
+    'solitary',
+    'high noon',
+    'breakneck',
+    'forge world',
+    'beachhead',
+    'corvette',
+    'courtyard',
+    'glacier',
+    'holdout',
+    'outpost',
+    'overlook',
+    'waterfront',
+    'unearthed',
+    'installation 04',
+
+];
+
 {
     const lib = require('lib');
     const mcc = lib.halo.mcc['@0.0.11'];
@@ -31,50 +274,98 @@ const kevinGamerTag = 'the nivekEffect';
                     .setDescription('List of help and commands for the HALO commands.')
                     .addField('!halo.g.{gamertag}', 'Returns some stats about that gamer tag', true)
                     .addField('!halo.{name}', 'Returns some stats about that viper (eddie, matt, mark, mike)', true)
+                    .addField('!halo.{name}.l{x}', 'Returns some stats about that viper (eddie, matt, mark, mike) where x is the last number of games', true)
+                    .addField('!halo.g.{gamerTag}', 'Returns some stats about that gamertag', true)
+                    .addField('!halo.g.{gamerTag}.l{x}', 'Returns some stats about that gamertag, where x is the last number of games.', true)
+
+
 
                 //.addField('!halo.{gamertag}')
                 _bot.channel.send(helpEmbed);
                 break;
             case matt:
-                if(common.isNotBlank(args[2])){
-                }else{
-                   callBasicStats(mattGamerTag);
-                }
+                getStats(mattGamerTag, args);
                 break;
             case mike:
-                if(common.isNotBlank(args[2])){
-                }else{
-                    callBasicStats(mikeGamerTag);
-                }
+                getStats(mikeGamerTag, args);
                 break;
             case eddie:
-                if(common.isNotBlank(args[2])){
-                }else{
-                    callBasicStats(eddieGamerTag);
-                }
+                getStats(eddieGamerTag, args);
                 break;
             case kevin:
-                if(common.isNotBlank(args[2])){
-                }else{
-                    callBasicStats(kevinGamerTag);
-                }
+                getStats(kevinGamerTag, args);
                 break;
             case mark:
-                if(common.isNotBlank(args[2])){
-                }else{
-                    callBasicStats(markGamerTag);
-                }
+                getStats(markGamerTag, args);
                 break;
             case gamerTag:
-                if(common.isNotBlank(args[3])){
-                }else{
-                    callBasicStats(args[2]);
+                const index = args.indexOf('g');
+                if (index > -1) {
+                    args.splice(index, 1);
                 }
+                getStats(args[1], args);
                 break;
             default:
                 // make API request
 
         }
+    }
+
+    function getStats(gamerTag, args){
+        if(common.isNotBlank(args[2])){
+            if(args[2].toLowerCase().match(lastGameRegex)){
+                let games = args[2].match(digitsRegex);
+                lastXGames(gamerTag,games[0]);
+            }
+        }else{
+            callBasicStats(gamerTag);
+        }
+    }
+
+    function lastXGames(gamerTag, gamesNum){
+        gamesNum = parseInt(gamesNum);
+      let slayer =  lib.halo.mcc['@0.0.11'].games.history({
+            gamertag: gamerTag,
+            game: 'All',
+            gameVariant: slayerGame,
+            count: gamesNum
+        }).then((result)=>{
+            result.games.forEach(game=>{
+                game.gameType = slayerGame;
+            })
+          return result;
+      }).catch(error =>
+          _bot.channel.send(error.message)
+      );
+        let ctf =  lib.halo.mcc['@0.0.11'].games.history({
+            gamertag: gamerTag,
+            game: 'All',
+            gameVariant: ctfGame,
+            count: gamesNum
+        }).then((result)=>{
+            result.games.forEach(game=>{
+                game.gameType = ctfGame;
+            })
+            return result;
+        }).catch(error =>
+            _bot.channel.send(error.message)
+        );
+
+
+        Promise.all([slayer,ctf]).then((values)=>{
+            const games = [];
+           for(let c = 0; c < values.length; c++){
+               for(let g = 0; g< values[c].games.length; g++){
+                   games.push(values[c].games[g]);
+               }
+           }
+            games.sort((a,b)=> b.playedAt - a.playedAt);
+            for(let i =0; i < gamesNum; i++){
+                gameCard(games[i],gamerTag,i+1);
+            }
+
+        });
+
     }
 
     function callBasicStats(userGamerTag) {
@@ -103,6 +394,22 @@ const kevinGamerTag = 'the nivekEffect';
             .addField("KD",  player.killDeathRatio.toFixed(2),true)
             .addField("Kills per game",  player.killsPerGame.toFixed(2),true)
             .addField("Deaths per game",  player.deathsPerGame.toFixed(2),true)
+        _bot.channel.send(helpEmbed);
+    }
+
+
+    function gameCard(game,gamerTag, gamenum) {
+        const helpEmbed = new Discord.RichEmbed()
+            .setColor('#b6d6eb')
+            .setTitle(`Game Record ${gamenum}: ${gamerTag}`)
+            .setDescription(`${gamerTag} game stats`)
+            .addField('GameType', game.gameType)
+            //.addField('Map', maps[game.mapId])
+            .addField("Outcome", game.won ? 'Won' : 'Lost')
+            .addField('Kills', game.kills,true)
+            .addField('Deaths', game.deaths,true)
+            .addField('Assists', game.assists, true)
+            .addField('Played',new Date(game.playedAt).toString() )
         _bot.channel.send(helpEmbed);
     }
 
