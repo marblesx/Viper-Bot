@@ -350,9 +350,179 @@ const maps = [
         }).catch(error =>
             _bot.channel.send(error.message)
         );
+        let juggernaut =  lib.halo.mcc['@0.0.11'].games.history({
+            gamertag: gamerTag,
+            game: 'All',
+            gameVariant: juggernautGame,
+            count: gamesNum
+        }).then((result)=>{
+            result.games.forEach(game=>{
+                game.gameType = juggernautGame;
+            })
+            return result;
+        }).catch(error =>
+            _bot.channel.send(error.message)
+        );
+        let koth =  lib.halo.mcc['@0.0.11'].games.history({
+            gamertag: gamerTag,
+            game: 'All',
+            gameVariant: kothGame,
+            count: gamesNum
+        }).then((result)=>{
+            result.games.forEach(game=>{
+                game.gameType = kothGame;
+            })
+            return result;
+        }).catch(error =>
+            _bot.channel.send(error.message)
+        );
+        let infection =  lib.halo.mcc['@0.0.11'].games.history({
+            gamertag: gamerTag,
+            game: 'All',
+            gameVariant: infectionGame,
+            count: gamesNum
+        }).then((result)=>{
+            result.games.forEach(game=>{
+                game.gameType = infectionGame;
+            })
+            return result;
+        }).catch(error =>
+            _bot.channel.send(error.message)
+        );
+        let flood =  lib.halo.mcc['@0.0.11'].games.history({
+            gamertag: gamerTag,
+            game: 'All',
+            gameVariant: floodGame,
+            count: gamesNum
+        }).then((result)=>{
+            result.games.forEach(game=>{
+                game.gameType = floodGame;
+            })
+            return result;
+        }).catch(error =>
+            _bot.channel.send(error.message)
+        );
+        let race =  lib.halo.mcc['@0.0.11'].games.history({
+            gamertag: gamerTag,
+            game: 'All',
+            gameVariant: raceGame,
+            count: gamesNum
+        }).then((result)=>{
+            result.games.forEach(game=>{
+                game.gameType = raceGame;
+            })
+            return result;
+        }).catch(error =>
+            _bot.channel.send(error.message)
+        );
+        let extraction =  lib.halo.mcc['@0.0.11'].games.history({
+            gamertag: gamerTag,
+            game: 'All',
+            gameVariant: extractionGame,
+            count: gamesNum
+        }).then((result)=>{
+            result.games.forEach(game=>{
+                game.gameType = extractionGame;
+            })
+            return result;
+        }).catch(error =>
+            _bot.channel.send(error.message)
+        );
+        let dominion =  lib.halo.mcc['@0.0.11'].games.history({
+            gamertag: gamerTag,
+            game: 'All',
+            gameVariant: dominionGame,
+            count: gamesNum
+        }).then((result)=>{
+            result.games.forEach(game=>{
+                game.gameType = slayerGame;
+            })
+            return dominionGame;
+        }).catch(error =>
+            _bot.channel.send(error.message)
+        );
+        let regicide =  lib.halo.mcc['@0.0.11'].games.history({
+            gamertag: gamerTag,
+            game: 'All',
+            gameVariant: regicideGame,
+            count: gamesNum
+        }).then((result)=>{
+            result.games.forEach(game=>{
+                game.gameType = regicideGame;
+            })
+            return result;
+        }).catch(error =>
+            _bot.channel.send(error.message)
+        );
+        let grifball =  lib.halo.mcc['@0.0.11'].games.history({
+            gamertag: gamerTag,
+            game: 'All',
+            gameVariant: grifballGame,
+            count: gamesNum
+        }).then((result)=>{
+            result.games.forEach(game=>{
+                game.gameType = grifballGame;
+            })
+            return result;
+        }).catch(error =>
+            _bot.channel.send(error.message)
+        );
+        let ricochet =  lib.halo.mcc['@0.0.11'].games.history({
+            gamertag: gamerTag,
+            game: 'All',
+            gameVariant: ricochetGame,
+            count: gamesNum
+        }).then((result)=>{
+            result.games.forEach(game=>{
+                game.gameType = ricochetGame;
+            })
+            return result;
+        }).catch(error =>
+            _bot.channel.send(error.message)
+        );
+        let vip_g =  lib.halo.mcc['@0.0.11'].games.history({
+            gamertag: gamerTag,
+            game: 'All',
+            gameVariant: vipGame,
+            count: gamesNum
+        }).then((result)=>{
+            result.games.forEach(game=>{
+                game.gameType = vipGame;
+            })
+            return result;
+        }).catch(error =>
+            _bot.channel.send(error.message)
+        );
+        let territorie =  lib.halo.mcc['@0.0.11'].games.history({
+            gamertag: gamerTag,
+            game: 'All',
+            gameVariant: territoriesGame,
+            count: gamesNum
+        }).then((result)=>{
+            result.games.forEach(game=>{
+                game.gameType = territoriesGame;
+            })
+            return result;
+        }).catch(error =>
+            _bot.channel.send(error.message)
+        );
+        let assualt =  lib.halo.mcc['@0.0.11'].games.history({
+            gamertag: gamerTag,
+            game: 'All',
+            gameVariant: assualtGame,
+            count: gamesNum
+        }).then((result)=>{
+            result.games.forEach(game=>{
+                game.gameType = assualtGame;
+            })
+            return result;
+        }).catch(error =>
+            _bot.channel.send(error.message)
+        );
 
 
-        Promise.all([slayer,ctf]).then((values)=>{
+        Promise.all([slayer,ctf,assualt,territorie,vip_g,ricochet,dominion,extraction,
+        race,flood,infection,juggernaut,koth]).then((values)=>{
             const games = [];
            for(let c = 0; c < values.length; c++){
                for(let g = 0; g< values[c].games.length; g++){
@@ -399,7 +569,7 @@ const maps = [
 
 
     function gameCard(game,gamerTag, gamenum) {
-        const helpEmbed = new Discord.RichEmbed()
+        let gameEmbed = new Discord.RichEmbed()
             .setColor('#b6d6eb')
             .setTitle(`Game Record ${gamenum}: ${gamerTag}`)
             .setDescription(`${gamerTag} game stats`)
@@ -410,7 +580,21 @@ const maps = [
             .addField('Deaths', game.deaths,true)
             .addField('Assists', game.assists, true)
             .addField('Played',new Date(game.playedAt).toString() )
-        _bot.channel.send(helpEmbed);
+            gameEmbed=addtionalStats(gameEmbed,game);
+
+        _bot.channel.send(gameEmbed);
+    }
+    function addtionalStats(gameEmbed, game){
+        switch(game.gameType){
+            case kothGame:
+                gameEmbed.addField("Time in hill", game.score);
+                break;
+            case ctfGame:
+                gameEmbed.addField("Flags captured", game.score);
+                break;
+        }
+
+        return gameEmbed
     }
 
 
