@@ -524,9 +524,12 @@ const maps = [
         Promise.all([slayer,ctf,assualt,territorie,vip_g,ricochet,dominion,extraction,
         race,flood,infection,juggernaut,koth]).then((values)=>{
             const games = [];
+
            for(let c = 0; c < values.length; c++){
-               for(let g = 0; g< values[c].games.length; g++){
-                   games.push(values[c].games[g]);
+               if(values[c].games != undefined) {
+                   for (let g = 0; g < values[c].games.length; g++) {
+                       games.push(values[c].games[g]);
+                   }
                }
            }
             games.sort((a,b)=> b.playedAt - a.playedAt);
