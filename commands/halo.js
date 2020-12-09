@@ -532,7 +532,7 @@ const maps = [
                    }
                }
            }
-            games.sort((a,b)=> b.playedAt - a.playedAt);
+            games.sort((a,b)=> new Date(b.playedAt) - new Date(a.playedAt));
             for(let i =0; i < gamesNum; i++){
                 gameCard(games[i],gamerTag,i+1);
             }
