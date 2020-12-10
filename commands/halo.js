@@ -274,9 +274,11 @@ const maps = [
                     .setDescription('List of help and commands for the HALO commands.')
                     .addField('!halo.g.{gamertag}', 'Returns some stats about that gamer tag', true)
                     .addField('!halo.{name}', 'Returns some stats about that viper (eddie, matt, mark, mike)', true)
-                    .addField('!halo.{name}.l{x}', 'Returns some stats about that viper (eddie, matt, mark, mike) where x is the last number of games', true)
+                    .addField('!halo.{name}.{x}', 'Returns some stats about that viper (eddie, matt, mark, mike) where x is the last number of games', true)
+                    .addField('!halo.{name}.{x}a', 'Returns AVG stats about that viper (eddie, matt, mark, mike) where x is the last number of games', true)
                     .addField('!halo.g.{gamerTag}', 'Returns some stats about that gamertag', true)
-                    .addField('!halo.g.{gamerTag}.l{x}', 'Returns some stats about that gamertag, where x is the last number of games.', true)
+                    .addField('!halo.g.{gamerTag}.{x}', 'Returns some stats about that gamertag, where x is the last number of games.', true)
+                    .addField('!halo.g.{gamerTag}.{x}a', 'Returns AVG stats about that gamertag, where x is the last number of games.', true)
                 _bot.channel.send(helpEmbed);
                 break;
             case matt:
@@ -545,16 +547,16 @@ const maps = [
                 game.KD = 0;
                 game.KDA=0;
                 for (let i = 0; i < gamesNum; i++) {
-                    game.kills+= parseInt(gamesNum[i].kills);
-                    game.deaths+= parseInt(gamesNum[i].deaths);
-                    game.assists+= parseInt(gamesNum[i].assists);
+                    game.kills+= parseInt(games[i].kills);
+                    game.deaths+= parseInt(games[i].deaths);
+                    game.assists+= parseInt(games[i].assists);
                 }
-                game.killsAvg = game.kills / gamesNum;
-                game.deathsAvg = game.deaths / gamesNum;
-                game.assistsAvg=game.assists / gamesNum;
-                game.KD = game.kills / game.deaths;
-                game.KDA=(game.kills + (game.assists / 3) ) / gamesNum;
-                gameCardAvg(game, gamerTag), gamesNum;
+                game.killsAvg = (game.kills / gamesNum).toFixed(2);
+                game.deathsAvg = (game.deaths / gamesNum).toFixed(2);
+                game.assistsAvg=(game.assists / gamesNum).toFixed(2);
+                game.KD = (game.kills / game.deaths).toFixed(2);
+                game.KDA=((game.kills + (game.assists / 3) ) / game.deaths).toFixed(2);
+                gameCardAvg(game, gamerTag, gamesNum);
             } else {
                 for (let i = 0; i < gamesNum; i++) {
                     gameCard(games[i], gamerTag, i + 1);
@@ -613,7 +615,7 @@ const maps = [
     function gameCardAvg(game,gamerTag, gameNum) {
         let gameEmbed = new Discord.RichEmbed()
             .setColor('#b6d6eb')
-            .setTitle(`Average Game Record for last ${gameNum}: ${gamerTag}`)
+            .setTitle(`Average Game Record for last ${gameNum} games: ${gamerTag}`)
             //.addField('Map', maps[game.mapId])
             .addField('Kills', game.kills,true)
             .addField('Deaths', game.deaths,true)
