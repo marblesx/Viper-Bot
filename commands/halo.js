@@ -5,7 +5,7 @@ const matt = 'matt';
 const eddie = 'eddie';
 const kevin = 'kevin';
 
-const lastGameRegex = /[l]\d+/g;
+const lastGameRegex = /\d+[a]/g;
 const digitsRegex = /\d+/g;
 
 const gamerTag = 'g';
@@ -277,10 +277,6 @@ const maps = [
                     .addField('!halo.{name}.l{x}', 'Returns some stats about that viper (eddie, matt, mark, mike) where x is the last number of games', true)
                     .addField('!halo.g.{gamerTag}', 'Returns some stats about that gamertag', true)
                     .addField('!halo.g.{gamerTag}.l{x}', 'Returns some stats about that gamertag, where x is the last number of games.', true)
-
-
-
-                //.addField('!halo.{gamertag}')
                 _bot.channel.send(helpEmbed);
                 break;
             case matt:
@@ -315,204 +311,209 @@ const maps = [
         if(common.isNotBlank(args[2])){
             if(args[2].toLowerCase().match(lastGameRegex)){
                 let games = args[2].match(digitsRegex);
-                lastXGames(gamerTag,games[0]);
+                avgLastXGames(gamerTag,games[0]);
+            }
+            else{
+                let games = args[2].match(digitsRegex);
+                lastXGames(gamerTag,games[0], false);
             }
         }else{
             callBasicStats(gamerTag);
         }
     }
 
-    function lastXGames(gamerTag, gamesNum){
+
+    function lastXGames(gamerTag, gamesNum, average) {
         gamesNum = parseInt(gamesNum);
-      let slayer =  lib.halo.mcc['@0.0.11'].games.history({
+        let slayer = lib.halo.mcc['@0.0.11'].games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: slayerGame,
             count: gamesNum
-        }).then((result)=>{
-            result.games.forEach(game=>{
+        }).then((result) => {
+            result.games.forEach(game => {
                 game.gameType = slayerGame;
             })
-          return result;
-      }).catch(error =>
-          _bot.channel.send(error.message)
-      );
-        let ctf =  lib.halo.mcc['@0.0.11'].games.history({
+            return result;
+        }).catch(error =>
+            _bot.channel.send(error.message)
+        );
+        let ctf = lib.halo.mcc['@0.0.11'].games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: ctfGame,
             count: gamesNum
-        }).then((result)=>{
-            result.games.forEach(game=>{
+        }).then((result) => {
+            result.games.forEach(game => {
                 game.gameType = ctfGame;
             })
             return result;
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let juggernaut =  lib.halo.mcc['@0.0.11'].games.history({
+        let juggernaut = lib.halo.mcc['@0.0.11'].games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: juggernautGame,
             count: gamesNum
-        }).then((result)=>{
-            result.games.forEach(game=>{
+        }).then((result) => {
+            result.games.forEach(game => {
                 game.gameType = juggernautGame;
             })
             return result;
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let koth =  lib.halo.mcc['@0.0.11'].games.history({
+        let koth = lib.halo.mcc['@0.0.11'].games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: kothGame,
             count: gamesNum
-        }).then((result)=>{
-            result.games.forEach(game=>{
+        }).then((result) => {
+            result.games.forEach(game => {
                 game.gameType = kothGame;
             })
             return result;
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let infection =  lib.halo.mcc['@0.0.11'].games.history({
+        let infection = lib.halo.mcc['@0.0.11'].games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: infectionGame,
             count: gamesNum
-        }).then((result)=>{
-            result.games.forEach(game=>{
+        }).then((result) => {
+            result.games.forEach(game => {
                 game.gameType = infectionGame;
             })
             return result;
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let flood =  lib.halo.mcc['@0.0.11'].games.history({
+        let flood = lib.halo.mcc['@0.0.11'].games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: floodGame,
             count: gamesNum
-        }).then((result)=>{
-            result.games.forEach(game=>{
+        }).then((result) => {
+            result.games.forEach(game => {
                 game.gameType = floodGame;
             })
             return result;
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let race =  lib.halo.mcc['@0.0.11'].games.history({
+        let race = lib.halo.mcc['@0.0.11'].games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: raceGame,
             count: gamesNum
-        }).then((result)=>{
-            result.games.forEach(game=>{
+        }).then((result) => {
+            result.games.forEach(game => {
                 game.gameType = raceGame;
             })
             return result;
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let extraction =  lib.halo.mcc['@0.0.11'].games.history({
+        let extraction = lib.halo.mcc['@0.0.11'].games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: extractionGame,
             count: gamesNum
-        }).then((result)=>{
-            result.games.forEach(game=>{
+        }).then((result) => {
+            result.games.forEach(game => {
                 game.gameType = extractionGame;
             })
             return result;
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let dominion =  lib.halo.mcc['@0.0.11'].games.history({
+        let dominion = lib.halo.mcc['@0.0.11'].games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: dominionGame,
             count: gamesNum
-        }).then((result)=>{
-            result.games.forEach(game=>{
+        }).then((result) => {
+            result.games.forEach(game => {
                 game.gameType = slayerGame;
             })
             return dominionGame;
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let regicide =  lib.halo.mcc['@0.0.11'].games.history({
+        let regicide = lib.halo.mcc['@0.0.11'].games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: regicideGame,
             count: gamesNum
-        }).then((result)=>{
-            result.games.forEach(game=>{
+        }).then((result) => {
+            result.games.forEach(game => {
                 game.gameType = regicideGame;
             })
             return result;
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let grifball =  lib.halo.mcc['@0.0.11'].games.history({
+        let grifball = lib.halo.mcc['@0.0.11'].games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: grifballGame,
             count: gamesNum
-        }).then((result)=>{
-            result.games.forEach(game=>{
+        }).then((result) => {
+            result.games.forEach(game => {
                 game.gameType = grifballGame;
             })
             return result;
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let ricochet =  lib.halo.mcc['@0.0.11'].games.history({
+        let ricochet = lib.halo.mcc['@0.0.11'].games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: ricochetGame,
             count: gamesNum
-        }).then((result)=>{
-            result.games.forEach(game=>{
+        }).then((result) => {
+            result.games.forEach(game => {
                 game.gameType = ricochetGame;
             })
             return result;
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let vip_g =  lib.halo.mcc['@0.0.11'].games.history({
+        let vip_g = lib.halo.mcc['@0.0.11'].games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: vipGame,
             count: gamesNum
-        }).then((result)=>{
-            result.games.forEach(game=>{
+        }).then((result) => {
+            result.games.forEach(game => {
                 game.gameType = vipGame;
             })
             return result;
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let territorie =  lib.halo.mcc['@0.0.11'].games.history({
+        let territorie = lib.halo.mcc['@0.0.11'].games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: territoriesGame,
             count: gamesNum
-        }).then((result)=>{
-            result.games.forEach(game=>{
+        }).then((result) => {
+            result.games.forEach(game => {
                 game.gameType = territoriesGame;
             })
             return result;
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let assualt =  lib.halo.mcc['@0.0.11'].games.history({
+        let assualt = lib.halo.mcc['@0.0.11'].games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: assualtGame,
             count: gamesNum
-        }).then((result)=>{
-            result.games.forEach(game=>{
+        }).then((result) => {
+            result.games.forEach(game => {
                 game.gameType = assualtGame;
             })
             return result;
@@ -521,24 +522,45 @@ const maps = [
         );
 
 
-        Promise.all([slayer,ctf,assualt,territorie,vip_g,ricochet,dominion,extraction,
-        race,flood,infection,juggernaut,koth]).then((values)=>{
+        Promise.all([slayer, ctf, assualt, territorie, vip_g, ricochet, dominion, extraction,
+            race, flood, infection, juggernaut, koth]).then((values) => {
             const games = [];
 
-           for(let c = 0; c < values.length; c++){
-               if(values[c].games != undefined) {
-                   for (let g = 0; g < values[c].games.length; g++) {
-                       games.push(values[c].games[g]);
-                   }
-               }
-           }
-            games.sort((a,b)=> new Date(b.playedAt) - new Date(a.playedAt));
-            for(let i =0; i < gamesNum; i++){
-                gameCard(games[i],gamerTag,i+1);
+            for (let c = 0; c < values.length; c++) {
+                if (values[c].games != undefined) {
+                    for (let g = 0; g < values[c].games.length; g++) {
+                        games.push(values[c].games[g]);
+                    }
+                }
             }
-
+            games.sort((a, b) => new Date(b.playedAt) - new Date(a.playedAt));
+            if (average) {
+                let game={};
+                game.kills =0;
+                game.deaths = 0;
+                game.assists = 0;
+                game.killsAvg = 0;
+                game.deathsAvg = 0;
+                game.assistsAvg=0;
+                game.KD = 0;
+                game.KDA=0;
+                for (let i = 0; i < gamesNum; i++) {
+                    game.kills+= gamesNum[i].kills;
+                    game.deaths+= gamesNum[i].deaths;
+                    game.assists+= gamesNum[i].assists;
+                }
+                game.killsAvg = game.kills / gamesNum;
+                game.deathsAvg = game.deaths / gamesNum;
+                game.assistsAvg=game.assists / gamesNum;
+                game.KD = game.kills / game.deaths;
+                game.KDA=(game.kills + (game.assists / 3) ) / gamesNum;
+                gameCardAvg(game, gamerTag), gamesNum;
+            } else {
+                for (let i = 0; i < gamesNum; i++) {
+                    gameCard(games[i], gamerTag, i + 1);
+                }
+            }
         });
-
     }
 
     function callBasicStats(userGamerTag) {
@@ -584,6 +606,23 @@ const maps = [
             .addField('Assists', game.assists, true)
             .addField('Played',new Date(game.playedAt).toString() )
             gameEmbed=addtionalStats(gameEmbed,game);
+
+        _bot.channel.send(gameEmbed);
+    }
+
+    function gameCardAvg(game,gamerTag, gameNum) {
+        let gameEmbed = new Discord.RichEmbed()
+            .setColor('#b6d6eb')
+            .setTitle(`Average Game Record for last ${gameNum}: ${gamerTag}`)
+            //.addField('Map', maps[game.mapId])
+            .addField('Kills', game.kills,true)
+            .addField('Deaths', game.deaths,true)
+            .addField('Assists', game.assists, true)
+            .addField('Avg Kills', game.killsAvg, true)
+            .addField('Avg Deaths', game.deathsAvg, true)
+            .addField('Avg Assists', game.assistsAvg, true)
+            .addField('KD', game.KD, true)
+            .addField('KDA', game.KDA, true)
 
         _bot.channel.send(gameEmbed);
     }
