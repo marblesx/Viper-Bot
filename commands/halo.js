@@ -311,7 +311,7 @@ const maps = [
         if(common.isNotBlank(args[2])){
             if(args[2].toLowerCase().match(lastGameRegex)){
                 let games = args[2].match(digitsRegex);
-                avgLastXGames(gamerTag,games[0]);
+                lastXGames(gamerTag,games[0],true);
             }
             else{
                 let games = args[2].match(digitsRegex);
@@ -523,7 +523,7 @@ const maps = [
 
 
         Promise.all([slayer, ctf, assualt, territorie, vip_g, ricochet, dominion, extraction,
-            race, flood, infection, juggernaut, koth]).then((values) => {
+            race, flood, infection, juggernaut, koth,regicide,grifball]).then((values) => {
             const games = [];
 
             for (let c = 0; c < values.length; c++) {
