@@ -545,9 +545,9 @@ const maps = [
                 game.KD = 0;
                 game.KDA=0;
                 for (let i = 0; i < gamesNum; i++) {
-                    game.kills+= gamesNum[i].kills;
-                    game.deaths+= gamesNum[i].deaths;
-                    game.assists+= gamesNum[i].assists;
+                    game.kills+= parseInt(gamesNum[i].kills);
+                    game.deaths+= parseInt(gamesNum[i].deaths);
+                    game.assists+= parseInt(gamesNum[i].assists);
                 }
                 game.killsAvg = game.kills / gamesNum;
                 game.deathsAvg = game.deaths / gamesNum;
