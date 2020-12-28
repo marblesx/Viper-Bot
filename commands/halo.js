@@ -555,7 +555,7 @@ const maps = [
                 game.deathsAvg = (game.deaths / gamesNum).toFixed(2);
                 game.assistsAvg=(game.assists / gamesNum).toFixed(2);
                 game.KD = (game.kills / game.deaths).toFixed(2);
-                game.SE=((game.kills + game.assists ) / game.kills + game.assists + game.deaths).toFixed(2);
+                game.SE=((game.kills + game.assists ) / (game.kills + game.assists + game.deaths)).toFixed(2);
                 gameCardAvg(game, gamerTag, gamesNum);
             } else {
                 for (let i = 0; i < gamesNum; i++) {
