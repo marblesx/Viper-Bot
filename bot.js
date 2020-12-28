@@ -27,8 +27,9 @@ logger.level = 'debug';
 const bot = new Discord.Client();
 
 bot.on('ready', ()=> {
-
     startTime = new Date();
+    console.log(`I am ready! ${startTime.toLocaleTimeString()}`);
+
 });
 
 bot.on('message', async message => {
@@ -69,11 +70,10 @@ bot.on('message', async message => {
 // Create an event listener for new guild members
 bot.on('guildMemberAdd', member => {
     // Send the message to a designated channel on a server:
-    const channel = member.guild.systemChannel;
+    const channel = member.guild.channels.cache.find(ch => ch.name === channelName);
 
     if(!channel) return;
-    if(channel.type !== "text") return;
-    if(channel.name !== channelName) return;
+
     // Send the message, mentioning the member
     channel.send(`Welcome to the server, ${member}`);
     serverCommand.welcomeBot(channel);

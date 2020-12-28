@@ -545,7 +545,7 @@ const maps = [
                 game.deathsAvg = 0;
                 game.assistsAvg=0;
                 game.KD = 0;
-                game.KDA=0;
+                game.SE=0;
                 for (let i = 0; i < gamesNum; i++) {
                     game.kills+= parseInt(games[i].kills);
                     game.deaths+= parseInt(games[i].deaths);
@@ -555,7 +555,7 @@ const maps = [
                 game.deathsAvg = (game.deaths / gamesNum).toFixed(2);
                 game.assistsAvg=(game.assists / gamesNum).toFixed(2);
                 game.KD = (game.kills / game.deaths).toFixed(2);
-                game.KDA=((game.kills + (game.assists / 3) ) / game.deaths).toFixed(2);
+                game.SE=((game.kills + game.assists ) / game.kills + game.assists + game.deaths).toFixed(2);
                 gameCardAvg(game, gamerTag, gamesNum);
             } else {
                 for (let i = 0; i < gamesNum; i++) {
@@ -624,7 +624,7 @@ const maps = [
             .addField('Avg Deaths', game.deathsAvg, true)
             .addField('Avg Assists', game.assistsAvg, true)
             .addField('KD', game.KD, true)
-            .addField('KDA', game.KDA, true)
+            .addField('Successful Engagements', game.SE, true)
 
         _bot.channel.send(gameEmbed);
     }
