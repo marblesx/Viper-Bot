@@ -318,8 +318,7 @@ const maps = [
                 lastXGames(gamerTag, games[0], true);
             } else {
                 let games = args[2].match(digitsRegex);
-                let gamesnum = parseInt(games);
-                if (gamesnum > haloGameLimit) {
+                if (parseInt(games) > parseInt(haloGameLimit)) {
                     _bot.channel.send("Fuck off wanker, keep it 10 and under.");
                 } else {
                     lastXGames(gamerTag, games[0], false);
