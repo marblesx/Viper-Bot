@@ -5,7 +5,7 @@ const matt = 'matt';
 const eddie = 'eddie';
 const kevin = 'kevin';
 
-const {haloGameLimit} = require('./config.json');
+const {haloGameLimit} = require('../config.json');
 
 const lastGameRegex = /\d+[a]/g;
 const digitsRegex = /\d+/g;
