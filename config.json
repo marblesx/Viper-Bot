@@ -1,4 +1,5 @@
 {
   "prefix": "!",
-  "channelName": "general-population"
+  "channelName": "general-population",
+  "haloGameLimit": 10
 }

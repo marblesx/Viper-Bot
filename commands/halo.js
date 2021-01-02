@@ -5,6 +5,8 @@ const matt = 'matt';
 const eddie = 'eddie';
 const kevin = 'kevin';
 
+const {haloGameLimit} = require('../config.json');
+
 const lastGameRegex = /\d+[a]/g;
 const digitsRegex = /\d+/g;
 
@@ -309,17 +311,20 @@ const maps = [
         }
     }
 
-    function getStats(gamerTag, args){
-        if(common.isNotBlank(args[2])){
-            if(args[2].toLowerCase().match(lastGameRegex)){
+    function getStats(gamerTag, args) {
+        if (common.isNotBlank(args[2])) {
+            if (args[2].toLowerCase().match(lastGameRegex)) {
                 let games = args[2].match(digitsRegex);
-                lastXGames(gamerTag,games[0],true);
-            }
-            else{
+                lastXGames(gamerTag, games[0], true);
+            } else {
                 let games = args[2].match(digitsRegex);
-                lastXGames(gamerTag,games[0], false);
+                if (parseInt(games) > parseInt(haloGameLimit)) {
+                    _bot.channel.send("Fuck off wanker, keep it 10 and under.");
+                } else {
+                    lastXGames(gamerTag, games[0], false);
+                }
             }
-        }else{
+        } else {
             callBasicStats(gamerTag);
         }
     }
