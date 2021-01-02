@@ -32,7 +32,7 @@ bot.on('ready', ()=> {
 
 });
 
-client.on('shardError', error => {
+bot.on('shardError', error => {
     console.error('A websocket connection encountered an error:', error);
 });
 
