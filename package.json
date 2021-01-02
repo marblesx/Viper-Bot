@@ -1,18 +1,18 @@
 {
   "name": "vipers-sports-bot",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Viper discord sports bot that will show statistics for players",
   "main": "bot.js",
   "author": "Marblesx",
   "dependencies": {
-    "discord.js": "^11.5.1",
+    "discord.js": "^12.0.2",
     "fs": "^0.0.1-security",
+    "lib": "^4.3.0",
+    "mongodb": "^3.6.3",
     "package.json": "^2.0.1",
-    "request": "^2.88.0",
+    "request": "^2.88.2",
     "sync-request": "^6.1.0",
     "tabletojson": "~1.2.0",
-    "winston": "^3.2.1",
-    "mongodb": "^3.5.4",
-    "lib": "^4.3.0"
+    "winston": "^3.3.3"
   }
 }

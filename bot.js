@@ -28,8 +28,12 @@ const bot = new Discord.Client();
 
 bot.on('ready', ()=> {
     startTime = new Date();
-    console.log(`I am ready! ${startTime.toLocaleTimeString()}`);
+    console.log(`Back online! ${startTime.toLocaleTimeString()}`);
 
+});
+
+client.on('shardError', error => {
+    console.error('A websocket connection encountered an error:', error);
 });
 
 bot.on('message', async message => {
@@ -55,6 +59,9 @@ bot.on('message', async message => {
         }
         if (cmd.startsWith('vhelp')) {
             args[args.length] = commands;
+        }
+        if (cmd.startsWith('admin')) {
+            args[args.length] = message.author;
         }
 
         if (!clientCommands[cmd]) return;
