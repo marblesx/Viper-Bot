@@ -268,7 +268,7 @@ const maps = [
 
         switch (args[1].toLowerCase()){
             case 'help':
-                const helpEmbed = new Discord.RichEmbed()
+                const helpEmbed = new Discord.MessageEmbed()
                     .setColor('#2dff16')
                     .setTitle('Halo Help Commands')
                     .setURL('https://github.com/marblesx')
@@ -583,7 +583,7 @@ const maps = [
     }
 
     function playerCard(player) {
-        const helpEmbed = new Discord.RichEmbed()
+        const helpEmbed = new Discord.MessageEmbed()
             .setColor('#b6d6eb')
             .setTitle(`Service Record: ${player.gamertag}`)
             .setDescription(`${player.gamertag} is part of ${player.clantag} and has played for ${player.playtime}`)
@@ -601,7 +601,7 @@ const maps = [
 
 
     function gameCard(game,gamerTag, gamenum) {
-        let gameEmbed = new Discord.RichEmbed()
+        let gameEmbed = new Discord.MessageEmbed()
             .setColor('#b6d6eb')
             .setTitle(`Game Record ${gamenum}: ${gamerTag}`)
             .setDescription(`${gamerTag} game stats`)
@@ -618,7 +618,7 @@ const maps = [
     }
 
     function gameCardAvg(game,gamerTag, gameNum) {
-        let gameEmbed = new Discord.RichEmbed()
+        let gameEmbed = new Discord.MessageEmbed()
             .setColor('#b6d6eb')
             .setTitle(`Average Game Record for last ${gameNum} games: ${gamerTag}`)
             //.addField('Map', maps[game.mapId])

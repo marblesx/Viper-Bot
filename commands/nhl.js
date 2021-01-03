@@ -44,7 +44,7 @@
         _bot = bot;
         switch (args[1]) {
             case 'help':
-                const helpEmbed = new Discord.RichEmbed()
+                const helpEmbed = new Discord.MessageEmbed()
                     .setColor('#2dff16')
                     .setTitle('NHL Help Commands')
                     .setURL('https://github.com/marblesx')

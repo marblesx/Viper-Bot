@@ -5,9 +5,9 @@ const Discord = require('discord.js');
 @returns an object to send to the channel.
  */
 function getDynamicCommands(commands){
-    const help = new Discord.Attachment('./content/help-icon.png');
-    const logo = new Discord.Attachment('./content/viper-icon.png');
-    const helpEmbed = new Discord.RichEmbed()
+    const help = new Discord.MessageAttachment('./content/help-icon.png');
+    const logo = new Discord.MessageAttachment('./content/viper-icon.png');
+    const helpEmbed = new Discord.MessageEmbed()
         .setColor('#2dff16')
         .setTitle('Viper Bot Help Commands')
         .setURL('https://github.com/marblesx')
