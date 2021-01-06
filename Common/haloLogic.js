@@ -8,7 +8,7 @@
     const lib = require('lib');
     const mcc = lib.halo.mcc['@0.0.11'];
     const Discord = require('discord.js');
-
+let _bot;
     const lastGameRegex = /\d+[a]/g;
     const digitsRegex = /\d+/g;
     let slayerGame = "Slayer";
@@ -252,50 +252,51 @@
     ];
 
     async function HaloCommands(bot, command, args) {
+        _bot = bot;
         switch (command) {
             case "register":
-                if(await haloDAL.isUserRegistered(bot.author.id)) {
-                    bot.channel.send("User is already registered, updating with new gamertag and nickname.");
-                    let gamerTag = await haloDAL.findRegisteredUser(bot.author.id)
+                if(await haloDAL.isUserRegistered(_bot.author.id)) {
+                    _bot.channel.send("User is already registered, updating with new gamertag and nickname.");
+                    let gamerTag = await haloDAL.findRegisteredUser(_bot.author.id)
                     gamerTag = gamerTag[0];
                     gamerTag.userGamerTag = args[2];
                     gamerTag.userNickName = args[3];
                     await haloDAL.updateRegisteredUser(gamerTag);
-                    bot.channel.send(`User <@${gamerTag.userGuid}> is updated to GT: ${gamerTag.userGamerTag} and nickname ${gamerTag.userNickName}`);
+                    _bot.channel.send(`User <@${gamerTag.userGuid}> is updated to GT: ${gamerTag.userGamerTag} and nickname ${gamerTag.userNickName}`);
                 }
                 else {
-                    bot.channel.send("User is not registered, registering with new gamertag and nickname.");
+                    _bot.channel.send("User is not registered, registering with new gamertag and nickname.");
                     let newUser = await haloDAL.getHaloUserObj();
-                    newUser.userGuid = bot.author.id;
+                    newUser.userGuid = _bot.author.id;
                     newUser.userGamerTag= args[2];
                     newUser.userNickName=args[3];
                     await haloDAL.registerUser(newUser);
-                    bot.channel.send(`User <@${gamerTag.userGuid}> is registered to GT: ${gamerTag.userGamerTag} and nickname ${gamerTag.userNickName}`);
-                    bot.channel.send(`<@${gamerTag.userGuid}> use command halo.me or halo.nickname to get stats`);
+                    _bot.channel.send(`User <@${gamerTag.userGuid}> is registered to GT: ${gamerTag.userGamerTag} and nickname ${gamerTag.userNickName}`);
+                    _bot.channel.send(`<@${gamerTag.userGuid}> use command halo.me or halo.nickname to get stats`);
 
                 }
                 break;
             case "deregister":
-                    if(await haloDAL.isUserRegistered(bot.author.id)) {
-                        const user = await haloDAL.findRegisteredUser(bot.author.id)
+                    if(await haloDAL.isUserRegistered(_bot.author.id)) {
+                        const user = await haloDAL.findRegisteredUser(_bot.author.id)
                         await haloDAL.deregisterUser(user[0]);
-                        bot.channel.send(`User <@${gamerTag.userGuid}> is no longer registered.`);
+                        _bot.channel.send(`User <@${gamerTag.userGuid}> is no longer registered.`);
                     }
                     else{
-                        bot.channel.send(`User <@${gamerTag.userGuid}> is not registered.`);
+                        _bot.channel.send(`User <@${gamerTag.userGuid}> is not registered.`);
 
                     }
                 break;
             case "list":
-                bot.channel.send("coming soon");
+                _bot.channel.send("coming soon");
                 break;
             default:
                 if(command === 'me'){
-                    if(await haloDAL.isUserRegistered(bot.author.id)){
-                        const gamerTag = await haloDAL.findRegisteredUser(bot.author.id)
+                    if(await haloDAL.isUserRegistered(_bot.author.id)){
+                        const gamerTag = await haloDAL.findRegisteredUser(_bot.author.id)
                         getStats(gamerTag[0].userGamerTag, args)
                     }else{
-                        bot.channel.send(`Sorry <@${bot.author.id}>, you need to register; try halo.register.gamertag.nickname`)
+                        _bot.channel.send(`Sorry <@${_bot.author.id}>, you need to register; try halo.register.gamertag.nickname`)
                     }
                 }
                 if(await haloDAL.isNickNameAvailable(command)){
