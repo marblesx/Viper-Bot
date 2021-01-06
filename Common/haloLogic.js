@@ -255,25 +255,28 @@ let _bot;
         _bot = bot;
         switch (command) {
             case "register":
-                if(await haloDAL.isUserRegistered(_bot.author.id)) {
-                    _bot.channel.send("User is already registered, updating with new gamertag and nickname.");
-                    let gamerTag = await haloDAL.findRegisteredUser(_bot.author.id)
-                    gamerTag = gamerTag[0];
-                    gamerTag.userGamerTag = args[2];
-                    gamerTag.userNickName = args[3];
-                    await haloDAL.updateRegisteredUser(gamerTag);
-                    _bot.channel.send(`User <@${gamerTag.userGuid}> is updated to GT: ${gamerTag.userGamerTag} and nickname ${gamerTag.userNickName}`);
-                }
-                else {
-                    _bot.channel.send("User is not registered, registering with new gamertag and nickname.");
-                    let newUser = await haloDAL.getHaloUserObj();
-                    newUser.userGuid = _bot.author.id;
-                    newUser.userGamerTag= args[2];
-                    newUser.userNickName=args[3];
-                    await haloDAL.registerUser(newUser);
-                    _bot.channel.send(`User <@${gamerTag.userGuid}> is registered to GT: ${gamerTag.userGamerTag} and nickname ${gamerTag.userNickName}`);
-                    _bot.channel.send(`<@${gamerTag.userGuid}> use command halo.me or halo.nickname to get stats`);
+                if(await haloDAL.isNickNameAvailable(command)) {
+                    if (await haloDAL.isUserRegistered(_bot.author.id)) {
+                        _bot.channel.send("User is already registered, updating with new gamertag and nickname.");
+                        let gamerTag = await haloDAL.findRegisteredUser(_bot.author.id)
+                        gamerTag = gamerTag[0];
+                        gamerTag.userGamerTag = args[2];
+                        gamerTag.userNickName = args[3];
+                        await haloDAL.updateRegisteredUser(gamerTag);
+                        _bot.channel.send(`User <@${gamerTag.userGuid}> is updated to GT: ${gamerTag.userGamerTag} and nickname ${gamerTag.userNickName}`);
+                    } else {
+                        _bot.channel.send("User is not registered, registering with new gamertag and nickname.");
+                        let newUser = await haloDAL.getHaloUserObj();
+                        newUser.userGuid = _bot.author.id;
+                        newUser.userGamerTag = args[2];
+                        newUser.userNickName = args[3];
+                        await haloDAL.registerUser(newUser);
+                        _bot.channel.send(`User <@${gamerTag.userGuid}> is registered to GT: ${gamerTag.userGamerTag} and nickname ${gamerTag.userNickName}`);
+                        _bot.channel.send(`<@${gamerTag.userGuid}> use command halo.me or halo.nickname to get stats`);
 
+                    }
+                }else{
+                    _bot.channel.send(`User <@${gamerTag.userGuid}> nickname ${gamerTag.userNickName} is already in use.`);
                 }
                 break;
             case "deregister":
@@ -299,7 +302,7 @@ let _bot;
                         _bot.channel.send(`Sorry <@${_bot.author.id}>, you need to register; try halo.register.gamertag.nickname`)
                     }
                 }
-                if(await haloDAL.isNickNameAvailable(command)){
+                if(!(await haloDAL.isNickNameAvailable(command))){
                     const user = await haloDAL.getUserByNickname(command);
                     getStats(user[0].userGamerTag, args)
                 }
