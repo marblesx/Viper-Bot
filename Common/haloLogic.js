@@ -276,7 +276,7 @@ let _bot;
 
                     }
                 }else{
-                    _bot.channel.send(`User <@${gamerTag.userGuid}> nickname ${gamerTag.userNickName} is already in use.`);
+                    _bot.channel.send(`User <@${_bot.author.id}> nickname ${args[3].toLowerCase()} is already in use.`);
                 }
                 break;
             case "deregister":
