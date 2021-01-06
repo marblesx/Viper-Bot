@@ -271,8 +271,8 @@ let _bot;
                         newUser.userGamerTag = args[2];
                         newUser.userNickName = args[3];
                         await haloDAL.registerUser(newUser);
-                        _bot.channel.send(`User <@${gamerTag.userGuid}> is registered to GT: ${gamerTag.userGamerTag} and nickname ${gamerTag.userNickName}`);
-                        _bot.channel.send(`<@${gamerTag.userGuid}> use command halo.me or halo.nickname to get stats`);
+                        _bot.channel.send(`User <@${newUser.userGuid}> is registered to GT: ${newUser.userGamerTag} and nickname ${newUser.userNickName}`);
+                        _bot.channel.send(`<@${newUser.userGuid}> use command halo.me or halo.nickname to get stats`);
 
                     }
                 }else{
@@ -302,7 +302,7 @@ let _bot;
                         _bot.channel.send(`Sorry <@${_bot.author.id}>, you need to register; try halo.register.gamertag.nickname`)
                     }
                 }
-                if(!(await haloDAL.isNickNameAvailable(command))){
+                else if(!(await haloDAL.isNickNameAvailable(command))){
                     const user = await haloDAL.getUserByNickname(command);
                     getStats(user[0].userGamerTag, args)
                 }
