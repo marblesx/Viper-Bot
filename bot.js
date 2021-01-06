@@ -60,9 +60,6 @@ bot.on('message', async message => {
         if (cmd.startsWith('vhelp')) {
             args[args.length] = commands;
         }
-        if (cmd.startsWith('admin')) {
-            args[args.length] = message.author;
-        }
 
         if (!clientCommands[cmd]) return;
 
