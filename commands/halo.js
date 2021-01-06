@@ -283,21 +283,18 @@ const maps = [
                     .addField('!halo.g.{gamerTag}.{x}a', 'Returns AVG stats about that gamertag, where x is the last number of games.', true)
                 _bot.channel.send(helpEmbed);
                 break;
-            case matt:
-                getStats(mattGamerTag, args);
+            case "register":
                 break;
-            case mike:
-                getStats(mikeGamerTag, args);
+            case"unregister":
                 break;
-            case eddie:
-                getStats(eddieGamerTag, args);
+            case "list":
                 break;
-            case kevin:
-                getStats(kevinGamerTag, args);
-                break;
-            case mark:
-                getStats(markGamerTag, args);
-                break;
+            default:
+                //check if me
+                //check if name registered
+                //check if gamer tag valid
+                    //return if invalidname
+                    //check stats.
             case gamerTag:
                 const index = args.indexOf('g');
                 if (index > -1) {
@@ -305,7 +302,7 @@ const maps = [
                 }
                 getStats(args[1], args);
                 break;
-            default:
+
                 // make API request
 
         }
