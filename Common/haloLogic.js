@@ -255,7 +255,7 @@ let _bot;
         _bot = bot;
         switch (command) {
             case "register":
-                if(await haloDAL.isNickNameAvailable(command)) {
+                if(await haloDAL.isNickNameAvailable(args[3].toLowerCase())) {
                     if (await haloDAL.isUserRegistered(_bot.author.id)) {
                         _bot.channel.send("User is already registered, updating with new gamertag and nickname.");
                         let gamerTag = await haloDAL.findRegisteredUser(_bot.author.id)
