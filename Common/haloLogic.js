@@ -4,7 +4,7 @@
     const {haloGameLimit} = require('../config.json');
     const haloDAL = require('../dataAccessLayer/haloDAL');
     const common = require('../Common/common');
-    
+
     const lastGameRegex = /\d+[a]/g;
     const digitsRegex = /\d+/g;
     let slayerGame = "Slayer";
@@ -252,7 +252,8 @@
             case "register":
                 if(await haloDAL.isUserRegistered(bot.author.id)) {
                     bot.channel.send("User is already registered, updating with new gamertag and nickname.");
-                    const gamerTag = await haloDAL.findRegisteredUser(bot.author.id)
+                    let gamerTag = await haloDAL.findRegisteredUser(bot.author.id)
+                    gamerTag = gamerTag[0];
                     gamerTag.userGamerTag = args[2];
                     gamerTag.userNickName = args[3];
                     await haloDAL.updateRegisteredUser(gamerTag);
@@ -273,7 +274,7 @@
             case "deregister":
                     if(await haloDAL.isUserRegistered(bot.author.id)) {
                         const user = await haloDAL.findRegisteredUser(bot.author.id)
-                        await haloDAL.deregisterUser(user);
+                        await haloDAL.deregisterUser(user[0]);
                         bot.channel.send(`User <@${gamerTag.userGuid}> is no longer registered.`);
                     }
                     else{
@@ -288,14 +289,14 @@
                 if(command === 'me'){
                     if(await haloDAL.isUserRegistered(bot.author.id)){
                         const gamerTag = await haloDAL.findRegisteredUser(bot.author.id)
-                        getStats(gamerTag, args)
+                        getStats(gamerTag[0].userGamerTag, args)
                     }else{
                         bot.channel.send(`Sorry <@${bot.author.id}>, you need to register; try halo.register.gamertag.nickname`)
                     }
                 }
                 if(await haloDAL.isNickNameAvailable(command)){
                     const user = await haloDAL.getUserByNickname(command);
-                    getStats(user.userGamerTag, args)
+                    getStats(user[0].userGamerTag, args)
                 }
                 else{
                     getStats(command, args);
