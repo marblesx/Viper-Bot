@@ -3,7 +3,8 @@
 
     const {haloGameLimit} = require('../config.json');
     const haloDAL = require('../dataAccessLayer/haloDAL');
-
+    const common = require('../Common/common');
+    
     const lastGameRegex = /\d+[a]/g;
     const digitsRegex = /\d+/g;
     let slayerGame = "Slayer";

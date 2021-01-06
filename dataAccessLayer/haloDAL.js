@@ -3,6 +3,7 @@ let url = "mongodb://localhost:27017/";
 const database = "halodb";
 const collections = "haloUsers"
 
+
 module.exports = {
     /**
      * Returns a blank object to set up for a new user.
