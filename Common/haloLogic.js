@@ -5,6 +5,10 @@
     const haloDAL = require('../dataAccessLayer/haloDAL');
     const common = require('../Common/common');
 
+    const lib = require('lib');
+    const mcc = lib.halo.mcc['@0.0.11'];
+    const Discord = require('discord.js');
+
     const lastGameRegex = /\d+[a]/g;
     const digitsRegex = /\d+/g;
     let slayerGame = "Slayer";
@@ -324,7 +328,7 @@
 
     function lastXGames(gamerTag, gamesNum, average) {
         gamesNum = parseInt(gamesNum);
-        let slayer = lib.halo.mcc['@0.0.11'].games.history({
+        let slayer = mcc.games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: slayerGame,
@@ -337,7 +341,7 @@
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let ctf = lib.halo.mcc['@0.0.11'].games.history({
+        let ctf = mcc.games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: ctfGame,
@@ -350,7 +354,7 @@
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let juggernaut = lib.halo.mcc['@0.0.11'].games.history({
+        let juggernaut = mcc.games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: juggernautGame,
@@ -363,7 +367,7 @@
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let koth = lib.halo.mcc['@0.0.11'].games.history({
+        let koth = mcc.games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: kothGame,
@@ -376,7 +380,7 @@
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let infection = lib.halo.mcc['@0.0.11'].games.history({
+        let infection =mcc.games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: infectionGame,
@@ -389,7 +393,7 @@
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let flood = lib.halo.mcc['@0.0.11'].games.history({
+        let flood = mcc.games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: floodGame,
@@ -402,7 +406,7 @@
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let race = lib.halo.mcc['@0.0.11'].games.history({
+        let race = mcc.games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: raceGame,
@@ -415,7 +419,7 @@
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let extraction = lib.halo.mcc['@0.0.11'].games.history({
+        let extraction = mcc.games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: extractionGame,
@@ -428,7 +432,7 @@
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let dominion = lib.halo.mcc['@0.0.11'].games.history({
+        let dominion = mcc.games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: dominionGame,
@@ -441,7 +445,7 @@
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let regicide = lib.halo.mcc['@0.0.11'].games.history({
+        let regicide = mcc.games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: regicideGame,
@@ -454,7 +458,7 @@
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let grifball = lib.halo.mcc['@0.0.11'].games.history({
+        let grifball = mcc.games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: grifballGame,
@@ -467,7 +471,7 @@
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let ricochet = lib.halo.mcc['@0.0.11'].games.history({
+        let ricochet = mcc.games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: ricochetGame,
@@ -480,7 +484,7 @@
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let vip_g = lib.halo.mcc['@0.0.11'].games.history({
+        let vip_g = mcc.games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: vipGame,
@@ -493,7 +497,7 @@
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let territorie = lib.halo.mcc['@0.0.11'].games.history({
+        let territorie = mcc.games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: territoriesGame,
@@ -506,7 +510,7 @@
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-        let assualt = lib.halo.mcc['@0.0.11'].games.history({
+        let assualt = mcc.games.history({
             gamertag: gamerTag,
             game: 'All',
             gameVariant: assualtGame,
@@ -564,7 +568,7 @@
 
     function callBasicStats(userGamerTag) {
 
-        lib.halo.mcc['@0.0.11'].stats({
+        mcc.stats({
             gamertag: userGamerTag
         }).then((result) => {
             playerCard(result)
