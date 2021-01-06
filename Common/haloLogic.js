@@ -261,7 +261,7 @@ let _bot;
                         let gamerTag = await haloDAL.findRegisteredUser(_bot.author.id)
                         gamerTag = gamerTag[0];
                         gamerTag.userGamerTag = args[2];
-                        gamerTag.userNickName = args[3];
+                        gamerTag.userNickName = args[3].toLowerCase();
                         await haloDAL.updateRegisteredUser(gamerTag);
                         _bot.channel.send(`User <@${gamerTag.userGuid}> is updated to GT: ${gamerTag.userGamerTag} and nickname ${gamerTag.userNickName}`);
                     } else {
