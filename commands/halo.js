@@ -19,13 +19,13 @@ const appName = 'halo';
                     .setURL('https://github.com/marblesx')
                     .setAuthor('Dev Team', '', 'https://github.com/marblesx')
                     .setDescription('List of help and commands for the HALO commands.')
-                    .addField('!halo.g.{gamertag}', 'Returns some stats about that gamer tag', true)
-                    .addField('!halo.{name}', 'Returns some stats about that viper (eddie, matt, mark, mike)', true)
-                    .addField('!halo.{name}.{x}', 'Returns some stats about that viper (eddie, matt, mark, mike) where x is the last number of games', true)
-                    .addField('!halo.{name}.{x}a', 'Returns AVG stats about that viper (eddie, matt, mark, mike) where x is the last number of games', true)
-                    .addField('!halo.g.{gamerTag}', 'Returns some stats about that gamertag', true)
-                    .addField('!halo.g.{gamerTag}.{x}', 'Returns some stats about that gamertag, where x is the last number of games.', true)
-                    .addField('!halo.g.{gamerTag}.{x}a', 'Returns AVG stats about that gamertag, where x is the last number of games.', true)
+                    .addField('!halo.register.{gamertag}.{nickname}', 'Registers gamertag to user account with nickname. ', true)
+                    .addField('!halo.deregister', 'Deregisteres gamertag from user.', true)
+                    .addField('!halo.me', 'Gets user stats.', true)
+                    .addField('!halo.{nickname}', 'Gets user stats.', true)
+                    .addField('!halo.gamertag', 'gets stats of gamertag', true)
+                    .addField('!halo.{me/Nickname/Gamertag}.{digit}', 'Gets last x games up to 10', true)
+                    .addField('!halo.{me/Nickname/Gamertag}.{digit}a', 'Gets average of last games up to 250', true)
                 _bot.channel.send(`Sliding in to your DM's <@${bot.author.id}>` );
 
                 _bot.author.send(helpEmbed);
@@ -34,9 +34,6 @@ const appName = 'halo';
                haloLogic.haloLogic(bot, args[1].toLowerCase(), args);
         }
     }
-
-
-
 
     module.exports = {
         name:appName,
