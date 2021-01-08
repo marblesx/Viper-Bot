@@ -27,7 +27,8 @@ module.exports = {
     name: 'vhelp',
     description: 'Help command, will give you all the help you need.',
     execute(args, bot){
-        bot.channel.send(
+        bot.author.send(`Check your DM's <@${bot.author.id}>`)
+        bot.author.send(
               getDynamicCommands(args[args.length-1]));
     }
 };
