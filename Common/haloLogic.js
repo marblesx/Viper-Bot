@@ -253,6 +253,7 @@ let _bot;
 
     async function HaloCommands(bot, command, args) {
         _bot = bot;
+        command = command.toLowerCase();
         switch (command) {
             case "register":
                 if(await haloDAL.isNickNameAvailable(args[3].toLowerCase())) {
@@ -269,7 +270,7 @@ let _bot;
                         let newUser = await haloDAL.getHaloUserObj();
                         newUser.userGuid = _bot.author.id;
                         newUser.userGamerTag = args[2];
-                        newUser.userNickName = args[3];
+                        newUser.userNickName = args[3].toLowerCase();
                         await haloDAL.registerUser(newUser);
                         _bot.channel.send(`User <@${newUser.userGuid}> is registered to GT: ${newUser.userGamerTag} and nickname ${newUser.userNickName}`);
                         _bot.channel.send(`<@${newUser.userGuid}> use command halo.me or halo.nickname to get stats`);
