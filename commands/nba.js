@@ -60,7 +60,7 @@
      */
     function gameStatus(game) {
         let toReturn = "";
-        toReturn += nbaTeams[game.hTeam.teamId] + (game.hTeam.score > game.vTeam.score ? " beating the " : " losing to the") + nbaTeams[game.vTeam.teamId] + " " + game.hTeam.score+ " - "+game.vTeam.score + " ";
+        toReturn += nbaTeams[game.hTeam.teamId] + (game.hTeam.score > game.vTeam.score ? " beating the " : " losing to the ") + nbaTeams[game.vTeam.teamId] + " " + game.hTeam.score+ " - "+game.vTeam.score + " ";
         if(game.period.isEndOfPeriod)
         {
             toReturn += `End of the ${getQrt(game.period.current)}`

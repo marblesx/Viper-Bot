@@ -8,7 +8,7 @@
     const lib = require('lib');
     const mcc = lib.halo.mcc['@0.0.11'];
     const Discord = require('discord.js');
-let _bot;
+    let _bot;
     const lastGameRegex = /\d+[a]/g;
     const digitsRegex = /\d+/g;
     let slayerGame = "Slayer";
