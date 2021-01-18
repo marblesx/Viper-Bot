@@ -74,5 +74,11 @@ module.exports = {
 
         const result = await dbo.collection(collections).deleteOne(playerObj);
         return result;
-    }
+    },
+    getAllUsers: async function(){
+        const db =  await MongoClient.connect(url,{useNewUrlParser:true, useUnifiedTopology:true});
+        const dbo = db.db(database);
+        const result = await dbo.collection(collections).find().toArray();
+        return result;
+    },
 }

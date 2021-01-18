@@ -4,11 +4,20 @@
     const {haloGameLimit} = require('../config.json');
     const haloDAL = require('../dataAccessLayer/haloDAL');
     const common = require('../Common/common');
+    const {halo5ApiKey} = require('../auth');
+    const halo5Api = new (require("haloapi"))(halo5ApiKey);
 
     const lib = require('lib');
     const mcc = lib.halo.mcc['@0.0.11'];
     const Discord = require('discord.js');
-let _bot;
+    const halo5 = "h5";
+    let _bot;
+
+    const h5DaysRegex = /\d+[D][T]/g;
+    const h5HoursRegex = /\d+[H]/g;
+    const h5MRegex = /\d+[M]/g;
+    const h5SecondsRegex = /[M]\d+/g;
+
     const lastGameRegex = /\d+[a]/g;
     const digitsRegex = /\d+/g;
     let slayerGame = "Slayer";
@@ -253,42 +262,15 @@ let _bot;
 
     async function HaloCommands(bot, command, args) {
         _bot = bot;
-        switch (command) {
-            case "register":
-                if(await haloDAL.isNickNameAvailable(args[3].toLowerCase())) {
-                    if (await haloDAL.isUserRegistered(_bot.author.id)) {
-                        _bot.channel.send("User is already registered, updating with new gamertag and nickname.");
-                        let gamerTag = await haloDAL.findRegisteredUser(_bot.author.id)
-                        gamerTag = gamerTag[0];
-                        gamerTag.userGamerTag = args[2];
-                        gamerTag.userNickName = args[3].toLowerCase();
-                        await haloDAL.updateRegisteredUser(gamerTag);
-                        _bot.channel.send(`User <@${gamerTag.userGuid}> is updated to GT: ${gamerTag.userGamerTag} and nickname ${gamerTag.userNickName}`);
-                    } else {
-                        _bot.channel.send("User is not registered, registering with new gamertag and nickname.");
-                        let newUser = await haloDAL.getHaloUserObj();
-                        newUser.userGuid = _bot.author.id;
-                        newUser.userGamerTag = args[2];
-                        newUser.userNickName = args[3];
-                        await haloDAL.registerUser(newUser);
-                        _bot.channel.send(`User <@${newUser.userGuid}> is registered to GT: ${newUser.userGamerTag} and nickname ${newUser.userNickName}`);
-                        _bot.channel.send(`<@${newUser.userGuid}> use command halo.me or halo.nickname to get stats`);
 
-                    }
-                }else{
-                    _bot.channel.send(`User <@${_bot.author.id}> nickname ${args[3].toLowerCase()} is already in use.`);
-                }
+
+        switch (command) {
+
+            case "register":
+               await haloRegisterUser(args);
                 break;
             case "deregister":
-                    if(await haloDAL.isUserRegistered(_bot.author.id)) {
-                        const user = await haloDAL.findRegisteredUser(_bot.author.id)
-                        await haloDAL.deregisterUser(user[0]);
-                        _bot.channel.send(`User <@${gamerTag.userGuid}> is no longer registered.`);
-                    }
-                    else{
-                        _bot.channel.send(`User <@${gamerTag.userGuid}> is not registered.`);
-
-                    }
+                 await  haloDeregisterUser(args);
                 break;
             case "list":
                 _bot.channel.send("coming soon");
@@ -297,40 +279,209 @@ let _bot;
                 if(command === 'me'){
                     if(await haloDAL.isUserRegistered(_bot.author.id)){
                         const gamerTag = await haloDAL.findRegisteredUser(_bot.author.id)
-                        getStats(gamerTag[0].userGamerTag, args)
+                        getHaloMccStats(gamerTag[0].userGamerTag, args)
                     }else{
                         _bot.channel.send(`Sorry <@${_bot.author.id}>, you need to register; try halo.register.gamertag.nickname`)
                     }
                 }
                 else if(!(await haloDAL.isNickNameAvailable(command))){
                     const user = await haloDAL.getUserByNickname(command);
-                    getStats(user[0].userGamerTag, args)
+                    getHaloMccStats(user[0].userGamerTag, args)
                 }
                 else{
-                    getStats(command, args);
+                    getHaloMccStats(command, args);
                 }
         }
     }
-    function getStats(gamerTag, args) {
+    async function Halo5Commands(bot, command, args){
+        _bot = bot;
+        switch (command) {
+
+            case "register":
+                await haloRegisterUser(args);
+                break;
+            case "deregister":
+                await  haloDeregisterUser(args);
+                break;
+            case "list":
+                _bot.channel.send("coming soon");
+                break;
+            default:
+                if(command === 'me'){
+                    if(await haloDAL.isUserRegistered(_bot.author.id)){
+                        const gamerTag = await haloDAL.findRegisteredUser(_bot.author.id)
+                        getHalo5Stats(gamerTag[0].userGamerTag, args)
+                    }else{
+                        _bot.channel.send(`Sorry <@${_bot.author.id}>, you need to register; try halo.register.gamertag.nickname`)
+                    }
+                }
+                else if(!(await haloDAL.isNickNameAvailable(command))){
+                    const user = await haloDAL.getUserByNickname(command);
+                    getHalo5Stats(user[0].userGamerTag, args)
+                }
+                else{
+                    getHalo5Stats(command, args);
+                }
+        }
+    }
+
+    function getHaloUsersList(){
+        
+    }
+
+    async function haloDeregisterUser(args){
+        if(await haloDAL.isUserRegistered(_bot.author.id)) {
+            const user = await haloDAL.findRegisteredUser(_bot.author.id)
+            await haloDAL.deregisterUser(user[0]);
+            _bot.channel.send(`User <@${_bot.author.id}> is no longer registered.`);
+        }
+        else{
+            _bot.channel.send(`User <@${_bot.author.id}> is not registered.`);
+
+        }
+    }
+
+    async function  haloRegisterUser(args){
+        if(await haloDAL.isNickNameAvailable(args[3].toLowerCase())) {
+            if (await haloDAL.isUserRegistered(_bot.author.id)) {
+                _bot.channel.send("User is already registered, updating with new gamertag and nickname.");
+                let gamerTag = await haloDAL.findRegisteredUser(_bot.author.id)
+                gamerTag = gamerTag[0];
+                gamerTag.userGamerTag = args[2];
+                gamerTag.userNickName = args[3].toLowerCase();
+                await haloDAL.updateRegisteredUser(gamerTag);
+                _bot.channel.send(`User <@${gamerTag.userGuid}> is updated to GT: ${gamerTag.userGamerTag} and nickname ${gamerTag.userNickName}`);
+            } else {
+                _bot.channel.send("User is not registered, registering with new gamertag and nickname.");
+                let newUser = await haloDAL.getHaloUserObj();
+                newUser.userGuid = _bot.author.id;
+                newUser.userGamerTag = args[2];
+                newUser.userNickName = args[3];
+                await haloDAL.registerUser(newUser);
+                _bot.channel.send(`User <@${newUser.userGuid}> is registered to GT: ${newUser.userGamerTag} and nickname ${newUser.userNickName}`);
+                _bot.channel.send(`<@${newUser.userGuid}> use command halo.me or halo.nickname to get stats`);
+
+            }
+        }else{
+            _bot.channel.send(`User <@${_bot.author.id}> nickname ${args[3].toLowerCase()} is already in use.`);
+        }
+    }
+
+    function getLeaderBoard(args){
+        
+    }
+    function getHalo5Stats(gamerTag, args) {
         if (common.isNotBlank(args[2])) {
             if (args[2].toLowerCase().match(lastGameRegex)) {
                 let games = args[2].match(digitsRegex);
-                lastXGames(gamerTag, games[0], true);
+                if (parseInt(games) > 25) {
+                    _bot.channel.send("Fuck off wanker, keep it 25 and under.");
+                } else {
+                    lastXGamesHalo5(gamerTag, games[0], true);
+                }
             } else {
                 let games = args[2].match(digitsRegex);
                 if (parseInt(games) > parseInt(haloGameLimit)) {
                     _bot.channel.send("Fuck off wanker, keep it 10 and under.");
                 } else {
-                    lastXGames(gamerTag, games[0], false);
+                    lastXGamesHalo5(gamerTag, games[0], false);
                 }
             }
         } else {
-            callBasicStats(gamerTag);
+            callBasicStatsHalo5(gamerTag);
         }
     }
 
+    function callBasicStatsHalo5(userGamerTag) {
+        halo5Api.stats.serviceRecordArena(userGamerTag).then((result) => {
+            result = result.Result;
+            let ArenaStats = result.ArenaStats;
+            let gameEmbed = new Discord.MessageEmbed()
+                .setColor('#b6d6eb')
+                .setTitle(`Halo 5 Profile: ${userGamerTag}`)
+                .setDescription(`${userGamerTag} game stats`)
+                .addField("Kills", ArenaStats.TotalKills, true)
+                .addField('Deaths', ArenaStats.TotalDeaths, true)
+                .addField('Assists', ArenaStats.TotalAssists, true)
+                .addField('Accuracy', '%'+((ArenaStats.TotalShotsLanded / ArenaStats.TotalShotsFired).toFixed(2) * 100), true)
+                .addField("Games Won", ArenaStats.TotalGamesWon, true)
+                .addField("Games Lost", ArenaStats.TotalGamesLost, true)
+                .addField('Time Played', getHalo5TimePlayedAsString(ArenaStats.TotalTimePlayed), true)
+            _bot.channel.send(gameEmbed);
+        });
+    }
 
-    function lastXGames(gamerTag, gamesNum, average) {
+    function getHalo5TimePlayedAsString(haloTimePlayed){
+        let Days = haloTimePlayed.match(h5DaysRegex);
+        let Hours = haloTimePlayed.match(h5HoursRegex);
+        let Mins = haloTimePlayed.match(h5MRegex);
+        let Seconds = haloTimePlayed.match(h5SecondsRegex);
+        return `Played for ${Days.length === 1 ? Days[0].match(digitsRegex) : 0} days ${Hours.length === 1 ? Hours[0].match(digitsRegex) : 0} hours
+         ${Mins.length === 1 ? Mins[0].match(digitsRegex): 0} mins and ${Seconds.length === 1? Seconds[0].match(digitsRegex): 0} seconds`;
+    }
+
+    function getHaloMccStats(gamerTag, args) {
+        if (common.isNotBlank(args[2])) {
+            if (args[2].toLowerCase().match(lastGameRegex)) {
+                let games = args[2].match(digitsRegex);
+                lastXGamesHaloMcc(gamerTag, games[0], true);
+            } else {
+                let games = args[2].match(digitsRegex);
+                if (parseInt(games) > parseInt(haloGameLimit)) {
+                    _bot.channel.send("Fuck off wanker, keep it 10 and under.");
+                } else {
+                    lastXGamesHaloMcc(gamerTag, games[0], false);
+                }
+            }
+        } else {
+            callBasicStatsHaloMcc(gamerTag);
+        }
+    }
+
+    function lastXGamesHalo5(gamerTag, gamesNum, average) {
+        gamesNum = parseInt(gamesNum);
+
+        halo5Api.stats.playerMatches({
+                player: gamerTag,
+                modes: "arena,warzone",
+                start: 0,
+                count: gamesNum
+            }).then((result) => {
+                let games = result.Results;
+            if (average) {
+                let game = {};
+                game.kills = 0;
+                game.deaths = 0;
+                game.assists = 0;
+                game.killsAvg = 0;
+                game.deathsAvg = 0;
+                game.assistsAvg = 0;
+                game.KD = 0;
+                game.SE = 0;
+                for (let i = 0; i < games.length; i++) {
+                    game.kills += parseInt(games[i].Players[0].TotalKills);
+                    game.deaths += parseInt(games[i].Players[0].TotalDeaths);
+                    game.assists += parseInt(games[i].Players[0].TotalAssists);
+                }
+                game.killsAvg = (game.kills / gamesNum).toFixed(2);
+                game.deathsAvg = (game.deaths / gamesNum).toFixed(2);
+                game.assistsAvg = (game.assists / gamesNum).toFixed(2);
+                game.KD = (game.kills / game.deaths).toFixed(2);
+                game.SE = (((game.kills + game.assists) / (game.kills + game.assists + game.deaths)) * 100).toFixed(2);
+                gameCardAvgHaloMcc(game, gamerTag, gamesNum);
+            } else {
+                for (let i = 0; i < gamesNum; i++) {
+                    gameCardHaloMcc(games[i], gamerTag, i + 1);
+                }
+            }
+            });
+
+
+
+
+    }
+
+    function lastXGamesHaloMcc(gamerTag, gamesNum, average) {
         gamesNum = parseInt(gamesNum);
         let slayer = mcc.games.history({
             gamertag: gamerTag,
@@ -561,28 +712,28 @@ let _bot;
                 game.assistsAvg=(game.assists / gamesNum).toFixed(2);
                 game.KD = (game.kills / game.deaths).toFixed(2);
                 game.SE=(((game.kills + game.assists ) / (game.kills + game.assists + game.deaths)) * 100).toFixed(2);
-                gameCardAvg(game, gamerTag, gamesNum);
+                gameCardAvgHaloMcc(game, gamerTag, gamesNum);
             } else {
                 for (let i = 0; i < gamesNum; i++) {
-                    gameCard(games[i], gamerTag, i + 1);
+                    gameCardHaloMcc(games[i], gamerTag, i + 1);
                 }
             }
         });
     }
 
-    function callBasicStats(userGamerTag) {
+    function callBasicStatsHaloMcc(userGamerTag) {
 
         mcc.stats({
             gamertag: userGamerTag
         }).then((result) => {
-            playerCard(result)
+            playerCardHaloMcc(result)
         }).catch(error =>
             _bot.channel.send(error.message)
         );
 
     }
 
-    function playerCard(player) {
+    function playerCardHaloMcc(player) {
         const helpEmbed = new Discord.MessageEmbed()
             .setColor('#b6d6eb')
             .setTitle(`Service Record: ${player.gamertag}`)
@@ -600,7 +751,7 @@ let _bot;
     }
 
 
-    function gameCard(game,gamerTag, gamenum) {
+    function gameCardHaloMcc(game,gamerTag, gamenum) {
         let gameEmbed = new Discord.MessageEmbed()
             .setColor('#b6d6eb')
             .setTitle(`Game Record ${gamenum}: ${gamerTag}`)
@@ -612,12 +763,12 @@ let _bot;
             .addField('Deaths', game.deaths,true)
             .addField('Assists', game.assists, true)
             .addField('Played',new Date(game.playedAt).toString() )
-        gameEmbed=addtionalStats(gameEmbed,game);
+        gameEmbed=additionalStatsHaloMcc(gameEmbed,game);
 
         _bot.channel.send(gameEmbed);
     }
 
-    function gameCardAvg(game,gamerTag, gameNum) {
+    function gameCardAvgHaloMcc(game,gamerTag, gameNum) {
         let gameEmbed = new Discord.MessageEmbed()
             .setColor('#b6d6eb')
             .setTitle(`Average Game Record for last ${gameNum} games: ${gamerTag}`)
@@ -634,7 +785,7 @@ let _bot;
         _bot.channel.send(gameEmbed);
     }
 
-    function addtionalStats(gameEmbed, game){
+    function additionalStatsHaloMcc(gameEmbed, game){
         switch(game.gameType){
             case kothGame:
                 gameEmbed.addField("Time in hill", game.score);
@@ -649,4 +800,6 @@ let _bot;
 
 
     module.exports.haloLogic = HaloCommands;
+    module.exports.halo5Logic = Halo5Commands;
+
 }
