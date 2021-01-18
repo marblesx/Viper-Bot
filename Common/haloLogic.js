@@ -262,6 +262,7 @@
 
     async function HaloCommands(bot, command, args) {
         _bot = bot;
+        command = command.toLowerCase();
 
 
         switch (command) {
@@ -295,6 +296,7 @@
     }
     async function Halo5Commands(bot, command, args){
         _bot = bot;
+        command = command.toLowerCase();
         switch (command) {
 
             case "register":
@@ -356,7 +358,7 @@
                 let newUser = await haloDAL.getHaloUserObj();
                 newUser.userGuid = _bot.author.id;
                 newUser.userGamerTag = args[2];
-                newUser.userNickName = args[3];
+                newUser.userNickName = args[3].toLowerCase();
                 await haloDAL.registerUser(newUser);
                 _bot.channel.send(`User <@${newUser.userGuid}> is registered to GT: ${newUser.userGamerTag} and nickname ${newUser.userNickName}`);
                 _bot.channel.send(`<@${newUser.userGuid}> use command halo.me or halo.nickname to get stats`);
@@ -368,7 +370,7 @@
     }
 
     function getLeaderBoard(args){
-        
+
     }
     function getHalo5Stats(gamerTag, args) {
         if (common.isNotBlank(args[2])) {
