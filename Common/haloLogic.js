@@ -326,7 +326,7 @@
     }
 
     function getHaloUsersList(){
-        
+
     }
 
     async function haloDeregisterUser(args){
