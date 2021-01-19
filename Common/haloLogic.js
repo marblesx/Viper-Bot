@@ -35,6 +35,7 @@
     let vipGame = "VIP";
     let territoriesGame = "Territories";
     let assualtGame = "Assault";
+    let oddBallGame = "Oddball";
 
 
     const maps = [
@@ -680,10 +681,22 @@
         }).catch(error =>
             _bot.channel.send(error.message)
         );
-
+        let oddball = mcc.games.history({
+            gamertag: gamerTag,
+            game: 'All',
+            gameVariant: oddBallGame,
+            count: gamesNum
+        }).then((result) => {
+            result.games.forEach(game => {
+                game.gameType = oddBallGame;
+            })
+            return result;
+        }).catch(error =>
+            _bot.channel.send(error.message)
+        );
 
         Promise.all([slayer, ctf, assualt, territorie, vip_g, ricochet, dominion, extraction,
-            race, flood, infection, juggernaut, koth,regicide,grifball]).then((values) => {
+            race, flood, infection, juggernaut, koth,regicide,grifball, oddball]).then((values) => {
             const games = [];
 
             for (let c = 0; c < values.length; c++) {
