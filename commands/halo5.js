@@ -1,9 +1,8 @@
-const appName = 'h5';
+const appName = 'halo5';
 
 {
     const Discord = require('discord.js');
     const haloLogic = require('../Common/haloLogic');
-    const {halo5ApiKey} = require('../auth');
     let _bot;
     let _userGuid;
     function haloMethod(args, bot) {
