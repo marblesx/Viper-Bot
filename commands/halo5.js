@@ -1,4 +1,4 @@
-const appName = 'halo5';
+const appName = 'h5';
 
 {
     const Discord = require('discord.js');
