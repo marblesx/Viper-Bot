@@ -1,16 +1,14 @@
-const appName = 'halo';
+const appName = 'h4';
 
 {
     const haloLogic = require('../Common/haloLogic');
     function haloMethod(args, bot) {
-
-        haloLogic.haloLogic(bot, args[1].toLowerCase(), args,"All");
-
+        haloLogic.haloLogic(bot, args[1].toLowerCase(), args,"Halo 4");
     }
 
     module.exports = {
         name:appName,
-        description: 'Gets halo stats, recent games, etc.',
+        description: 'Gets halo 4 stats, recent games, etc.',
         execute(args, bot){
             haloMethod(args,bot);
         }

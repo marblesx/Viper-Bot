@@ -37,6 +37,15 @@
     let assualtGame = "Assault";
     let oddBallGame = "Oddball";
 
+    const HaloCE = "Halo: CE";
+    const Halo2 = "Halo 2";
+    const Halo2a = "Halo 2: Anniversary"
+    const Halo3 = "Halo 3";
+    const Halo4 = "Halo 4";
+    const HaloReach = "Halo: Reach";
+    const HaloMCC = "All"
+
+
 
     const maps = [
         'Pillar of Autumn',
@@ -261,13 +270,30 @@
 
     ];
 
-    async function HaloCommands(bot, command, args) {
+    async function HaloCommands(bot, command, args, haloGame) {
         _bot = bot;
         command = command.toLowerCase();
 
 
         switch (command) {
+            case 'help':
+                const helpEmbed = new Discord.MessageEmbed()
+                    .setColor('#2dff16')
+                    .setTitle('Halo Help Commands')
+                    .setURL('https://github.com/marblesx')
+                    .setAuthor('Dev Team', '', 'https://github.com/marblesx')
+                    .setDescription('List of help and commands for the HALO commands.')
+                    .addField('!halo.register.{gamertag}.{nickname}', 'Registers gamertag to user account with nickname. ', true)
+                    .addField('!halo.deregister', 'Deregisteres gamertag from user.', true)
+                    .addField('!halo.me', 'Gets user stats.', true)
+                    .addField('!halo.{nickname}', 'Gets user stats.', true)
+                    .addField('!halo.gamertag', 'gets stats of gamertag', true)
+                    .addField('!halo.{me/Nickname/Gamertag}.{digit}', 'Gets last x games up to 10', true)
+                    .addField('!halo.{me/Nickname/Gamertag}.{digit}a', 'Gets average of last games up to 250', true)
+                _bot.channel.send(`Sliding in to your DM's <@${bot.author.id}>` );
 
+                _bot.author.send(helpEmbed);
+                break;
             case "register":
                await haloRegisterUser(args);
                 break;
@@ -281,20 +307,21 @@
                 if(command === 'me'){
                     if(await haloDAL.isUserRegistered(_bot.author.id)){
                         const gamerTag = await haloDAL.findRegisteredUser(_bot.author.id)
-                        getHaloMccStats(gamerTag[0].userGamerTag, args)
+                        getHaloMccStats(gamerTag[0].userGamerTag, args, haloGame)
                     }else{
                         _bot.channel.send(`Sorry <@${_bot.author.id}>, you need to register; try halo.register.gamertag.nickname`)
                     }
                 }
                 else if(!(await haloDAL.isNickNameAvailable(command))){
                     const user = await haloDAL.getUserByNickname(command);
-                    getHaloMccStats(user[0].userGamerTag, args)
+                    getHaloMccStats(user[0].userGamerTag, args, haloGame)
                 }
                 else{
-                    getHaloMccStats(command, args);
+                    getHaloMccStats(command, args,haloGame);
                 }
         }
     }
+
     async function Halo5Commands(bot, command, args){
         _bot = bot;
         command = command.toLowerCase();
@@ -373,6 +400,7 @@
     function getLeaderBoard(args){
 
     }
+
     function getHalo5Stats(gamerTag, args) {
         if (common.isNotBlank(args[2])) {
             if (args[2].toLowerCase().match(lastGameRegex)) {
@@ -423,17 +451,17 @@
          ${Mins.length === 1 ? Mins[0].match(digitsRegex): 0} mins and ${Seconds.length === 1? Seconds[0].match(digitsRegex): 0} seconds`;
     }
 
-    function getHaloMccStats(gamerTag, args) {
+    function getHaloMccStats(gamerTag, args,haloGame) {
         if (common.isNotBlank(args[2])) {
             if (args[2].toLowerCase().match(lastGameRegex)) {
                 let games = args[2].match(digitsRegex);
-                lastXGamesHaloMcc(gamerTag, games[0], true);
+                lastXGamesHaloMcc(gamerTag, games[0], true,haloGame);
             } else {
                 let games = args[2].match(digitsRegex);
                 if (parseInt(games) > parseInt(haloGameLimit)) {
                     _bot.channel.send("Fuck off wanker, keep it 10 and under.");
                 } else {
-                    lastXGamesHaloMcc(gamerTag, games[0], false);
+                    lastXGamesHaloMcc(gamerTag, games[0], false,haloGame);
                 }
             }
         } else {
@@ -484,11 +512,11 @@
 
     }
 
-    function lastXGamesHaloMcc(gamerTag, gamesNum, average) {
+    function lastXGamesHaloMcc(gamerTag, gamesNum, average, haloGame) {
         gamesNum = parseInt(gamesNum);
         let slayer = mcc.games.history({
             gamertag: gamerTag,
-            game: 'All',
+            game: haloGame,
             gameVariant: slayerGame,
             count: gamesNum
         }).then((result) => {
@@ -501,7 +529,7 @@
         );
         let ctf = mcc.games.history({
             gamertag: gamerTag,
-            game: 'All',
+            game: haloGame,
             gameVariant: ctfGame,
             count: gamesNum
         }).then((result) => {
@@ -514,7 +542,7 @@
         );
         let juggernaut = mcc.games.history({
             gamertag: gamerTag,
-            game: 'All',
+            game: haloGame,
             gameVariant: juggernautGame,
             count: gamesNum
         }).then((result) => {
@@ -527,7 +555,7 @@
         );
         let koth = mcc.games.history({
             gamertag: gamerTag,
-            game: 'All',
+            game: haloGame,
             gameVariant: kothGame,
             count: gamesNum
         }).then((result) => {
@@ -540,7 +568,7 @@
         );
         let infection =mcc.games.history({
             gamertag: gamerTag,
-            game: 'All',
+            game: haloGame,
             gameVariant: infectionGame,
             count: gamesNum
         }).then((result) => {
@@ -553,7 +581,7 @@
         );
         let flood = mcc.games.history({
             gamertag: gamerTag,
-            game: 'All',
+            game: haloGame,
             gameVariant: floodGame,
             count: gamesNum
         }).then((result) => {
@@ -566,7 +594,7 @@
         );
         let race = mcc.games.history({
             gamertag: gamerTag,
-            game: 'All',
+            game: haloGame,
             gameVariant: raceGame,
             count: gamesNum
         }).then((result) => {
@@ -579,7 +607,7 @@
         );
         let extraction = mcc.games.history({
             gamertag: gamerTag,
-            game: 'All',
+            game: haloGame,
             gameVariant: extractionGame,
             count: gamesNum
         }).then((result) => {
@@ -592,20 +620,20 @@
         );
         let dominion = mcc.games.history({
             gamertag: gamerTag,
-            game: 'All',
+            game: haloGame,
             gameVariant: dominionGame,
             count: gamesNum
         }).then((result) => {
             result.games.forEach(game => {
-                game.gameType = slayerGame;
+                game.gameType = dominionGame;
             })
-            return dominionGame;
+            return result;
         }).catch(error =>
             _bot.channel.send(error.message)
         );
         let regicide = mcc.games.history({
             gamertag: gamerTag,
-            game: 'All',
+            game: haloGame,
             gameVariant: regicideGame,
             count: gamesNum
         }).then((result) => {
@@ -618,7 +646,7 @@
         );
         let grifball = mcc.games.history({
             gamertag: gamerTag,
-            game: 'All',
+            game: haloGame,
             gameVariant: grifballGame,
             count: gamesNum
         }).then((result) => {
@@ -631,7 +659,7 @@
         );
         let ricochet = mcc.games.history({
             gamertag: gamerTag,
-            game: 'All',
+            game: haloGame,
             gameVariant: ricochetGame,
             count: gamesNum
         }).then((result) => {
@@ -644,7 +672,7 @@
         );
         let vip_g = mcc.games.history({
             gamertag: gamerTag,
-            game: 'All',
+            game: haloGame,
             gameVariant: vipGame,
             count: gamesNum
         }).then((result) => {
@@ -657,7 +685,7 @@
         );
         let territorie = mcc.games.history({
             gamertag: gamerTag,
-            game: 'All',
+            game: haloGame,
             gameVariant: territoriesGame,
             count: gamesNum
         }).then((result) => {
@@ -670,7 +698,7 @@
         );
         let assualt = mcc.games.history({
             gamertag: gamerTag,
-            game: 'All',
+            game: haloGame,
             gameVariant: assualtGame,
             count: gamesNum
         }).then((result) => {
@@ -683,7 +711,7 @@
         );
         let oddball = mcc.games.history({
             gamertag: gamerTag,
-            game: 'All',
+            game: haloGame,
             gameVariant: oddBallGame,
             count: gamesNum
         }).then((result) => {
@@ -715,22 +743,25 @@
                 game.killsAvg = 0;
                 game.deathsAvg = 0;
                 game.assistsAvg=0;
+                game.headShots =0;
                 game.KD = 0;
                 game.SE=0;
                 for (let i = 0; i < gamesNum; i++) {
                     game.kills+= parseInt(games[i].kills);
                     game.deaths+= parseInt(games[i].deaths);
                     game.assists+= parseInt(games[i].assists);
+                    game.headShots += parseInt(games[i].headshots)
                 }
                 game.killsAvg = (game.kills / gamesNum).toFixed(2);
                 game.deathsAvg = (game.deaths / gamesNum).toFixed(2);
                 game.assistsAvg=(game.assists / gamesNum).toFixed(2);
+                game.headShotsAvg = (game.headShots / gamesNum).toFixed(2)
                 game.KD = (game.kills / game.deaths).toFixed(2);
                 game.SE=(((game.kills + game.assists ) / (game.kills + game.assists + game.deaths)) * 100).toFixed(2);
-                gameCardAvgHaloMcc(game, gamerTag, gamesNum);
+                gameCardAvgHaloMcc(game, gamerTag, gamesNum, haloGame);
             } else {
                 for (let i = 0; i < gamesNum; i++) {
-                    gameCardHaloMcc(games[i], gamerTag, i + 1);
+                    gameCardHaloMcc(games[i], gamerTag, i + 1,haloGame);
                 }
             }
         });
@@ -766,27 +797,31 @@
     }
 
 
-    function gameCardHaloMcc(game,gamerTag, gamenum) {
+    function gameCardHaloMcc(game,gamerTag, gamenum, haloGame) {
+        if(haloGame === HaloMCC) haloGame="Halo MCC";
         let gameEmbed = new Discord.MessageEmbed()
             .setColor('#b6d6eb')
             .setTitle(`Game Record ${gamenum}: ${gamerTag}`)
-            .setDescription(`${gamerTag} game stats`)
+            .setDescription(`${haloGame} game stats`)
             .addField('GameType', game.gameType)
             //.addField('Map', maps[game.mapId])
             .addField("Outcome", game.won ? 'Won' : 'Lost')
             .addField('Kills', game.kills,true)
             .addField('Deaths', game.deaths,true)
             .addField('Assists', game.assists, true)
+            .addField('Headshots', game.headshots, true)
             .addField('Played',new Date(game.playedAt).toString() )
         gameEmbed=additionalStatsHaloMcc(gameEmbed,game);
 
         _bot.channel.send(gameEmbed);
     }
 
-    function gameCardAvgHaloMcc(game,gamerTag, gameNum) {
+    function gameCardAvgHaloMcc(game,gamerTag, gameNum, haloGame) {
+        if(haloGame === HaloMCC) haloGame="Halo MCC";
+
         let gameEmbed = new Discord.MessageEmbed()
             .setColor('#b6d6eb')
-            .setTitle(`Average Game Record for last ${gameNum} games: ${gamerTag}`)
+            .setTitle(`Average Game Record for last ${gameNum} games: ${haloGame}`)
             //.addField('Map', maps[game.mapId])
             .addField('Kills', game.kills,true)
             .addField('Deaths', game.deaths,true)
@@ -794,6 +829,7 @@
             .addField('Avg Kills', game.killsAvg, true)
             .addField('Avg Deaths', game.deathsAvg, true)
             .addField('Avg Assists', game.assistsAvg, true)
+            .addField('Avg Headshots', game.headShotsAvg, true)
             .addField('KD', game.KD, true)
             .addField('Successful Engagements %', game.SE, true)
 
