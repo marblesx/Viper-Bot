@@ -14,7 +14,7 @@
     const Scheduled = "Scheduled";
     const GameOver = "Game Over";
     const Postponed = "Postponed";
-    const Phillies_ID = '143';
+    //const Phillies_ID = '143';
     let cache_teams ={};
     let cache_teamCodes ={};
     let _bot;
@@ -35,7 +35,7 @@
                 );
                 break;
             case 'games':
-                gamesToday();
+                gamesToday().then(g=>console.log(g));
                 break;
             default:
                 bot.channel.send("Invalid command, try !mlb.help for a list of valid commands.");
@@ -98,7 +98,7 @@
      * @returns {string} game status
      */
     function gameStatus(status, awayTeam, homeTeam, gameDate) {
-        let toReturn = '';
+        let toReturn;
         let awayTeamName = getTeamName(awayTeam.team.id);
 
         let homeTeamName = getTeamName(homeTeam.team.id);
@@ -145,64 +145,6 @@
         return cache_teams[id].name;
     }
 
-    function PhilliesNextGame() {
-        //set the start of this up, we're going to get the formatted date, and the current date object
-        let dateFormatted = common.getToDaysDateFormatted();
-        let toDaysDate = common.getToDaysDate();
-        //set the url to todays date est.
-        let scheduleUrl = TODAY_GAMES_URL + '&date=' + dateFormatted;
-        //blank object, we'll generate this.
-        let gameObject = {};
-        while (gameObject.game === undefined) {
-            let response = request_sync('GET', scheduleUrl);
-            let schedule = JSON.parse(response.getBody('utf8'));
-            if (schedule.dates.length !== 0) {
-                let games = schedule.dates[0].games;
-                for (let i = 0; i < games.length; i++) {
-                    //if the phillies match any of the teams (away/home)
-                    if (games[i].teams.away.team.id.toString() === Phillies_ID || games[i].teams.home.team.id.toString() === Phillies_ID) {
-                        //save the game
-                        gameObject.game = games[i];
-                        // game id
-                        gameObject.Phillies_GameID = games[i].gamePk;
-                        //if the game is starting... or started set timeout to -1
-                        if (games[i].status.detailedState === currentGame || games[i].status.detailedState === PreGame) {
-                            gameObject.timeout = -1;
-                        } else if (games[i].status.detailedState === FinalGame || games[i].status.detailedState === GameOver) {
-                            gameObject.game = undefined;
-                        } else {
-                            //if its not we'll set the timeout to the start time.. we're going to run in to issues due to game delays.
-                            gameObject.timeout = common.getTimeDifferenceInSeconds(games[i].gameDate);
-                        }
-                        //some of the mlb apis dont care about teams id, just away/home status.. we need to save this.
-                        if (games[i].teams.away.team.id.toString() === Phillies_ID) {
-                            gameObject.Phillies_Location = 'away';
-                        } else {
-                            gameObject.Phillies_Location = 'home';
-                        }
-                        break; //Break the for loop.
-                    }
-                }
-            }
-            //check game property, if its not set, check the next day (do this FOREVER..lets break this after x amount of tries... )
-            if(gameObject.game === undefined)
-            {
-                //get the next day.
-                toDaysDate = new Date(toDaysDate.setDate(toDaysDate.getDate() + 1));
-                dateFormatted = common.formatDate(toDaysDate);
-                //set the new url.
-                scheduleUrl = TODAY_GAMES_URL + '&date=' + dateFormatted;
-            }
-        }
-        return gameObject;
-    }
-
-    /**
-     * @param {string} message : Message to send to channel.
-     * */
-    function UpdateChannel(message) {
-        _bot.channel.send(message);
-    }
 
     // exports the variables and functions above so that other modules can use them
     module.exports = {

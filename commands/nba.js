@@ -5,7 +5,6 @@
 
 
     let baseUrl = 'http://data.nba.net/prod/';
-    let v1 = 'v1';
     let v2 = 'v2';
     let scoreboard = '/scoreboard.json';
     let _bot;

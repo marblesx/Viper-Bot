@@ -27,23 +27,20 @@ module.exports = {
         const db =  await MongoClient.connect(url,{useNewUrlParser:true, useUnifiedTopology:true});
         const dbo = db.db(rps);
 
-        const result = await dbo.collection(players).insertOne(playerObj);
-        return result;
+        return await dbo.collection(players).insertOne(playerObj);
     },
     findPlayer: async function(playerObj)
     {
         const db =  await MongoClient.connect(url,{useNewUrlParser:true, useUnifiedTopology:true});
         const dbo = db.db(rps);
         const query = { userGuid: playerObj.userGuid };
-            const result = await dbo.collection(players).find(query).toArray();
-            return result;
+        return await dbo.collection(players).find(query).toArray();
     },
     updatePlayer: async function(playerObj) {
         const db =  await MongoClient.connect(url,{useNewUrlParser:true, useUnifiedTopology:true});
         const dbo = db.db(rps);
         const myquery = {userGuid: playerObj.userGuid};
         const newvalues = {$set: playerObj};
-        const result = await dbo.collection(players).updateOne(myquery, newvalues);
-        return result;
+        return await dbo.collection(players).updateOne(myquery, newvalues);
     }
 };

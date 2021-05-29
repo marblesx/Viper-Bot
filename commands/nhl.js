@@ -8,7 +8,6 @@
     let BASE_URL = 'https://statsapi.web.nhl.com/api/' + VERSION_1;
     let TODAY_GAMES_URL = BASE_URL + '/schedule';
     let TEAM_URL = BASE_URL + '/teams/';
-    let FLYERS_ID = "4";
 
     let cache_teams ={};
     let cache_teamCodes = {};
@@ -38,7 +37,6 @@
      * This handles all the arg method calls for nhl
      * @param {string[] } args arguments for the bot.
      * @param {object} bot the bot object.
-     * @param {int}channelId the channel ID it sends back to.
      */
     function nhlMethods(args, bot) {
         _bot = bot;
@@ -63,7 +61,7 @@
                 break;
             default:
                 if (args[1] in cache_teamCodes) {
-                    if (args[2] == 'h') {
+                    if (args[2] === 'h') {
                         getHighlights(args[1].toLowerCase());
                     }
                 } else {
@@ -113,11 +111,11 @@
      * @returns {string} the game status for the nhl.
      */
     function gameStatus(status, awayTeam, homeTeam, gameDate, game) {
-        let toReturn = '';
+        let toReturn;
         let awayTeamName = getTeamName(awayTeam.team.id).name;
-        awayTeamName = awayTeamName == undefined ? awayTeam.team.name : awayTeamName;
+        awayTeamName = aaasawayTeamName === undefined ? awayTeam.team.name : awayTeamName;
         let homeTeamName = getTeamName(homeTeam.team.id).name;
-        homeTeamName = homeTeamName == undefined ? homeTeam.team.name : homeTeamName;
+        homeTeamName = homeTeamName === undefined ? homeTeam.team.name : homeTeamName;
 
         switch (status.detailedState) {
             case Postponed:
@@ -201,7 +199,7 @@
                 if (data.dates.length !== 0) {
                     let games = data.dates[0].games;
                     for (let i = 0; i < games.length; i++) {
-                        if (games[i].teams.away.team.id == cache_teamCodes[teamCode] || games[i].teams.home.team.id == cache_teamCodes[teamCode]) {
+                        if (games[i].teams.away.team.id === cache_teamCodes[teamCode] || games[i].teams.home.team.id === cache_teamCodes[teamCode]) {
                             gameID = games[i].gamePk;
                             highlights = true;
                             break;
@@ -219,13 +217,13 @@
                         let teamID = cache_teamCodes[teamCode];
                         let hl = highlightsjson.gameCenter.items;
                         for (let v = 0; v < hl.length; v++) {
-                            if (hl[v].keywords.find(k => k.type === 'teamId').value == teamID) {
+                            if (hl[v].keywords.find(k => k.type === 'teamId').value === teamID) {
                                 _bot.channel.send(hl[v].description);
-                                _bot.channel.send(hl[v].playbacks.find(p => p.name == 'FLASH_1800K_896x504').url);
+                                _bot.channel.send(hl[v].playbacks.find(p => p.name === 'FLASH_1800K_896x504').url);
                                 count++;
                             }
                         }
-                        if (count == 0) {
+                        if (count === 0) {
                             _bot.channel.send(noHLMessage);
                         }
                     } else {

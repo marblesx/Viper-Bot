@@ -1,4 +1,4 @@
-let eightballPhrases = [
+let eightBallPhrases = [
     'As I see it, yes.',
     'Ask again later.',
     'Better not tell you now.',
@@ -25,7 +25,7 @@ let eightballPhrases = [
  * @returns {string} Returns random string.
  * */
 function EightBall() {
-    return eightballPhrases[Math.floor(Math.random()*eightballPhrases.length)];
+    return eightBallPhrases[Math.floor(Math.random()*eightBallPhrases.length)];
 }
 
 module.exports = {

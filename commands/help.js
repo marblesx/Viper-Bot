@@ -15,7 +15,6 @@ function getDynamicCommands(commands){
         .setDescription('List of help and commands for the Viper Bot.')
         .setThumbnail('attachment://viper-icon.png');
 
-    let returnList = "";
     commands.forEach(command => {
         helpEmbed.addField(command.name, command.description, true);
         }
@@ -27,8 +26,8 @@ module.exports = {
     name: 'vhelp',
     description: 'Help command, will give you all the help you need.',
     execute(args, bot){
-        bot.author.send(`Check your DM's <@${bot.author.id}>`)
+        bot.author.send(`Check your DM's <@${bot.author.id}>`).then(r => console.log(r))
         bot.author.send(
-              getDynamicCommands(args[args.length-1]));
+              getDynamicCommands(args[args.length-1])).then(r=>console.log(r));
     }
 };

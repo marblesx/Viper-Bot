@@ -9,7 +9,7 @@ function Dice(dice)
     return Math.floor(Math.random() * dice) + 1;
 }
 
-function rollMutlipleDice(args) {
+function rollMultipleDice(args) {
     let total = 0;
     let diceNum = parseInt(args[1]);
     let message = `You rolled a ${args[1]} sided dice, ${args[2]} times. Your rolls are: `;
@@ -27,7 +27,7 @@ module.exports = {
     description: 'Dice rolling command, d.20 will roll a 20 sided dice. d.6.4 will roll a 6 sided dice 4 times and total them.',
     execute(args, bot) {
         if (args.length === 3) {
-            let message = rollMutlipleDice(args);
+            let message = rollMultipleDice(args);
             bot.channel.send(message);
         } else {
             bot.channel.send('You rolled a ' + Dice(parseInt(args[1])))

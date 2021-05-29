@@ -74,8 +74,8 @@
          * @return {boolean}
          */
         isBlank: function (userString){
-            if(userString){return false}
-            return true;
+            return !userString;
+
         },
         /**
          * Returns if string is blank or not.
@@ -83,8 +83,8 @@
          * @return {boolean}
          */
         isNotBlank: function (userString){
-          if(userString){return true}
-          return false;
+          return !!userString;
+
         }
 
     };

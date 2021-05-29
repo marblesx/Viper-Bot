@@ -1,5 +1,4 @@
 {
-    const appName = 'halo';
 
     const {haloGameLimit} = require('../config.json');
     const haloDAL = require('../dataAccessLayer/haloDAL');
@@ -10,7 +9,6 @@
     const lib = require('lib');
     const mcc = lib.halo.mcc['@0.0.11'];
     const Discord = require('discord.js');
-    const halo5 = "h5";
     let _bot;
 
     const h5DaysRegex = /\d+[D][T]/g;
@@ -37,243 +35,11 @@
     let assualtGame = "Assault";
     let oddBallGame = "Oddball";
 
-    const HaloCE = "Halo: CE";
-    const Halo2 = "Halo 2";
-    const Halo2a = "Halo 2: Anniversary"
-    const Halo3 = "Halo 3";
-    const Halo4 = "Halo 4";
-    const HaloReach = "Halo: Reach";
-    const HaloMCC = "All"
-
-
-
-    const maps = [
-        'Pillar of Autumn',
-        'Halo',
-        'Truth and Reconciliation',
-        'Silent Cartographer',
-        '343 guilty spark',
-        'the library',
-        'two betrayals',
-        'keyes',
-        'the maw',
-        'battle creek',
-        'sidewinder',
-        'damnation',
-        'rat race',
-        'prisoner',
-        'hang em high',
-        'chill out',
-        'derelict',
-        'boarding action',
-        'chiron',
-        'blood gulch',
-        'wizard',
-        'longest',
-        'death island',
-        'danger canyon',
-        'infinity',
-        'timberland',
-        'ice fields',
-        'gephyrophobia',
-        'the heretic',
-        'the armory',
-        'cairo station',
-        'outskirts',
-        'metropolis',
-        'the arbiter',
-        'the oracle',
-        'delta halo',
-        'regret',
-        'sacred icon',
-        'quarantine zone',
-        'gravemind',
-        'uprising',
-        'high charity',
-        'the great journey',
-        'lockout',
-        'ascension',
-        'midship',
-        'ivory tower',
-        'beaver creek',
-        'burial mounds',
-        'colossus',
-        'zanzibar',
-        'coagulation',
-        'headlong',
-        'waterworks',
-        'foundation',
-        'containment',
-        'warlock',
-        'sanctuary',
-        'turf',
-        'backwash',
-        'elongation',
-        'gemini',
-        'relic',
-        'terminal',
-        'desolation',
-        'tombstone',
-        'district',
-        'uplift',
-        'arrival',
-        'sierra 117',
-        'crows nest',
-        'tsavo highway',
-        'the storm',
-        'floodgate',
-        'the ark',
-        'the covenant',
-        'cortana',
-        'halo',
-        'construct',
-        'epitaph',
-        'guardian',
-        'high ground',
-        'isolation',
-        'last resort',
-        'narrows',
-        'sandtrap',
-        'snowbound',
-        'the pit',
-        'valhalla',
-        'foundry',
-        'rats nest',
-        'standoff',
-        'avalanche',
-        'blackout',
-        'ghost town',
-        'cold storage',
-        'assembly',
-        'orbital',
-        'sandbox',
-        'citadel',
-        'heretic',
-        'longshore',
-        'prologue',
-        'dawn',
-        'requiem',
-        'forerunner',
-        'infinity',
-        'reclaimer',
-        'shutdown',
-        'composer',
-        'midnight',
-        'epilogue',
-        'multiplayer first DONOTUSE OR REMOVE',
-        'adrift',
-        'abandon',
-        'complex',
-        'exile',
-        'haven',
-        'longbow',
-        'meltdown',
-        'ragnarok',
-        'solace',
-        'vortex',
-        'ravine',
-        'impact',
-        'erosion',
-        'forge island',
-        'wreckage',
-        'harvest',
-        'shatter',
-        'landfall',
-        'monolith',
-        'skyline',
-        'daybreak',
-        'outcast',
-        'perdition',
-        'pitfall',
-        'vertigo',
-        'spartan ops first DONOTUSE OR REMOVE',
-        'chopperbowl',
-        'sniperalley',
-        'fortsw',
-        'temple',
-        'scurve',
-        'courtyard',
-        'complex',
-        'valhalla',
-        'factory',
-        'mezzanie',
-        'caverns',
-        'vortex',
-        'breach',
-        'hillside',
-        'engine',
-        'groundhog lockout',
-        'groundhog ascension',
-        'groundhog zanzibar',
-        'groundhog coagulation',
-        'groundhog warlock',
-        'groundhog sanctuary',
-        'groundhog forge skybox01',
-        'groundhog forge skybox02',
-        'groundhog forge skybox03',
-        'extracredit first DONOTUSE OR REMOVE',
-        'epilogue',
-        'prepare to drop',
-        'mombasa streets',
-        'tayari plaza',
-        'uplift reserve',
-        'kizingo boulevard',
-        'oni alpha site',
-        'nmpd hq',
-        'kikowani station',
-        'data hive',
-        'coastal highway',
-        'epilogue',
-        'groundhog relic',
-        'noble actual',
-        'winter contingency',
-        'oni sword base',
-        'nightfall',
-        'tip of the spear',
-        'long night of solace',
-        'exodus',
-        'new alexandria',
-        'the package',
-        'the pillar of autumn',
-        'the pillar of autumn credits',
-        'lone wolf',
-        'boardwalk',
-        'boneyard',
-        'countdown',
-        'powerhouse',
-        'reflection',
-        'spire',
-        'sword base',
-        'zealot',
-        'anchor 9',
-        'breakpoint',
-        'tempest',
-        'condemned',
-        'highlands',
-        'battle canyon',
-        'penance',
-        'ridgeline',
-        'solitary',
-        'high noon',
-        'breakneck',
-        'forge world',
-        'beachhead',
-        'corvette',
-        'courtyard',
-        'glacier',
-        'holdout',
-        'outpost',
-        'overlook',
-        'waterfront',
-        'unearthed',
-        'installation 04',
-
-    ];
+    const HaloMCC = "All";
 
     async function HaloCommands(bot, command, args, haloGame) {
         _bot = bot;
         command = command.toLowerCase();
-
 
         switch (command) {
             case 'help':
@@ -355,11 +121,8 @@
         }
     }
 
-    function getHaloUsersList(){
 
-    }
-
-    async function haloDeregisterUser(args){
+    async function haloDeregisterUser(){
         if(await haloDAL.isUserRegistered(_bot.author.id)) {
             const user = await haloDAL.findRegisteredUser(_bot.author.id)
             await haloDAL.deregisterUser(user[0]);
@@ -397,9 +160,6 @@
         }
     }
 
-    function getLeaderBoard(args){
-
-    }
 
     function getHalo5Stats(gamerTag, args) {
         if (common.isNotBlank(args[2])) {
@@ -728,7 +488,7 @@
             const games = [];
 
             for (let c = 0; c < values.length; c++) {
-                if (values[c].games != undefined) {
+                if (values[c].games !== undefined) {
                     for (let g = 0; g < values[c].games.length; g++) {
                         games.push(values[c].games[g]);
                     }

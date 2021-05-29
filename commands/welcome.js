@@ -1,5 +1,3 @@
-const {gifToken} = require('../auth');
-const request = require('request');
 const common = require('../Common/serverCommon');
 let _bot;
 function welcome(){

@@ -110,14 +110,15 @@
                         "!sb.sp \n" +
                         "!sb.fa \n"
                 );
+                break;
             case 'su':
-                GetStats(SummerUrl, bot);
+                new GetStats(SummerUrl, bot);
                 break;
             case 'fa':
-                GetStats(FallUrl, bot);
+                new GetStats(FallUrl, bot);
                 break;
             case 'sp':
-                GetStats(SpringUrl, bot);
+                new GetStats(SpringUrl, bot);
                 break;
             default:
                bot.channel.send("Invalid command, try !sb.help for a list of valid commands.");

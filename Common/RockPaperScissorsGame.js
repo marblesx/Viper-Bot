@@ -6,7 +6,6 @@
         'Scissors'
     ];
 
-    let RPSScore = [];
 
     /***
      * @param {string}userInput user selection
@@ -35,7 +34,7 @@
 
 
         let cpuPick = RPS[Math.floor(Math.random() * RPS.length)];
-        let message = '';
+        let message;
         //User and computer picked the same
         if (cpuPick.toLowerCase() === userInput.toLowerCase()) {
             user.ties++;
@@ -86,14 +85,13 @@
                     '\nties ' + user.ties;
             }
         }
-        let result;
         if(newUser)
         {
-            result = await rockPaperScissorsDAL.insertPlayer(user);
+             await rockPaperScissorsDAL.insertPlayer(user);
         }
         else
         {
-            result = await rockPaperScissorsDAL.updatePlayer(user);
+             await rockPaperScissorsDAL.updatePlayer(user);
         }
 
       bot.channel.send(message);
