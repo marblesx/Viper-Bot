@@ -90,8 +90,8 @@
                 if (data.dates.length !== 0) {
                     let games = data.dates[0].games;
                     message += "Away team first, home team second: \n";
-                    for (let i = 0; i < games.length; i++) {
-                        message += gameStatus(games[i].status, games[i].teams.away, games[i].teams.home, games[i].gameDate, games[i]);
+                    for (const game of games) {
+                        message += gameStatus(game.status,game.teams.away, game.teams.home,game.gameDate, game);
                     }
                      _bot.channel.send( message);
 
@@ -169,9 +169,9 @@
         if (Object.entries(cache_teams).length === 0) {
             let res = request_sync('GET', TEAM_URL);
             let temp = JSON.parse(res.getBody('utf8')).teams;
-            for (let i = 0; i < temp.length; i++) {
-                cache_teams[temp[i].id] = {name: temp[i].teamName, teamCode: temp[i].abbreviation.toLowerCase()} ;
-                cache_teamCodes[temp[i].abbreviation.toLowerCase()] = temp[i].id;
+            for (const team  of temp) {
+                cache_teams[team.id] = {name: team.teamName, teamCode: team.abbreviation.toLowerCase()} ;
+                cache_teamCodes[team.abbreviation.toLowerCase()] = team.id;
             }
         }
     }
@@ -198,9 +198,9 @@
                 // data is already parsed as JSON:
                 if (data.dates.length !== 0) {
                     let games = data.dates[0].games;
-                    for (let i = 0; i < games.length; i++) {
-                        if (games[i].teams.away.team.id === cache_teamCodes[teamCode] || games[i].teams.home.team.id === cache_teamCodes[teamCode]) {
-                            gameID = games[i].gamePk;
+                    for (const game of games) {
+                        if (game.teams.away.team.id === cache_teamCodes[teamCode] || game.teams.home.team.id === cache_teamCodes[teamCode]) {
+                            gameID = game.gamePk;
                             highlights = true;
                             break;
                         }
@@ -216,10 +216,10 @@
                     if (highlightsjson.gameCenter.length !== 0) {
                         let teamID = cache_teamCodes[teamCode];
                         let hl = highlightsjson.gameCenter.items;
-                        for (let v = 0; v < hl.length; v++) {
-                            if (hl[v].keywords.find(k => k.type === 'teamId').value === teamID) {
-                                _bot.channel.send(hl[v].description);
-                                _bot.channel.send(hl[v].playbacks.find(p => p.name === 'FLASH_1800K_896x504').url);
+                        for (const highlight of hl) {
+                            if (highlight.keywords.find(k => k.type === 'teamId').value === teamID) {
+                                _bot.channel.send(highlight.description);
+                                _bot.channel.send(highlight.playbacks.find(p => p.name === 'FLASH_1800K_896x504').url);
                                 count++;
                             }
                         }
