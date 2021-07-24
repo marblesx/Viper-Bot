@@ -14,7 +14,6 @@
     const Scheduled = "Scheduled";
     const GameOver = "Game Over";
     const Postponed = "Postponed";
-    //const Phillies_ID = '143';
     let cache_teams ={};
     let cache_teamCodes ={};
     let _bot;
@@ -49,10 +48,10 @@
         if (Object.entries(cache_teams).length === 0) {
             let res = request_sync('GET', TEAM_URL);
             let temp = JSON.parse(res.getBody('utf8')).teams;
-            for (let i = 0; i < temp.length; i++) {
-                if (temp[i].league.id === NLCode || temp[i].league.id === ALCode) {
-                    cache_teams[temp[i].id] = {name: temp[i].teamName, teamCode: temp[i].abbreviation.toLowerCase()};
-                    cache_teamCodes[temp[i].abbreviation.toLowerCase()] = temp[i].id;
+            for (const item of temp) {
+                if (item.league.id === NLCode || item.league.id === ALCode) {
+                    cache_teams[item.id] = {name: item.teamName, teamCode: item.abbreviation.toLowerCase()};
+                    cache_teamCodes[item.abbreviation.toLowerCase()] = item.id;
                 }
             }
         }
@@ -79,8 +78,8 @@
                 if (data.totalGames !== 0) {
                     let games = data.dates[0].games;
                     message += "Away team first, home team second: \n";
-                    for (let i = 0; i < games.length; i++) {
-                        message += gameStatus(games[i].status, games[i].teams.away, games[i].teams.home, games[i].gameDate);
+                    for (const game of games) {
+                        message += gameStatus(game.status, game.teams.away, game.teams.home, game.gameDate);
                     }
                    _bot.channel.send(message);
                 } else {

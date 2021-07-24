@@ -112,13 +112,13 @@
                 );
                 break;
             case 'su':
-                new GetStats(SummerUrl, bot);
+                 GetStats(SummerUrl, bot);
                 break;
             case 'fa':
-                new GetStats(FallUrl, bot);
+                 GetStats(FallUrl, bot);
                 break;
             case 'sp':
-                new GetStats(SpringUrl, bot);
+                 GetStats(SpringUrl, bot);
                 break;
             default:
                bot.channel.send("Invalid command, try !sb.help for a list of valid commands.");

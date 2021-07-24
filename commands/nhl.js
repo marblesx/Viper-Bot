@@ -176,40 +176,45 @@
         }
     }
 
+    function hasHighlights(data) {
+        let gameID = 0;
+        let highlights = false;
+        // data is already parsed as JSON:
+        if (data.dates.length !== 0) {
+            let games = data.dates[0].games;
+            for (const game of games) {
+                if (game.teams.away.team.id === cache_teamCodes[teamCode] || game.teams.home.team.id === cache_teamCodes[teamCode]) {
+                    gameID = game.gamePk;
+                    highlights = true;
+                    break;
+                }
+            }
+        } else {
+            _bot.channel.send(noHLMessage);
+        }
+        return {gameId: gameID, highlights: highlights};
+    }
+
     /**
      * Gets the highlights of a team if they have any.
      * @param teamCode {string} 3 character Id of NHL team.
      */
     function getHighlights(teamCode) {
         let noHLMessage = `Sorry, no highlights for ${cache_teams[cache_teamCodes[teamCode]].name}.`;
-        let highlights = false;
-        let gameID = 0;
         let date = common.getDateFormatted();
+
         request.get({
             url: TODAY_GAMES_URL + '?date=' + date,
             json: true,
             headers: {'User-Agent': 'request'}
         }, (err, res, data) => {
-            if (err) {
+            if (err || res.statusCode !== 200) {
                 console.log('Error:', err);
-            } else if (res.statusCode !== 200) {
                 console.log('Status:', res.statusCode);
             } else {
-                // data is already parsed as JSON:
-                if (data.dates.length !== 0) {
-                    let games = data.dates[0].games;
-                    for (const game of games) {
-                        if (game.teams.away.team.id === cache_teamCodes[teamCode] || game.teams.home.team.id === cache_teamCodes[teamCode]) {
-                            gameID = game.gamePk;
-                            highlights = true;
-                            break;
-                        }
-                    }
-                } else {
-                    _bot.channel.send(noHLMessage);
-                }
-                if (highlights) {
-                    let res = request_sync('GET', BASE_URL + `/game/${gameID}/content`);
+                let returnedData = hasHighlights(data);
+                if ( returnedData.highlights) {
+                    let res = request_sync('GET', BASE_URL + `/game/${returnedData.gameId}/content`);
                     let temp = JSON.parse(res.getBody('utf8'));
                     let highlightsjson = temp.highlights;
                     let count = 0;

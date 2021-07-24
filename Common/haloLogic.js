@@ -64,7 +64,7 @@
                await haloRegisterUser(args);
                 break;
             case "deregister":
-                 await  haloDeregisterUser(args);
+                 await haloDeregisterUser();
                 break;
             case "list":
                 _bot.channel.send("coming soon");
@@ -97,7 +97,7 @@
                 await haloRegisterUser(args);
                 break;
             case "deregister":
-                await  haloDeregisterUser(args);
+                await  haloDeregisterUser();
                 break;
             case "list":
                 _bot.channel.send("coming soon");
@@ -249,11 +249,11 @@
                 game.assistsAvg = 0;
                 game.KD = 0;
                 game.SE = 0;
-                for (let i = 0; i < games.length; i++) {
-                    game.kills += parseInt(games[i].Players[0].TotalKills);
-                    game.deaths += parseInt(games[i].Players[0].TotalDeaths);
-                    game.assists += parseInt(games[i].Players[0].TotalAssists);
-                }
+                games.forEach(item => {
+                    game.kills += parseInt(item.Players[0].TotalKills);
+                    game.deaths += parseInt(item.Players[0].TotalDeaths);
+                    game.assists += parseInt(item.Players[0].TotalAssists);
+                });
                 game.killsAvg = (game.kills / gamesNum).toFixed(2);
                 game.deathsAvg = (game.deaths / gamesNum).toFixed(2);
                 game.assistsAvg = (game.assists / gamesNum).toFixed(2);
@@ -487,10 +487,10 @@
             race, flood, infection, juggernaut, koth,regicide,grifball, oddball]).then((values) => {
             const games = [];
 
-            for (let c = 0; c < values.length; c++) {
-                if (values[c].games !== undefined) {
-                    for (let g = 0; g < values[c].games.length; g++) {
-                        games.push(values[c].games[g]);
+            for (const value of values) {
+                if (value.games !== undefined) {
+                    for (const game of value.games) {
+                        games.push(game);
                     }
                 }
             }
