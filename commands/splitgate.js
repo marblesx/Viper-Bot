@@ -54,7 +54,7 @@ const skill = 'skill';
     }
 
     async function getStatsObject(playerObj, bot){
-        await request.get({
+        return request.get({
             url: `${splitgateStats}${playerObj.userSys}/${playerObj.userGamerTag}`,
             json: true,
             headers: {'TRN-Api-Key': splitGateToken}
@@ -194,9 +194,6 @@ const skill = 'skill';
                     bot.channel.send(`User <@${bot.author.id}> is not registered.`);
                 }
                 break;
-            case rank:
-                await rankCommands(args[2],bot);
-                break;
             case skill:
                 if (user.length !== 0) {
                     await getSkill(user[0], bot);
@@ -211,9 +208,18 @@ const skill = 'skill';
 
                    await splitGateMethodsNickName(args, bot, userNickName[0]);
                 } else {
-                    bot.channel.send(`User <@${bot.author.id}> is not registered.`);
+                    bot.channel.send(`User <@${bot.author.id}> is not registered, or command not recognized.`);
                 }
         }
+    }
+
+    async function getAllRegisteredUsers(registeredUsers,bot, userStats) {
+        for (let user of registeredUsers) {
+            getStatsObject(user, bot).then(obj => {
+                userStats.push(obj);
+            })
+        }
+        return userStats;
     }
 
     async function rankCommands( command, bot){
@@ -223,9 +229,9 @@ const skill = 'skill';
             .setColor('#2dff16')
             .setTitle('Ranks')
 
-        for(let user of registeredUsers){
-            userStats.push(await getStatsObject(user, bot))
-        }
+
+
+        getAllRegisteredUsers(registeredUsers, bot, userStats).then();
         switch(command){
             case 'kills':
                 userStats.sort((a,b)=>(a.segments.stats.kills.value > b.segments.stats.kills.value )? 1: -1);
