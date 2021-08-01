@@ -2,8 +2,10 @@ const stats = 'stats';
 const rank = 'rank';
 const skill = 'skill';
 const objective = 'objective';
+const register = 'register';
+const deregister = 'deregister';
 {
-    const unUsableNickNames = ['register','deregister',stats, rank]
+    const unUsableNickNames = [register,deregister,stats, rank]
     const Discord = require("discord.js");
     const splitgateDAL = require('../dataAccessLayer/splitgateDAL');
     const splitgateStats = 'https://public-api.tracker.gg/v2/splitgate/standard/profile/'
@@ -117,7 +119,7 @@ const objective = 'objective';
                     .addField(stats.kingSlayers.displayName,stats.killsOnHill.displayValue, true)
                     .addField(stats.killsAsVIP.displayName,stats.killsAsVIP.displayValue, true)
                     .addField(stats.hillsNeutralized.displayName,stats.hillsNeutralized.displayValue, true)
-                    .addField(stats.hillsCaptured.displayName,stats.hillsCaptured.displayValue, true)
+                    .addField(stats.enemyKillsOnHill.displayName,stats.enemyKillsOnHill.displayValue, true)
                     .addField(stats.flagsReturned.displayName,stats.flagsReturned.displayValue, true)
                     .addField(stats.flagKills.displayName,stats.flagKills.displayValue, true)
                     .addField(stats.flagCarrierKills.displayName,stats.flagCarrierKills.displayValue, true)
@@ -204,14 +206,20 @@ const objective = 'objective';
                     .setURL('https://github.com/marblesx')
                     .setAuthor('Dev Team', '', 'https://github.com/marblesx')
                     .setDescription('List of help and commands for the SplitGate commands.')
+                    .addField(register,'register.<platform>.<gamertag>.<nickname>', true)
+                    .addField(deregister,'removes you from the registered users.', true)
+                    .addField(stats,'gets the current overall stats.', true)
+                    .addField(skill,'gets the current overall skill.', true)
+                    .addField(objective,'gets the current overall objective stats.', true)
+
                 bot.channel.send(`Sliding in to your DM's <@${bot.author.id}>`);
 
                 await bot.author.send(helpEmbed);
                 break;
-            case "register":
+            case register:
                 await registerUser(args, bot);
                 break;
-            case "deregister":
+            case deregister:
                 await deregisterUser(bot);
                 break;
             case stats:
