@@ -1,6 +1,7 @@
 const stats = 'stats';
 const rank = 'rank';
 const skill = 'skill';
+const objective = 'objective';
 {
     const unUsableNickNames = ['register','deregister',stats, rank]
     const Discord = require("discord.js");
@@ -97,7 +98,33 @@ const skill = 'skill';
         })
     }
 
-
+    async function getObjectives(playerObj,bot) {
+        request.get({
+            url: `${splitgateStats}${playerObj.userSys}/${playerObj.userGamerTag}`,
+            json: true,
+            headers: {'TRN-Api-Key': splitGateToken}
+        }, (err, res, data) => {
+            if (err || res.statusCode !== 200) {
+                bot.channel.send("issue getting data from API for spligate stat");
+            } else {
+                const stats = data.data.segments[0].stats;
+                const statEmbed = new Discord.MessageEmbed()
+                    .setColor('#163dff')
+                    .setTitle(`Objective Stats for ${playerObj.userGamerTag}`)
+                    .addField(stats.oddballsPickedUp.displayName,stats.oddballsPickedUp.displayValue, true)
+                    .addField(stats.oddballKills.displayName,stats.oddballKills.displayValue, true)
+                    .addField(stats.oddballCarrierKills.displayName,stats.oddballCarrierKills.displayValue, true)
+                    .addField(stats.kingSlayers.displayName,stats.killsOnHill.displayValue, true)
+                    .addField(stats.killsAsVIP.displayName,stats.killsAsVIP.displayValue, true)
+                    .addField(stats.hillsNeutralized.displayName,stats.hillsNeutralized.displayValue, true)
+                    .addField(stats.hillsCaptured.displayName,stats.hillsCaptured.displayValue, true)
+                    .addField(stats.flagsReturned.displayName,stats.flagsReturned.displayValue, true)
+                    .addField(stats.flagKills.displayName,stats.flagKills.displayValue, true)
+                    .addField(stats.flagCarrierKills.displayName,stats.flagCarrierKills.displayValue, true)
+                bot.channel.send(statEmbed);
+            }
+        })
+    }
 
     async function getSkill(playerObj, bot){
     request.get({
@@ -201,6 +228,13 @@ const skill = 'skill';
                     bot.channel.send(`User <@${bot.author.id}> is not registered.`);
                 }
                 break;
+                case objective:
+                if (user.length !== 0) {
+                    await getObjectives(user[0], bot);
+                } else {
+                    bot.channel.send(`User <@${bot.author.id}> is not registered.`);
+                }
+                break;
             default:
                 let nickName = args[1];
                 const userNickName = await splitgateDAL.getUserByNickname(nickName);
@@ -258,6 +292,13 @@ const skill = 'skill';
           case skill:
               if(user.length !== 0){
                   await getSkill(userNickName,bot);
+              } else{
+                  bot.channel.send(`User <@${bot.author.id}> is not registered.`);
+              }
+              break;
+          case objective:
+              if(user.length !== 0){
+                  await getObjectives(userNickName,bot);
               } else{
                   bot.channel.send(`User <@${bot.author.id}> is not registered.`);
               }
